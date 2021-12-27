@@ -1,6 +1,8 @@
-node_moduels/
-__pycache__
 .env
-vscode/
-*.js
+.vscode/
 .DS_Store
+
+node_moduels/
+__pycache__/
+
+*.js
