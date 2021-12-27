@@ -2,7 +2,7 @@
 .vscode/
 .DS_Store
 
-node_moduels/
+node_modules/
 __pycache__/
 
 *.js
