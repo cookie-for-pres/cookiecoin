@@ -1,10 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import Alert from '../components/Alert';
 
 import AuthNavbar from '../components/AuthNavbar';
 
 const Register = () => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [alertType, setAlertType] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertShow, setAlertShow] = useState(false);
+
+  const [redirect, setRedirect] = useState(false);
+  const [redirectUrl, setRedirectUrl] = useState('');
+   
+  const register = async () => {    
+    const req = await fetch('http://127.0.0.1:5500/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, email, password })
+    });
+
+    const res = await req.json();
+
+    if (res.success) {
+      setAlertType('success');
+      setAlertMessage('Successfully registered account.');
+      setAlertShow(true);
+      setRedirectUrl('/login')
+
+      setTimeout(() => {
+        setAlertShow(false);
+        setRedirect(true);
+      }, 4000);
+    } else {
+
+    }
+  }
+
   return (
     <>
       <Helmet>
@@ -17,27 +55,38 @@ const Register = () => {
 
       <h1 style={{ textAlign: 'center' }}>Register</h1>
       <br />
-      <br />
       <div className='container-sm' style={{ width: '500px' }}>	
-        <div className="form-group">
-          <input type="text" className="form-style" placeholder="Username" autoComplete='off' />
-          <i className="input-icon fa-solid fa-user" />
+        {
+          alertShow && (
+            <Alert style={{ marginBottom: '24px' }} message={alertMessage} type={alertType} />
+          )
+        }
+
+        <div className='form-group'>
+          <input value={username} onChange={e => setUsername(e.target.value)} type='text' className='form-style' placeholder='Username' />
+          <i className='input-icon fa-solid fa-user' />
         </div>
         <br />
-        <div className="form-group">
-          <input type="email" className="form-style" placeholder="Email" autoComplete='off' />
-          <i className="input-icon fa-solid fa-at" />
+        <div className='form-group'>
+          <input value={email} onChange={e => setEmail(e.target.value)} type='email' className='form-style' placeholder='Email' />
+          <i className='input-icon fa-solid fa-at' />
         </div>
         <br />
-        <div className="form-group">
-          <input type="password" className="form-style" placeholder="Password" autoComplete='off' />
-          <i className="input-icon fa-solid fa-lock" />
+        <div className='form-group'>
+          <input value={password} onChange={e => setPassword(e.target.value)} type='password' className='form-style' placeholder='Password' />
+          <i className='input-icon fa-solid fa-lock' />
         </div>
         <hr style={{ marginTop: '25px', marginBottom: '25px' }} />
-        <button className='btn shadow-none' style={{ width: '100%', height: '48px', color: 'var(--light)', backgroundColor: 'var(--purple)' }}>
+        <button onClick={register} className='btn shadow-none' style={{ width: '100%', height: '48px', color: 'var(--light)', backgroundColor: 'var(--purple)' }}>
           Register <i className='fa-solid fa-user-plus' />
         </button>
       </div>
+
+      {
+        redirect && (
+          <Navigate to={redirectUrl} />
+        )
+      }
     </>
   );
 }

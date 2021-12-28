@@ -5,6 +5,7 @@
     --dark: #1d1d1d;
     --light: #fff;
     --purple: #824ed2;
+    --purple-04: rgb(130, 78, 210, 0.4)
 }
 
 body {
@@ -49,7 +50,7 @@ body {
     width: 100%;
     font-weight: 500;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 17px;
     line-height: 22px;
     letter-spacing: 0.5px;
     outline: none;
@@ -78,4 +79,19 @@ body {
     text-align: left;
     -webkit-transition: all 200ms linear;
     transition: all 200ms linear;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 1px solid var(--purple);
+  -webkit-text-fill-color: var(--light);
+  -webkit-box-shadow: 0 0 0px 1000px var(--purple-04) inset;
+  transition: background-color 5000s ease-in-out 0s;
 }

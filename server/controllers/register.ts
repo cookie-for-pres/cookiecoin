@@ -4,7 +4,7 @@ import Account from '../models/Account';
 import { v4 } from 'uuid';
 
 export default async (req: any, res: any) => {
-  const { username, email, password } = req.body;
+  const { username, email, password } = req.body;  
   const check1 = await Account.findOne({ username });
   const check2 = await Account.findOne({ email });
 
@@ -21,12 +21,16 @@ export default async (req: any, res: any) => {
         coins: [boughtCoinId]
       });
 
-      // TODO: add coin to db so it can read coin price.
+      const cookieCoin = await Coin.findOne({ '_id': 'd32bc721-44b5-4ae3-9790-892dec019a23' });
+
       const boughtCoin = new BoughtCoin({
         _id: boughtCoinId,
         name: 'CookieCoin',
-        abbreviation: 'cec'
-      })
+        abbreviation: 'CEC',
+        price: cookieCoin.price,
+        amount: 1,
+        owner: accountId
+      });
 
       await account.save(async (err1: any) => {
         if (!err1) {
@@ -34,7 +38,7 @@ export default async (req: any, res: any) => {
             if (!err2) {
               res.json({
                 message: 'successfully registered account',
-                sucess: true
+                success: true
               });
             } else {
               res.status(500).json({

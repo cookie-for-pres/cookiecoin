@@ -9,6 +9,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import Coinflip from './pages/Coinflip';
+import Dashboard from './pages/Dashboard';
+import Logout from './pages/Logout';
 
 const App = () => {
   return (
@@ -25,6 +27,9 @@ const App = () => {
           <Route element={<ProtectedRoutes />}>
             <Route path='/home' element={<Home />} />
             <Route path='/coinflip' element={<Coinflip />} />
+            <Route path='/dashboard' element={<Dashboard />} />
+
+            <Route path='/logout' element={<Logout />} />
           </Route>
         </Routes>
       </Router>

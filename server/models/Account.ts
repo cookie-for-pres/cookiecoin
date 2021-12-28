@@ -6,10 +6,9 @@ const accountSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  banned: { type: Boolean, required: true },
   type: { type: String, default: 'member' },
+  banned: { type: Boolean, default: true },
   verified: { type: Boolean, default: false },
-  verify_code: { type: String, default: '' },
   coins: [],
   cases: [],
   balances: {
@@ -20,13 +19,16 @@ const accountSchema = new mongoose.Schema({
 }, { timestamps: true, versionKey: false });
 
 accountSchema.pre('save', function (next) {
-  if (!this.isModified('password') || this.isModified('verify_code')) {
+  if (!this.isModified('password')) {
     return next();
   }
 
-  this.verify_code = (Math.random() + 1).toString(36).substring(7);
   this.password = bcryptjs.hashSync(this.password, 12);
   next();
 });
+
+accountSchema.methods.comparePassword = function (plaintext, callback) {
+  return callback(null, bcryptjs.compareSync(plaintext, this.password));
+}
 
 export default mongoose.model('accounts', accountSchema);

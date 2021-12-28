@@ -6,6 +6,9 @@ import cors from 'cors';
 
 import config from './config/config';
 
+import login from './routes/login';
+import register from './routes/register';
+
 const app = express();
 
 app.use(responseTime());
@@ -18,10 +21,12 @@ app.disable('x-powered-by');
 
 const api = '/api';
 
+app.use(api, login);
+app.use(api, register);
+
 app.listen(config.port, () => {
   console.log(`Listening on http://127.0.0.1:${config.port}/`)
 
-  // @ts-ignore
   mongoose.connect(config.mongoUri, () => {
     console.log('MongoDB connected');
   });
