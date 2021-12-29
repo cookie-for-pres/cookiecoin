@@ -20,9 +20,7 @@ const Register = () => {
   const register = async () => {    
     const req = await fetch('http://127.0.0.1:5500/api/register', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ username, email, password })
     });
 
@@ -37,9 +35,15 @@ const Register = () => {
       setTimeout(() => {
         setAlertShow(false);
         setRedirect(true);
-      }, 4000);
+      }, 3000);
     } else {
+      setAlertType('danger');
+      setAlertMessage(res.message.charAt(0).toUpperCase() + res.message.slice(1) + '.');
+      setAlertShow(true);
 
+      setTimeout(() => {
+        setAlertShow(false);
+      }, 3000);
     }
   }
 
@@ -77,7 +81,7 @@ const Register = () => {
           <i className='input-icon fa-solid fa-lock' />
         </div>
         <hr style={{ marginTop: '25px', marginBottom: '25px' }} />
-        <button onClick={register} className='btn shadow-none' style={{ width: '100%', height: '48px', color: 'var(--light)', backgroundColor: 'var(--purple)' }}>
+        <button onClick={register} className='btn btn-purple shadow-none' style={{ width: '100%', height: '48px' }}>
           Register <i className='fa-solid fa-user-plus' />
         </button>
       </div>

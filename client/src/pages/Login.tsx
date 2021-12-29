@@ -22,9 +22,7 @@ const Login = () => {
   const login = async () => {
     const req = await fetch('http://127.0.0.1:5500/api/login', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ username, password })
     });
 
@@ -34,16 +32,22 @@ const Login = () => {
       setAlertType('success');
       setAlertMessage('Successfully logged in to account.');
       setAlertShow(true);
-      setRedirectUrl('/dashboard')
+      setRedirectUrl('/dashboard');
 
       cookies.set('account', res.id);
 
       setTimeout(() => {
         setAlertShow(false);
         setRedirect(true);
-      }, 4000);
+      }, 3000);
     } else {
+      setAlertType('danger');
+      setAlertMessage(res.message.charAt(0).toUpperCase() + res.message.slice(1) + '.');
+      setAlertShow(true);
 
+      setTimeout(() => {
+        setAlertShow(false);
+      }, 3000);
     }
   }
 
@@ -76,7 +80,7 @@ const Login = () => {
           <i className='input-icon fa-solid fa-lock' />
         </div>
         <hr style={{ marginTop: '25px', marginBottom: '25px' }} />
-        <button onClick={login} className='btn shadow-none' style={{ width: '100%', height: '48px', color: 'var(--light)', backgroundColor: 'var(--purple)' }}>
+        <button onClick={login} className='btn btn-purple shadow-none' style={{ width: '100%', height: '48px' }}>
           Login <i className='fa-solid fa-arrow-right-to-bracket' />
         </button>
       </div>

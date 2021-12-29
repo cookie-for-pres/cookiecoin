@@ -4,5 +4,9 @@
 
 node_modules/
 __pycache__/
+public/profile_pictures/*
+!public/profile_pictures/default.png
 
 *.js
+
+notes.txt

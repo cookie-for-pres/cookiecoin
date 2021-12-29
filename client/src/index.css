@@ -4,7 +4,7 @@
     --grey: #2e2e2e;
     --dark: #1d1d1d;
     --light: #fff;
-    --purple: #824ed2;
+    --purple: #824ef8;
     --purple-04: rgb(130, 78, 210, 0.4)
 }
 
@@ -24,16 +24,14 @@ body {
     color: var(--light);
 }
 
-.btn-hover:hover {
-    -moz-transform: scale(1.02);
-    -webkit-transform: scale(1.02);
-    -o-transform: scale(1.02);
-    -ms-transform: scale(1.02);
-    -webkit-transform: scale(1.02);
-    transform: scale(1.02);
-    transition: transform .20s ease-in-out;
+.btn-purple {
+    color: var(--light);
+    background-color: var(--purple);
+}
 
-    box-shadow: 0 4px 8px 0 rgba(21,21,21,.2);
+.btn-purple:hover {
+    color: var(--light);
+    background-color: rgb(129, 79, 248, 85%);
 }
 
 .form-group{ 
@@ -94,4 +92,24 @@ select:-webkit-autofill:focus {
   -webkit-text-fill-color: var(--light);
   -webkit-box-shadow: 0 0 0px 1000px var(--purple-04) inset;
   transition: background-color 5000s ease-in-out 0s;
+}
+
+.logged-in {
+    color: green;
+    font-size: 25px;
+}
+
+.logged-out {
+    color: red;
+    font-size: 25px;
+}
+
+.no-text-decoration, .no-text-decoration:hover, .no-text-decoration:focus {
+    text-decoration: none;
+}
+
+.wrapper-3 {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
 }

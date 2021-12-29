@@ -31,33 +31,33 @@ const Home = () => {
 				<br />
 				<br />
 				<div className='row'>
-					<div className="col-sm-6">
+					<div className='col-sm-6'>
 						<h1 style={{ textAlign: 'center' }}>Games</h1>
 						<br />
 						<div className='card' style={{ height: '78%' }}>
 							<div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)'}}>
-								<ul className="list-group list-group-flush">
-									<li className="list-group-item">
-										Coinflip • <span className='text-muted'>1 Player <i className="fa-solid fa-user" /></span>
-										<Link className='btn shadow-none' style={{ float: 'right', color: 'var(--light)', backgroundColor: 'var(--purple)', width: '15%' }} to='/coinflip'>
+								<ul className='list-group list-group-flush'>
+									<li className='list-group-item'>
+										Coinflip • <span className='text-muted'>1 Player <i className='fa-solid fa-user' /></span>
+										<Link className='btn btn-purple shadow-none' style={{ float: 'right', width: '15%' }} to='/coinflip'>
 											Play
 										</Link>
 									</li>
-									<li className="list-group-item">
-										Blackjack • <span className='text-muted'>1-4 Players <i className="fa-solid fa-user" /></span>
-										<Link className='btn disabled' style={{ float: 'right', color: 'var(--light)', backgroundColor: 'var(--purple)', width: '15%' }} to='#'>
+									<li className='list-group-item'>
+										Blackjack • <span className='text-muted'>1-4 Players <i className='fa-solid fa-user' /></span>
+										<Link className='btn btn-purple shadow-none' style={{ float: 'right', width: '15%' }} to='/blackjack'>
 											Play
 										</Link>
 									</li>
-									<li className="list-group-item">
-										Rock Paper Scissors • <span className='text-muted'>1-2 Players <i className="fa-solid fa-user" /></span>
-										<Link className='btn disabled' style={{ float: 'right', color: 'var(--light)', backgroundColor: 'var(--purple)', width: '15%' }} to='#'>
+									<li className='list-group-item'>
+										Rock Paper Scissors • <span className='text-muted'>1-2 Players <i className='fa-solid fa-user' /></span>
+										<Link className='btn btn-purple shadow-none' style={{ float: 'right', width: '15%' }} to='/rock-paper-scissors'>
 											Play
 										</Link>
 									</li>
-									<li className="list-group-item">
-										Crash • <span className='text-muted'>1-10 Players <i className="fa-solid fa-user" /></span>
-										<Link className='btn disabled' style={{ float: 'right', color: 'var(--light)', backgroundColor: 'var(--purple)', width: '15%' }} to='#'>
+									<li className='list-group-item'>
+										Crash • <span className='text-muted'>1-10 Players <i className='fa-solid fa-user' /></span>
+										<Link className='btn btn-purple shadow-none' style={{ float: 'right', width: '15%' }} to='/crash'>
 											Play
 										</Link>
 									</li>
@@ -65,25 +65,25 @@ const Home = () => {
 							</div>
 						</div>
 					</div>
-					<div className="col-sm-6">
+					<div className='col-sm-6'>
 						<h1 style={{ textAlign: 'center' }}>Leaderboard</h1>
 						<br />
 						<div className='card' style={{ height: '78%' }}>
 							<div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)' }}>
-								<ul className="list-group list-group-flush">
-									<li className="list-group-item">
+								<ul className='list-group list-group-flush'>
+									<li className='list-group-item'>
 										----- <span style={{ float: 'right' }}>$0</span>
 									</li>
-									<li className="list-group-item">
+									<li className='list-group-item'>
 										----- <span style={{ float: 'right' }}>$0</span>
 									</li>
-									<li className="list-group-item">
+									<li className='list-group-item'>
 										----- <span style={{ float: 'right' }}>$0</span>
 									</li>
-									<li className="list-group-item">
+									<li className='list-group-item'>
 										----- <span style={{ float: 'right' }}>$0</span>
 									</li>
-									<li className="list-group-item">
+									<li className='list-group-item'>
 										----- <span style={{ float: 'right' }}>$0</span>
 									</li>
 								</ul>

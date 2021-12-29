@@ -5,6 +5,8 @@ dotenv.config();
 export default {
   mongoUri: process.env.MONGO_URI,
   port: process.env.PORT,
+  cecId: process.env.CEC_ID,
+  shutdownId: process.env.SHUTDOWN_ID,
   pusher: {
     appId: process.env.PUSHER_APP_ID,
     key: process.env.PUSHER_KEY,

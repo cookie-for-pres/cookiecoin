@@ -110,6 +110,7 @@ const Navbar = ({ page }: any) => {
           </div>
         </div>
       </nav>
+      <br />
     </>
   )
 }
