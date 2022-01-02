@@ -64,7 +64,7 @@ const Login = () => {
       <h1 style={{ textAlign: 'center' }}>Login</h1>
       <br />
       <div className='container-sm' style={{ width: '500px' }}>	
-      {
+        { 
           alertShow && (
             <Alert style={{ marginBottom: '24px' }} message={alertMessage} type={alertType} />
           )

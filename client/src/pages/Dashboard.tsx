@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie';
 
 import Navbar from '../components/Navbar';
 import Friends from '../components/dashboard/Friends';
-import Balance from '../components/dashboard/Balance';
+import Balances from '../components/dashboard/Balances';
 import NewsArticles from '../components/dashboard/NewsArticles';
 
 const Dashboard = () => {
@@ -32,7 +32,6 @@ const Dashboard = () => {
         setBalances(res.account.balances)
       } else if (res.message === 'cant find account') {
         cookies.remove('account');
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         window.location.reload();
       }
     });
@@ -53,27 +52,7 @@ const Dashboard = () => {
 						<br />
 						<div className='card' style={{ height: '78%' }}>
 							<div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)'}}>
-                <ul className="list-group list-group-flush">
-                  {
-                    balances.cash === '' ? (
-                      <Balance name='Cash' type='loading' amount={0} />
-                    ) : (
-                      <Balance name='Cash' type='actual' amount={balances.cash} />
-                    )
-                  }
-                  {
-                    balances.bank === '' ? (
-                      <Balance name='Bank' type='loading' amount={0} />
-                    ) : (
-                      <Balance name='Bank' type='actual' amount={balances.bank} />
-                    )
-                  }
-                </ul>
-                <br />
-                <br />
-                <Link className='btn btn-purple' to='/portfolio' style={{ width: '100%' }}>
-                  View Portfolio <i className='fa-solid fa-piggy-bank' />
-                </Link>
+                <Balances balances={balances} />
               </div>
             </div>
           </div>

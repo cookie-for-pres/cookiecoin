@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 
@@ -40,25 +40,25 @@ const Home = () => {
 									<li className='list-group-item'>
 										Coinflip • <span className='text-muted'>1 Player <i className='fa-solid fa-user' /></span>
 										<Link className='btn btn-purple shadow-none' style={{ float: 'right', width: '15%' }} to='/coinflip'>
-											Play
+											Play <i className='fa-solid fa-play' />
 										</Link>
 									</li>
 									<li className='list-group-item'>
 										Blackjack • <span className='text-muted'>1-4 Players <i className='fa-solid fa-user' /></span>
-										<Link className='btn btn-purple shadow-none' style={{ float: 'right', width: '15%' }} to='/blackjack'>
-											Play
+										<Link className='btn btn-purple shadow-none disabled' style={{ float: 'right', width: '15%' }} to='/blackjack'>
+											Play <i className='fa-solid fa-play' />
 										</Link>
 									</li>
 									<li className='list-group-item'>
 										Rock Paper Scissors • <span className='text-muted'>1-2 Players <i className='fa-solid fa-user' /></span>
-										<Link className='btn btn-purple shadow-none' style={{ float: 'right', width: '15%' }} to='/rock-paper-scissors'>
-											Play
+										<Link className='btn btn-purple shadow-none disabled' style={{ float: 'right', width: '15%' }} to='/rock-paper-scissors'>
+											Play <i className='fa-solid fa-play' />
 										</Link>
 									</li>
 									<li className='list-group-item'>
 										Crash • <span className='text-muted'>1-10 Players <i className='fa-solid fa-user' /></span>
-										<Link className='btn btn-purple shadow-none' style={{ float: 'right', width: '15%' }} to='/crash'>
-											Play
+										<Link className='btn btn-purple shadow-none disabled' style={{ float: 'right', width: '15%' }} to='/crash'>
+											Play <i className='fa-solid fa-play' />
 										</Link>
 									</li>
 								</ul>

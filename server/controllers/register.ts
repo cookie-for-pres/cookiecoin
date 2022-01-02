@@ -21,13 +21,13 @@ export default async (req: any, res: any) => {
         coins: [boughtCoinId]
       });
 
-      const cookieCoin = await Coin.findOne({ '_id': process.env.CEC_ID });
+      const dogecoin = await Coin.findOne({ '_id': process.env.DOGE_ID });
 
       const boughtCoin = new BoughtCoin({
         _id: boughtCoinId,
-        name: 'CookieCoin',
-        abbreviation: 'CEC',
-        amount: 0.1,
+        name: dogecoin.name,
+        abbreviation: dogecoin.abbreviation,
+        amount: 5,
         owner: accountId
       });
 

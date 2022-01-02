@@ -21,7 +21,7 @@ const NewsArticles = ({ articles }: any) => {
             }
           </div> 
         ) : (
-          <p className='text-muted' style={{ textAlign: 'center', fontSize: '20px' }}>Could'nt retrieve any news articles</p>
+          <p className='text-muted' style={{ textAlign: 'center', fontSize: '20px' }}>Couldn't retrieve any news articles <i className='fa-solid fa-face-frown' /></p>
         )
       }
     </>
