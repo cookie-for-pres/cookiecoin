@@ -64,8 +64,8 @@ export const buy = async (req: any, res: any) => {
       
       if (owned) {
         if (balance === 'cash') {
-          if (account.balance.cash >= coin.price * amount) {
-            account.balance.cash = roundToHundredth(account.balance.cash - (coin.price * amount));
+          if (account.balances.cash >= coin.price * amount) {
+            account.balances.cash = roundToHundredth(account.balances.cash - (coin.price * amount));
             owned.amount = owned.amount + amount;
 
             await account.save(async (err1) => {
@@ -99,8 +99,8 @@ export const buy = async (req: any, res: any) => {
             });
           }
         } else {
-          if (account.balance.bank >= coin.price * amount) {
-            account.balance.bank = roundToHundredth(account.balance.bank - (coin.price * amount));
+          if (account.balances.bank >= coin.price * amount) {
+            account.balances.bank = roundToHundredth(account.balances.bank - (coin.price * amount));
             owned.amount = owned.amount + amount;
 
             await account.save(async (err1) => {
@@ -136,11 +136,14 @@ export const buy = async (req: any, res: any) => {
         }
       } else {
         if (balance === 'cash') {
-          if (account.balance.cash >= coin.price * amount) {
-            account.balance.cash = roundToHundredth(account.balance.cash - (coin.price * amount));
-            
+          if (account.balances.cash >= coin.price * amount) {
+            const boughtCoinId = v4();
+
+            account.balances.cash = roundToHundredth(account.balances.cash - (coin.price * amount));
+            account.coins.push(boughtCoinId);
+
             const boughtCoin = new BoughtCoin({
-              _id: v4(),
+              _id: boughtCoinId,
               name: coin.name,
               abbreviation: coin.abbreviation,
               owner: account._id,
@@ -178,11 +181,14 @@ export const buy = async (req: any, res: any) => {
             });
           }
         } else {
-          if (account.balance.bank >= coin.price * amount) {
-            account.balance.bank = roundToHundredth(account.balance.bank - (coin.price * amount));
+          if (account.balances.bank >= coin.price * amount) {
+            const boughtCoinId = v4();
+
+            account.balances.bank = roundToHundredth(account.balances.bank - (coin.price * amount));
+            account.coins.push(boughtCoinId);
             
             const boughtCoin = new BoughtCoin({
-              _id: v4(),
+              _id: boughtCoinId,
               name: coin.name,
               abbreviation: coin.abbreviation,
               owner: account._id,

@@ -42,9 +42,11 @@ const App = () => {
             <Route path='/portfolio' element={<Portfolio />} />
             <Route path='/settings' element={<Settings />} />
 
-            <Route path='/coin/:coinId' element={<Coin />} />
+            <Route path='/coin/:coinId' element={<Coin /> } />
 
             <Route path='/logout' element={<Logout />} />
+            
+            <Route path='*' element={<Navigate to='/home' />} />
           </Route>
         </Routes>
       </Router>

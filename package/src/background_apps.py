@@ -100,7 +100,7 @@ class BackgrounApps:
                     'updatedAt': datetime.now().isoformat()   
                 })
 
-            time.sleep(0.1)
+            time.sleep(300)
 
     def anti_cheat(self):
         pass
@@ -108,4 +108,7 @@ class BackgrounApps:
     def start(self):
         threading.Thread(target=self.live_coin_update).start()
         threading.Thread(target=self.other_coin_update).start()
-        threading.Thread(target=self.anti_cheat).start()
+        # threading.Thread(target=self.anti_cheat).start()
+
+ba = BackgrounApps()
+ba.start()

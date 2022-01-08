@@ -15,6 +15,7 @@ import auth from './routes/auth';
 import friend from './routes/friend';
 import game from './routes/game';
 import coin from './routes/coin';
+import account from './routes/account';
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use(api, auth);
 app.use(api, friend);
 app.use(api, game);
 app.use(api, coin);
+app.use(api, account);
 
 app.listen(config.port, () => {
   console.log(`Listening on http://127.0.0.1:${config.port}/`)
