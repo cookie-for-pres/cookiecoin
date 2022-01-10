@@ -33,7 +33,6 @@ const App = () => {
           </Route>
 
           <Route element={<ProtectedRoutes />}>
-            <Route path='/home' element={<Home />} />
             <Route path='/coinflip' element={<Coinflip />} />
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/games' element={<Games />} />
@@ -46,7 +45,7 @@ const App = () => {
 
             <Route path='/logout' element={<Logout />} />
             
-            <Route path='*' element={<Navigate to='/home' />} />
+            <Route path='*' element={<Navigate to='/' />} />
           </Route>
         </Routes>
       </Router>

@@ -53,13 +53,15 @@ class BackgrounApps:
                     '$set': {'price': round(res['dogecoin']['usd'], 2)}, 
                     '$push': {'logs': {'price': current_doge['price'], 'date': datetime.now().isoformat()}}
                 })
-
+                
                 self.pusher_client.trigger('coins', 'update', {})
+                self.pusher_client.trigger('coin', 'update', {})
 
-            except Exception:
+            except Exception as e:
                 self.background_app_log_collection.insert_one({
                     '_id': str(uuid.uuid4()), 
                     'description': 'failed to get/insert/update bitcoin, ethereum, or dogecoin prices.',
+                    'error': str(e),
                     'createdAt': datetime.now().isoformat(),
                     'updatedAt': datetime.now().isoformat()   
                 })
@@ -91,11 +93,13 @@ class BackgrounApps:
                 })
 
                 self.pusher_client.trigger('coins', 'update', {})
+                self.pusher_client.trigger('coin', 'update', {})
 
-            except Exception:
+            except Exception as e:
                 self.background_app_log_collection.insert_one({
                     '_id': str(uuid.uuid4()), 
                     'description': 'failed to get/insert/update cookiecoin, big pik man, or lv coin prices.',
+                    'error': str(e),
                     'createdAt': datetime.now().isoformat(),
                     'updatedAt': datetime.now().isoformat()   
                 })

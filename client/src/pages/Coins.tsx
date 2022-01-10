@@ -12,7 +12,7 @@ const Coins = () => {
   const cookies = new Cookies();
   const cookie = cookies.get('account');
 
-  const pusher = new Pusher('966f8bb46128f58fc70c', { cluster: 'us3' });
+  const pusher = new Pusher('07371de38a1579061d39', { cluster: 'us3' });
   const channel = pusher.subscribe('coins');
 
   channel.bind('update', () => {
