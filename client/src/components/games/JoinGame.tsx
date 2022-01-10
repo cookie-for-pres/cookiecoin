@@ -40,7 +40,7 @@ const JoinGame = () => {
   const cookie = cookies.get('account');
 
   const findGame = async () => {
-    const req = await fetch('http://localhost/api/games/find', {
+    const req = await fetch('http://74.207.247.90/api/games/find', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ accountId: cookie, code: gameCode, password: gamePassword })
@@ -72,7 +72,7 @@ const JoinGame = () => {
   }
 
   const joinGame = async () => {
-    const req = await fetch('http://localhost/api/games/join', {
+    const req = await fetch('http://74.207.247.90/api/games/join', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ accountId: cookie, code: gameCode, password: gamePassword })

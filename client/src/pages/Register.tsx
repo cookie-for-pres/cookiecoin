@@ -18,7 +18,7 @@ const Register = () => {
   const [redirectUrl, setRedirectUrl] = useState('');
    
   const register = async () => {    
-    const req = await fetch('http://localhost/api/register', {
+    const req = await fetch('http://74.207.247.90/api/register', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ username, email, password })

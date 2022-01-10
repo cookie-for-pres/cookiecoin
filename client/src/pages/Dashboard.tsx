@@ -19,7 +19,7 @@ const Dashboard = () => {
   const cookie = cookies.get('account');
 
   useEffect(() => {
-    fetch('http://localhost/api/dashboard', {
+    fetch('http://74.207.247.90/api/dashboard', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ accountId: cookie })

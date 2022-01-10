@@ -38,7 +38,7 @@ const Sell = ({ coin: c, boughtCoin: bc, coinId, cookie, balances: b }: any) => 
   });
 
   useEffect(() => {
-    fetch('http://localhost/api/account/balances', {
+    fetch('http://74.207.247.90/api/account/balances', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ accountId: cookie })
@@ -51,7 +51,7 @@ const Sell = ({ coin: c, boughtCoin: bc, coinId, cookie, balances: b }: any) => 
       }
     });
 
-    fetch('http://localhost/api/coins/find', {
+    fetch('http://74.207.247.90/api/coins/find', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ accountId: cookie, coinId })
@@ -67,7 +67,7 @@ const Sell = ({ coin: c, boughtCoin: bc, coinId, cookie, balances: b }: any) => 
   }, []);
 
   const sell = async () => {
-    const req = await fetch('http://localhost/api/coins/sell', {
+    const req = await fetch('http://74.207.247.90/api/coins/sell', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ accountId: cookie, coinId, amount: sellAmount, balance: sellAccount })
@@ -96,7 +96,7 @@ const Sell = ({ coin: c, boughtCoin: bc, coinId, cookie, balances: b }: any) => 
     setSellAmount(0);
     setSellTotal(0);
 
-    fetch('http://localhost/api/account/balances', {
+    fetch('http://74.207.247.90/api/account/balances', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ accountId: cookie })
@@ -109,7 +109,7 @@ const Sell = ({ coin: c, boughtCoin: bc, coinId, cookie, balances: b }: any) => 
       }
     });
 
-    fetch('http://localhost/api/coins/find', {
+    fetch('http://74.207.247.90/api/coins/find', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ accountId: cookie, coinId })

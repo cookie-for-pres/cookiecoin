@@ -15,7 +15,7 @@ const Games = () => {
   const cookie = cookies.get('account');
 
   useEffect(() => {
-    fetch('http://localhost/api/games', {
+    fetch('http://74.207.247.90/api/games', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ accountId: cookie })

@@ -34,7 +34,7 @@ const Coin = () => {
   }
 
   useEffect(() => {
-    fetch('http://localhost/api/coins/find', {
+    fetch('http://74.207.247.90/api/coins/find', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ accountId: cookie, coinId })
