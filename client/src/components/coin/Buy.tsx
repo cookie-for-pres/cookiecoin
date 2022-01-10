@@ -38,7 +38,7 @@ const Buy = ({ coin, boughtCoin, coinId, cookie, balances: b }) => {
   });
 
   useEffect(() => {
-    fetch('http://127.0.0.1:5500/api/account/balances', {
+    fetch('http://localhost/api/account/balances', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ accountId: cookie })
@@ -53,7 +53,7 @@ const Buy = ({ coin, boughtCoin, coinId, cookie, balances: b }) => {
   }, []);
 
   const buy = async () => {
-    const req = await fetch('http://127.0.0.1:5500/api/coins/buy', {
+    const req = await fetch('http://localhost/api/coins/buy', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ accountId: cookie, coinId, amount: buyAmount, balance: buyAccount })
@@ -83,7 +83,7 @@ const Buy = ({ coin, boughtCoin, coinId, cookie, balances: b }) => {
     setBuyAmount(0);
     setBuyTotal(0);
 
-    fetch('http://127.0.0.1:5500/api/account/balances', {
+    fetch('http://localhost/api/account/balances', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ accountId: cookie })

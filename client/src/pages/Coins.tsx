@@ -24,7 +24,7 @@ const Coins = () => {
   }, []);
   
   const getCoins = () => {
-    fetch('http://127.0.0.1:5500/api/coins', {
+    fetch('http://localhost/api/coins', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ accountId: cookie })

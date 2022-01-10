@@ -20,7 +20,7 @@ const Login = () => {
   const cookies = new Cookies();
 
   const login = async () => {
-    const req = await fetch('http://127.0.0.1:5500/api/login', {
+    const req = await fetch('http://localhost/api/login', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ username, password })
