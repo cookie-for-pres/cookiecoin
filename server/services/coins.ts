@@ -44,7 +44,7 @@ export const real = async () => {
   const doge = await Coin.findOne({ abbreviation: 'DOGE' });
 
   const url = 'https://coingecko.p.rapidapi.com/simple/price?ids=bitcoin,ethereum,dogecoin&vs_currencies=usd';
-  const headers = { 'x-rapidapi-host': 'coingecko.p.rapidapi.com', 'x-rapidapi-key': config.cryptoApiKey }
+  const headers = { 'x-rapidapi-host': 'coingecko.p.rapidapi.com', 'x-rapidapi-key': 'b94414038cmshb3205d6a0c31a45p12c9bejsn2a77d0ffa6a1' }
 
   // @ts-ignore
   const { data } = await axios.get(url, { headers });

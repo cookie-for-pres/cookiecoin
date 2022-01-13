@@ -15,9 +15,7 @@ import Coins from './pages/Coins';
 import Friends from './pages/Friends';
 import Portfolio from './pages/Portfolio';
 import Settings from './pages/Settings';
-
 import Coin from './pages/Coin';
-
 import Logout from './pages/Logout';
 
 const App = () => {
@@ -42,7 +40,7 @@ const App = () => {
             <Route path='/settings' element={<Settings />} />
 
             <Route path='/coin/:coinId' element={<Coin /> } />
-
+            
             <Route path='/logout' element={<Logout />} />
             
             <Route path='*' element={<Navigate to='/' />} />
