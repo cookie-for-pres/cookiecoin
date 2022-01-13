@@ -27,8 +27,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: [
   'http://127.0.0.1:3000', 
   'http://localhost:3000', 
-  'http://cookie-coin.xyz', 
-  'https://cookie-coin.xyz'
+  'http://cookie-coin.xyz/', 
+  'https://cookie-coin.xyz/'
 ], credentials: true }));
 app.use(shutdown);
 
