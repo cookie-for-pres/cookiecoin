@@ -1,19 +1,14 @@
 import { v4 } from 'uuid';
-import Pusher from 'pusher';
-
 import Coin from '../models/Coin';
 import Account from '../models/Account';
 import BoughtCoin from '../models/BoughtCoin';
+import { Request, Response } from 'express';
 
-import config from '../config/config';
-
-const roundToHundredth = (value) => {
+const roundToHundredth = (value: number) => {
   return Number(value.toFixed(2));
-};
+}
 
-const pusher = new Pusher(config.pusher);
-
-export const coins = async (req: any, res: any) => {
+export const coins = async (req: Request, res: Response) => {
   const { accountId } = req.body;
   const account = await Account.findOne({ _id: accountId });
   const coins = await Coin.find({});
@@ -32,7 +27,7 @@ export const coins = async (req: any, res: any) => {
   }
 }
 
-export const find = async (req: any, res: any) => {
+export const find = async (req: Request, res: Response) => {
   const { accountId, coinId } = req.body;
   const account = await Account.findOne({ _id: accountId });
   const coin = await Coin.findOne({ _id: coinId });
@@ -73,7 +68,7 @@ export const find = async (req: any, res: any) => {
   }
 }
 
-export const buy = async (req: any, res: any) => {
+export const buy = async (req: Request, res: Response) => {
   const { accountId, coinId, amount, balance } = req.body;
   const account = await Account.findOne({ _id: accountId });
   const coin = await Coin.findOne({ _id: coinId });
@@ -96,9 +91,9 @@ export const buy = async (req: any, res: any) => {
             account.balances.cash = roundToHundredth(account.balances.cash - (coin.price * amount) + (dif > 0 ? dif : 0));
             owned.amount = owned.amount + amount;
 
-            await account.save(async (err1) => {
+            await account.save(async (err1: any) => {
               if (!err1) {
-                await owned.save((err2) => {
+                await owned.save((err2: any) => {
                   if (!err2) {
 
                     res.json({
@@ -133,9 +128,9 @@ export const buy = async (req: any, res: any) => {
             account.balances.bank = roundToHundredth(account.balances.bank - (coin.price * amount) + (dif > 0 ? dif : 0));
             owned.amount = owned.amount + amount;
 
-            await account.save(async (err1) => {
+            await account.save(async (err1: any) => {
               if (!err1) {
-                await owned.save((err2) => {
+                await owned.save((err2: any) => {
                   if (!err2) {
 
                     res.json({
@@ -182,9 +177,9 @@ export const buy = async (req: any, res: any) => {
               amount: amount
             });
             
-            await account.save(async (err1) => {
+            await account.save(async (err1: any) => {
               if (!err1) {
-                await boughtCoin.save((err2) => {
+                await boughtCoin.save((err2: any) => {
                   if (!err2) {
 
                     res.json({
@@ -229,9 +224,9 @@ export const buy = async (req: any, res: any) => {
               amount: amount
             });
             
-            await account.save(async (err1) => {
+            await account.save(async (err1: any) => {
               if (!err1) {
-                await boughtCoin.save((err2) => {
+                await boughtCoin.save((err2: any) => {
                   if (!err2) {
 
                     res.json({
@@ -276,7 +271,7 @@ export const buy = async (req: any, res: any) => {
   }
 }
 
-export const sell = async (req: any, res: any) => {
+export const sell = async (req: Request, res: Response) => {
   const { accountId, coinId, amount, balance } = req.body;
   const account = await Account.findOne({ _id: accountId });
   const coin = await Coin.findOne({ _id: coinId });
@@ -294,15 +289,10 @@ export const sell = async (req: any, res: any) => {
             account.balances.bank = roundToHundredth(account.balances.bank + (coin.price * amount));
           }
 
-          await boughtCoin.save(async (err1) => {
+          await boughtCoin.save(async (err1: any) => {
             if (!err1) {
-              await account.save(async (err2) => {
-                if (!err2) {
-                  pusher.trigger('balance', 'update', {
-                    cash: account.balances.cash,
-                    bank: account.balances.bank
-                  });
-                  
+              await account.save(async (err2: any) => {
+                if (!err2) {                  
                   res.json({
                     message: 'successfully sold coin',
                     success: true
@@ -349,6 +339,6 @@ export const sell = async (req: any, res: any) => {
   } 
 }
 
-export const create = async (req: any, res: any) => {
+export const create = async (req: Request, res: Response) => {
 
 }

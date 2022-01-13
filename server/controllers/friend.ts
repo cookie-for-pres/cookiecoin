@@ -1,8 +1,9 @@
 import { v4 } from 'uuid';
 import Account from '../models/Account';
 import Friend from '../models/Friend';
+import { Request, Response } from 'express';
 
-export const add = async (req: any, res: any) => {
+export const add = async (req: Request, res: Response) => {
   const { accountId, friendId } = req.body;
   const account = await Account.findOne({ _id: accountId });
   const friendAccount = await Account.findOne({ _id: friendId });
@@ -59,23 +60,23 @@ export const add = async (req: any, res: any) => {
   }
 }
 
-export const remove = async (req: any, res: any) => {
+export const remove = async (req: Request, res: Response) => {
   const { accountId, friendId } = req.body;
   const account = await Account.findOne({ _id: accountId });
   const friend = await Friend.findOne({ _id: friendId });
 
   if (account) {
     if (friend) {
-      let newFriends1 = [];
-      let newFriends2 = [];
+      let newFriends1: any[] = [];
+      let newFriends2: any[] = [];
 
-      account.friends.forEach((friend1) => {
+      account.friends.forEach((friend1: any) => {
         if (friend1 !== friend._id) {
           newFriends1.push(friend1);
         }
       });
 
-      friend.friends.forEach((friend1) => {
+      friend.friends.forEach((friend1: any) => {
         if (friend1 !== account._id) {
           newFriends2.push(friend1);
         }
@@ -84,9 +85,9 @@ export const remove = async (req: any, res: any) => {
       account.friends = newFriends1;
       friend.friends = newFriends2;
 
-      await account.save(async (err) => {
+      await account.save(async (err: any) => {
         if (!err) {
-          await friend.save((err1) => {
+          await friend.save((err1: any) => {
             if (!err1) {
               res.json({
                 message: 'successfully removed friend',
@@ -127,10 +128,10 @@ export const remove = async (req: any, res: any) => {
   }
 }
 
-export const block = async (req: any, res: any) => {
+export const block = async (req: Request, res: Response) => {
   
 }
 
-export const unblock = async (req: any, res: any) => {
+export const unblock = async (req: Request, res: Response) => {
   
 }

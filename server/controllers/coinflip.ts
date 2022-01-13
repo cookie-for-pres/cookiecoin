@@ -1,19 +1,20 @@
 import Account from '../models/Account';
 import GameLog from '../models/GameLog';
 import { v4 } from 'uuid';
+import { Request, Response } from 'express';
 
-export default async (req: any, res: any) => {
+export default async (req: Request, res: Response) => {
   const { accountId, account: balance, side, bet } = req.body;
   const account = await Account.findById(accountId);
 
-  if (account) {  
-    if ((side !== 'heads' && side !== 'tails') || !side || !bet || !accountId || !account) {
+  if (account) {      
+    if ((side !== 'heads' && side !== 'tails') || bet < 0 || !accountId || !account) {
       return res.status(400).send({
         message: 'side, bet, accountId, and account are required fields'
       });
     }
 
-    if (account.balances.cash >= bet || account.balances.bank >= bet) {
+    if (account.balances[balance] >= bet) {
       if (bet > 0) {
         const botChoice = ['heads', 'tails'][Math.floor(Math.random() * 2)];
 
@@ -27,10 +28,18 @@ export default async (req: any, res: any) => {
 
         if (side === botChoice) {
           if (balance === 'cash') {
-            account.balances.cash = account.balances.cash + bet;
+            account.balances.cash = account.balances.cash + (bet * 2);
             await account.save();
           } else {
-            account.balances.bank = account.balances.bank + bet;
+            account.balances.bank = account.balances.bank + (bet * 2);
+            await account.save();
+          }
+        } else {
+          if (balance === 'cash') {
+            account.balances.cash = account.balances.cash - bet;
+            await account.save();
+          } else {
+            account.balances.bank = account.balances.bank - bet;
             await account.save();
           }
         }
@@ -52,7 +61,11 @@ export default async (req: any, res: any) => {
             res.status(200).json({
               message: 'successfully played coinflip',
               success: true,
-              data: gameLog
+              data: gameLog,
+              balances: {
+                cash: account.balances.cash,
+                bank: account.balances.bank,
+              },
             });
           } else {
             res.status(500).json({

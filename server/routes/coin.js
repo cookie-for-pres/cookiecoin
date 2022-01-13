@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const coin_1 = require("../controllers/coin");
+const router = (0, express_1.Router)();
+router.post('/coins', coin_1.coins);
+router.post('/coins/buy', coin_1.buy);
+router.post('/coins/find', coin_1.find);
+router.post('/coins/sell', coin_1.sell);
+exports.default = router;

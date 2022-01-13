@@ -1,13 +1,14 @@
 import Account from '../models/Account';
+import { Request, Response } from 'express';
 
-export default async (req: any, res: any) => {
+export default async (req: Request, res: Response) => {
   const { username, password } = req.body;
   const account = await Account.findOne({ username });
 
   if (username && password) {
     if (account) {
       if (!account.banned) {
-        account.comparePassword(password, async (err, match) => {
+        account.comparePassword(password, async (err: any, match: any)  => {
           if (!err) {
             if (match) {
               res.json({

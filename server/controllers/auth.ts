@@ -1,6 +1,7 @@
 import Account from '../models/Account';
+import { Request, Response } from 'express';
 
-export default async (req: any, res: any) => {
+export default async (req: Request, res: Response) => {
   const { accountId } = req.body;
   const account = await Account.findOne({ _id: accountId });
 

@@ -44,6 +44,7 @@ app.use(api, coinflip);
 app.listen(config.port, () => {
   console.log(`Listening on http://127.0.0.1:${config.port}/`)
 
+  // @ts-ignore
   mongoose.connect(config.mongoUri, () => {
     console.log('MongoDB connected');
   });

@@ -1,7 +1,8 @@
 import Account from '../models/Account';
 import Game from '../models/Game';
+import { Request, Response } from 'express';
 
-export const games = async (req: any, res: any) => {
+export const games = async (req: Request, res: Response) => {
   const { accountId } = req.body;
   const account = await Account.findOne({ _id: accountId });
   const displayGames = await Game.find({ display: true });
@@ -22,7 +23,7 @@ export const games = async (req: any, res: any) => {
   }
 }
 
-export const find = async (req: any, res: any) => {
+export const find = async (req: Request, res: Response) => {
   const { accountId, code } = req.body;
   const account = await Account.findOne({ _id: accountId });
   const game = await Game.findOne({ 'data.code': code });  
@@ -80,7 +81,7 @@ export const find = async (req: any, res: any) => {
   }
 }
 
-export const join = async (req: any, res: any) => {
+export const join = async (req: Request, res: Response) => {
   const { accountId, code } = req.body;
   const account = await Account.findOne({ _id: accountId });
   const game = await Game.findOne({ 'data.code': code });  

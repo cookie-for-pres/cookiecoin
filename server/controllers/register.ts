@@ -2,8 +2,9 @@ import Coin from '../models/Coin';
 import BoughtCoin from '../models/BoughtCoin';
 import Account from '../models/Account';
 import { v4 } from 'uuid';
+import { Request, Response } from 'express';
 
-export default async (req: any, res: any) => {
+export default async (req: Request, res: Response) => {
   const { username, email, password } = req.body;  
   const check1 = await Account.findOne({ username });
   const check2 = await Account.findOne({ email });
