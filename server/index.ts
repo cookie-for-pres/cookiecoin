@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
+import fs from 'fs';
 
 import config from './config/config';
 
@@ -20,20 +21,15 @@ import coinflip from './routes/coinflip';
 
 const app = express();
 
+let rawOrigins = fs.readFileSync('origins.json');
+let origins: any = JSON.parse(rawOrigins.toString());
+origins = origins.map((origin: any) => origin.url);
+
 app.use(responseTime());
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: [
-  'http://127.0.0.1:3000', 
-  'http://localhost:3000', 
-  'http://cookie-coin.xyz', 
-  'https://cookie-coin.xyz',
-  'http://www.cookie-coin.xyz', 
-  'https://www.cookie-coin.xyz',
-  'http://104.237.153.11',
-  'https://104.237.153.11'
-], credentials: true }));
+app.use(cors({ origin: origins, credentials: true }));
 app.use(shutdown);
 
 app.disable('x-powered-by');

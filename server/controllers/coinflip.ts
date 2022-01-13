@@ -34,16 +34,8 @@ export default async (req: Request, res: Response) => {
             account.balances.bank = account.balances.bank + (bet * 2);
             await account.save();
           }
-        } else {
-          if (balance === 'cash') {
-            account.balances.cash = account.balances.cash - bet;
-            await account.save();
-          } else {
-            account.balances.bank = account.balances.bank - bet;
-            await account.save();
-          }
-        }
-    
+        } 
+
         const gameLog = new GameLog({
           _id: v4(),
           playerId: accountId,

@@ -45,16 +45,6 @@ exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                         yield account.save();
                     }
                 }
-                else {
-                    if (balance === 'cash') {
-                        account.balances.cash = account.balances.cash - bet;
-                        yield account.save();
-                    }
-                    else {
-                        account.balances.bank = account.balances.bank - bet;
-                        yield account.save();
-                    }
-                }
                 const gameLog = new GameLog_1.default({
                     _id: (0, uuid_1.v4)(),
                     playerId: accountId,
