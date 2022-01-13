@@ -43,16 +43,21 @@ export const real = async () => {
   const eth = await Coin.findOne({ abbreviation: 'ETH' });
   const doge = await Coin.findOne({ abbreviation: 'DOGE' });
 
-  const url = 'https://coingecko.p.rapidapi.com/simple/price?ids=bitcoin,ethereum,dogecoin&vs_currencies=usd';
+  const url = 'https://coingecko.p.rapidapi.com/simple/price';
+  const params = { 'ids': 'bitcoin,ethereum,dogecoin', 'vs_currencies': 'usd' }
   const headers = { 'x-rapidapi-host': 'coingecko.p.rapidapi.com', 'x-rapidapi-key': 'b94414038cmshb3205d6a0c31a45p12c9bejsn2a77d0ffa6a1' }
 
   // @ts-ignore
-  const { data } = await axios.get(url, { headers });
+  const { data } = await axios.get(url, { params, headers });
   const { bitcoin, ethereum, dogecoin } = data;
 
   btc.price = bitcoin.usd;
   eth.price = ethereum.usd;
   doge.price = dogecoin.usd;
+
+  btc.logs.push({ price: btc.price, date: new Date().toISOString() });
+  eth.logs.push({ price: eth.price, date: new Date().toISOString() });
+  doge.logs.push({ price: doge.price, date: new Date().toISOString() });
 
   await btc.save();
   await eth.save();
