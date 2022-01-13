@@ -28,7 +28,9 @@ app.use(cors({ origin: [
   'http://127.0.0.1:3000', 
   'http://localhost:3000', 
   'http://cookie-coin.xyz', 
-  'https://cookie-coin.xyz'
+  'https://cookie-coin.xyz',
+  'http://www.cookie-coin.xyz', 
+  'https://www.cookie-coin.xyz'
 ], credentials: true }));
 app.use(shutdown);
 
