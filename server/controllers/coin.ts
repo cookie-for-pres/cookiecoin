@@ -31,7 +31,7 @@ export const find = async (req: Request, res: Response) => {
   const { accountId, coinId } = req.body;
   const account = await Account.findOne({ _id: accountId });
   const coin = await Coin.findOne({ _id: coinId });
-  let boughtCoin = await BoughtCoin.findOne({ account: accountId, name: coin.name });
+  let boughtCoin = await BoughtCoin.findOne({ owner: accountId, name: coin.name });
 
   if (account) {
     if (coin) {
