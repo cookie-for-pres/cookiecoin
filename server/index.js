@@ -24,7 +24,7 @@ app.use((0, response_time_1.default)());
 app.use(express_1.default.json());
 app.use((0, morgan_1.default)('dev'));
 app.use(express_1.default.urlencoded({ extended: true }));
-app.use((0, cors_1.default)({ origin: ['http://127.0.0.1:3000', 'http://localhost:3000'], credentials: true }));
+app.use((0, cors_1.default)({ origin: ['*'], credentials: true }));
 app.use(shutdown_1.default);
 app.disable('x-powered-by');
 const api = '/api';
