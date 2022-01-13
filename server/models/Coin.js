@@ -9,6 +9,7 @@ const coinSchema = new mongoose_1.default.Schema({
     name: { type: String, required: true },
     abbreviation: { type: String, required: true },
     price: { type: Number, required: true },
-    imageUrl: { type: String, required: true }
+    imageUrl: { type: String, required: true },
+    logs: []
 }, { timestamps: true, versionKey: false });
 exports.default = mongoose_1.default.model('coins', coinSchema);

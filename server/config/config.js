@@ -10,6 +10,7 @@ exports.default = {
     port: process.env.PORT,
     cecId: process.env.CEC_ID,
     shutdownId: process.env.SHUTDOWN_ID,
+    cryptoApiKey: process.env.CRYPTO_API_KEY,
     pusher: {
         appId: process.env.PUSHER_APP_ID,
         key: process.env.PUSHER_KEY,

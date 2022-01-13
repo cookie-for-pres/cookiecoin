@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Cookies from 'universal-cookie';
-import Pusher from 'pusher-js';
+import { io } from 'socket.io-client';
 
 import Navbar from '../components/Navbar';
 import CoinS from '../components/coins/Coins';
@@ -14,13 +14,12 @@ const Coins = () => {
   const cookies = new Cookies();
   const cookie = cookies.get('account');
 
-  const pusher = new Pusher('07371de38a1579061d39', { cluster: 'us3' });
-  const channel = pusher.subscribe('coins');
-
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-  channel.bind('update', () => {
-    getCoins();
+  const socket = io(BASE_URL);
+
+  socket.on('coin-update', (data) => {
+    setCoins(data);
   });
 
   useEffect(() => {

@@ -12,7 +12,7 @@ export const coins = async (req: Request, res: Response) => {
   const { accountId } = req.body;
   const account = await Account.findOne({ _id: accountId });
   const coins = await Coin.find({});
-
+  
   if (account) {
     res.json({
       message: 'successfully found coins',
@@ -30,7 +30,7 @@ export const coins = async (req: Request, res: Response) => {
 export const find = async (req: Request, res: Response) => {
   const { accountId, coinId } = req.body;
   const account = await Account.findOne({ _id: accountId });
-  const coin = await Coin.findOne({ _id: coinId });
+  const coin = await Coin.findOne({ _id: coinId }, { logs: { $slice: -25 } });
   let boughtCoin = await BoughtCoin.findOne({ owner: accountId, name: coin.name });
 
   if (account) {

@@ -130,17 +130,10 @@ const Buy = ({ coin, coinId, cookie, balances: b }) => {
                 <i className='input-icon fa-solid fa-tags' />
               </div>
               <br />
-              <h3 style={{ marginLeft: '2px' }}>Total: {
-                buyAmount === 0 ? (
-                  <strong>
-                    { format(buyTotal) }
-                  </strong>
-                ) : (
-                  <strong style={{ color: 'red' }}>
-                    -{ format(buyTotal) }
-                  </strong> 
-                )
-              }
+              <h3 style={{ marginLeft: '2px' }}>Total:
+                <strong>
+                  { format(buyTotal) }
+                </strong>
               </h3>
             </div>
             <div className='modal-footer border-0'>

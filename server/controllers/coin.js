@@ -42,7 +42,7 @@ exports.coins = coins;
 const find = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { accountId, coinId } = req.body;
     const account = yield Account_1.default.findOne({ _id: accountId });
-    const coin = yield Coin_1.default.findOne({ _id: coinId });
+    const coin = yield Coin_1.default.findOne({ _id: coinId }, { logs: { $slice: -25 } });
     let boughtCoin = yield BoughtCoin_1.default.findOne({ owner: accountId, name: coin.name });
     if (account) {
         if (coin) {

@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams, useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import Pusher from 'pusher-js';
+import { io } from 'socket.io-client';
 
 import Chart from '../components/coins/Chart';
 import Navbar from '../components/Navbar';
@@ -20,7 +20,7 @@ const format = (amount) => {
 }
 
 const Coin = () => {
-  const [coin, setCoin] = useState({ abbreviation: 'Loading...', name: 'Loading...', imageUrl: '', price: 'Loading...', logs: [] });
+  const [coin, setCoin] = useState({ abbreviation: 'Loading...', name: 'Loading...', imageUrl: '', price: 'Loading...', logs: [].slice(-100) });
   const [boughtCoin, setBoughtCoin] = useState({ amount: 0 });
   const [balances, setBalances] = useState({ cash: 0, bank: 0 });
 
@@ -28,13 +28,12 @@ const Coin = () => {
   const cookies = new Cookies();
   const cookie = cookies.get('account');
   const navigate = useNavigate();
-  const pusher = new Pusher('07371de38a1579061d39', { cluster: 'us3' });
-  const coinChannel = pusher.subscribe('coin');
-  const balanceChannel = pusher.subscribe('balance');
 
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  
+  const socket = io(BASE_URL);
 
-  coinChannel.bind('update', (data) => {    
+  socket.on('coin-update', (data) => {
     window.location.reload();
   });
 

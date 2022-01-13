@@ -98,13 +98,13 @@ const Navbar = ({ page }) => {
               <li className='nav-item'>
                 {
                   page === 'logout' ? (
-                    <Link className='nav-link' style={{ color: 'var(--purple)' }} to='/logout'>
+                    <a className='nav-link' style={{ color: 'var(--purple)' }} href='/logout'>
                       Logout <i className='fa-solid fa-power-off' />
-                    </Link>
+                    </a>
                   ) : (
-                    <Link className='nav-link' style={{ color: 'var(--light)' }} to='/logout'>
+                    <a className='nav-link' style={{ color: 'var(--light)' }} href='/logout'>
                       Logout <i className='fa-solid fa-power-off' />
-                    </Link>
+                    </a>
                   )
                 }
               </li>

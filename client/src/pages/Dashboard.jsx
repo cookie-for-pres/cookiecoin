@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import { io } from 'socket.io-client';
 
 import Navbar from '../components/Navbar';
 import Friends from '../components/dashboard/Friends';
@@ -22,6 +23,13 @@ const Dashboard = () => {
   const cookie = cookies.get('account');
 
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+  useEffect(() => {
+    const socket = io(BASE_URL);
+    socket.connect();
+
+    socket.emit('online-presence-on', cookie);
+  }, []);
 
   useEffect(() => {
     fetch(`${BASE_URL}/api/dashboard`, {
