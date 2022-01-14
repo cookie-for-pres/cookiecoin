@@ -22,31 +22,11 @@ export default async (req: Request, res: Response) => {
         coins: [boughtCoinId]
       });
 
-      const dogecoin = await Coin.findOne({ '_id': process.env.DOGE_ID });
-
-      const boughtCoin = new BoughtCoin({
-        _id: boughtCoinId,
-        name: dogecoin.name,
-        abbreviation: dogecoin.abbreviation,
-        amount: 5,
-        owner: accountId
-      });
-
       await account.save(async (err1: any) => {
         if (!err1) {
-          await boughtCoin.save((err2: any) => {
-            if (!err2) {
-              res.json({
-                message: 'successfully registered account',
-                success: true
-              });
-            } else {
-              res.status(500).json({
-                message: 'unknown error',
-                success: false,
-                error: err2.message
-              });
-            }
+          res.json({
+            message: 'successfully registered account',
+            success: true
           });
         } else {
           res.status(500).json({
