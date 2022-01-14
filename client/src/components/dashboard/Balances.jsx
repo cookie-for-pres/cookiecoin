@@ -23,10 +23,10 @@ const Balances = ({ balances, boughtCoins, coins }) => {
             <br />
             {
               boughtCoins.length > 0 && coins.length > 0 ? (
-                boughtCoins.map((coin, index) => (
+                boughtCoins.map((coin) => (
                   coins.map((c, i) => (
                     c.name === coin.name && (
-                      coin.amount > 0 ? (
+                      coin.amount > 0 && (
                         <li className='list-group-item' style={{ textDecoration: 'none', fontSize: '18px' }} key={i}>
                           <span>
                             <img style={{ width: '4%', paddingRight: '5px' }} src={c.imageUrl} alt='icon' />
@@ -36,7 +36,7 @@ const Balances = ({ balances, boughtCoins, coins }) => {
                             { format(coin.amount * c.price) }
                           </span>
                         </li>
-                      ) : null
+                      )
                     )
                   ))
                 ))

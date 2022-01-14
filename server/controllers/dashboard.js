@@ -20,18 +20,41 @@ exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { accountId } = req.body;
     const account = yield Account_1.default.findOne({ _id: accountId });
     if (account) {
-        const boughtCoins = yield BoughtCoin_1.default.find({ owner: account._id }).limit(3);
+        const boughtCoins = yield BoughtCoin_1.default.find({ owner: account._id, amount: { '$gt': 0 } })
+            .limit(3)
+            .sort({ amount: -1 });
         const coins = yield Coin_1.default.find({});
         const friends1 = yield Friend_1.default.find({ owner: account._id });
         const friends2 = yield Friend_1.default.find({ friend: account._id });
+        let newBoughtCoins = [];
+        let newCoins = [];
+        boughtCoins.forEach((boughtCoin) => {
+            const coin1 = {
+                _id: boughtCoin._id,
+                name: boughtCoin.name,
+                abbreviation: boughtCoin.abbreviation,
+                amount: boughtCoin.amount
+            };
+            newBoughtCoins.push(coin1);
+        });
+        coins.forEach((coin) => {
+            const coin2 = {
+                _id: coin._id,
+                name: coin.name,
+                abbreviation: coin.abbreviation,
+                price: coin.price,
+                imageUrl: coin.imageUrl
+            };
+            newCoins.push(coin2);
+        });
         res.json({
             message: 'dashboard data found',
             success: true,
-            coins,
+            coins: newCoins,
             account: {
                 balances: account.balances,
                 friends: [...friends1, ...friends2],
-                boughtCoins
+                boughtCoins: newBoughtCoins
             }
         });
     }
