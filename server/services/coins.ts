@@ -24,7 +24,7 @@ export const fake = async () => {
   const cec = await Coin.findOne({ abbreviation: 'CEC' });
   const bpm = await Coin.findOne({ abbreviation: 'BPM' });
   const lvc = await Coin.findOne({ abbreviation: 'ŁVC' });
-  const s4y = await Coin.findOne({ abbreviation: 'S4Y' });
+  const s4y = await Coin.findOne({ abbreviation: '420' });
   const boof = await Coin.findOne({ abbreviation: 'BOOF' });
   const shr = await Coin.findOne({ abbreviation: 'SHR' });
   
