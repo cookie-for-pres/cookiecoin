@@ -73,7 +73,7 @@ const Coin = () => {
             <div className='row'>
               <div className='col-sm-5'>
                 <div style={{ textAlign: 'center' }}>
-                  <img src={coin.imageUrl} style={{ width: '75%' }} alt='' />
+                  <img src={process.env.PUBLIC_URL + coin.imageUrl} style={{ width: '75%' }} alt='' />
                 </div>
               </div>
               <div className='col-sm-7'>

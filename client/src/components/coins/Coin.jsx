@@ -13,7 +13,7 @@ const Coin = ({ name, abbreviation, price, imageUrl, url }) => {
     <>
       <div className='card' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)' }}>
         <div style={{ alignItems: 'center' }}>
-          <img src={imageUrl} style={{ width: '25%', display: 'block', marginLeft: 'auto', marginRight: 'auto' }} className='card-img-top' alt='' />
+          <img src={process.env.PUBLIC_URL + imageUrl} style={{ width: '25%', display: 'block', marginLeft: 'auto', marginRight: 'auto' }} className='card-img-top' alt='' />
         </div>
         <div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)' }}>
           <h5 className='card-title'>{ name } <span className='text-muted'>({ abbreviation })</span></h5>

@@ -35,18 +35,22 @@ const fake = () => __awaiter(void 0, void 0, void 0, function* () {
     const bpm = yield Coin_1.default.findOne({ abbreviation: 'BPM' });
     const lvc = yield Coin_1.default.findOne({ abbreviation: 'ŁVC' });
     const s4y = yield Coin_1.default.findOne({ abbreviation: 'S4Y' });
+    const boof = yield Coin_1.default.findOne({ abbreviation: 'BOOF' });
     cec.price = cec.price + rndInt(-10, 10);
     bpm.price = bpm.price + rndInt(-10, 10);
     lvc.price = lvc.price + rndInt(-10, 10);
     s4y.price = s4y.price + rndInt(-10, 10);
+    boof.price = boof.price + rndInt(-10, 10);
     cec.logs.push({ price: cec.price, date: new Date().toISOString() });
     bpm.logs.push({ price: bpm.price, date: new Date().toISOString() });
     lvc.logs.push({ price: lvc.price, date: new Date().toISOString() });
     s4y.logs.push({ price: s4y.price, date: new Date().toISOString() });
+    boof.logs.push({ price: boof.price, date: new Date().toISOString() });
     yield cec.save();
     yield bpm.save();
     yield lvc.save();
     yield s4y.save();
+    yield boof.save();
 });
 exports.fake = fake;
 const real = () => __awaiter(void 0, void 0, void 0, function* () {
