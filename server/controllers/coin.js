@@ -17,8 +17,7 @@ const uuid_1 = require("uuid");
 const Coin_1 = __importDefault(require("../models/Coin"));
 const Account_1 = __importDefault(require("../models/Account"));
 const BoughtCoin_1 = __importDefault(require("../models/BoughtCoin"));
-const ethers_1 = __importDefault(require("ethers"));
-const crypto_1 = __importDefault(require("crypto"));
+const ethereumjs_wallet_1 = __importDefault(require("ethereumjs-wallet"));
 const roundToHundredth = (value) => {
     return Number(value.toFixed(2));
 };
@@ -105,7 +104,9 @@ const buy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                         owned.amount = owned.amount + amount;
                         yield account.save((err1) => __awaiter(void 0, void 0, void 0, function* () {
                             if (!err1) {
+                                console.log(err1);
                                 yield owned.save((err2) => {
+                                    console.log(err2);
                                     if (!err2) {
                                         res.json({
                                             message: 'successfully bought coin',
@@ -116,7 +117,7 @@ const buy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                                         res.status(500).json({
                                             message: 'unknown error',
                                             success: false,
-                                            error: err1.message
+                                            error: err1
                                         });
                                     }
                                 });
@@ -125,7 +126,7 @@ const buy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                                 res.status(500).json({
                                     message: 'unknown error',
                                     success: false,
-                                    error: err1.message
+                                    error: err1
                                 });
                             }
                         }));
@@ -143,9 +144,11 @@ const buy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                         account.balances.bank = roundToHundredth(account.balances.bank - (coin.price * amount) + (dif > 0 ? dif : 0));
                         owned.amount = owned.amount + amount;
                         yield account.save((err1) => __awaiter(void 0, void 0, void 0, function* () {
+                            console.log(err1);
                             if (!err1) {
                                 yield owned.save((err2) => {
                                     if (!err2) {
+                                        console.log(err2);
                                         res.json({
                                             message: 'successfully bought coin',
                                             success: true
@@ -155,7 +158,7 @@ const buy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                                         res.status(500).json({
                                             message: 'unknown error',
                                             success: false,
-                                            error: err1.message
+                                            error: err1
                                         });
                                     }
                                 });
@@ -164,7 +167,7 @@ const buy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                                 res.status(500).json({
                                     message: 'unknown error',
                                     success: false,
-                                    error: err1.message
+                                    error: err1
                                 });
                             }
                         }));
@@ -184,21 +187,22 @@ const buy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                         const boughtCoinId = (0, uuid_1.v4)();
                         account.balances.cash = roundToHundredth(account.balances.cash - (coin.price * amount) + (dif > 0 ? dif : 0));
                         account.coins.push(boughtCoinId);
-                        const id = crypto_1.default.randomBytes(32).toString('hex');
-                        let wallet = '0x' + id;
-                        wallet = new ethers_1.default.Wallet(wallet);
+                        const wallet = ethereumjs_wallet_1.default.generate();
+                        const address = wallet.getAddressString();
                         const boughtCoin = new BoughtCoin_1.default({
                             _id: boughtCoinId,
                             name: coin.name,
                             abbreviation: coin.abbreviation,
                             owner: account._id,
                             amount: amount,
-                            wallet: wallet.address
+                            wallet: address
                         });
                         yield account.save((err1) => __awaiter(void 0, void 0, void 0, function* () {
                             if (!err1) {
+                                console.log(err1);
                                 yield boughtCoin.save((err2) => {
                                     if (!err2) {
+                                        console.log(err2);
                                         res.json({
                                             message: 'successfully bought coin',
                                             success: true
@@ -208,7 +212,7 @@ const buy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                                         res.status(500).json({
                                             message: 'unknown error',
                                             success: false,
-                                            error: err1.message
+                                            error: err1
                                         });
                                     }
                                 });
@@ -217,7 +221,7 @@ const buy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                                 res.status(500).json({
                                     message: 'unknown error',
                                     success: false,
-                                    error: err1.message
+                                    error: err1
                                 });
                             }
                         }));
@@ -235,17 +239,22 @@ const buy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                         const boughtCoinId = (0, uuid_1.v4)();
                         account.balances.bank = roundToHundredth(account.balances.bank - (coin.price * amount) + (dif > 0 ? dif : 0));
                         account.coins.push(boughtCoinId);
+                        const wallet = ethereumjs_wallet_1.default.generate();
+                        const address = wallet.getAddressString();
                         const boughtCoin = new BoughtCoin_1.default({
                             _id: boughtCoinId,
                             name: coin.name,
                             abbreviation: coin.abbreviation,
                             owner: account._id,
-                            amount: amount
+                            amount: amount,
+                            wallet: address
                         });
                         yield account.save((err1) => __awaiter(void 0, void 0, void 0, function* () {
                             if (!err1) {
+                                console.log(err1);
                                 yield boughtCoin.save((err2) => {
                                     if (!err2) {
+                                        console.log(err2);
                                         res.json({
                                             message: 'successfully bought coin',
                                             success: true
@@ -255,7 +264,7 @@ const buy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                                         res.status(500).json({
                                             message: 'unknown error',
                                             success: false,
-                                            error: err1.message
+                                            error: err1
                                         });
                                     }
                                 });
@@ -264,7 +273,7 @@ const buy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                                 res.status(500).json({
                                     message: 'unknown error',
                                     success: false,
-                                    error: err1.message
+                                    error: err1
                                 });
                             }
                         }));
@@ -322,7 +331,7 @@ const sell = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                                     res.status(500).json({
                                         message: 'unknown error',
                                         success: false,
-                                        error: err1.message
+                                        error: err1
                                     });
                                 }
                             }));
@@ -331,7 +340,7 @@ const sell = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                             res.status(500).json({
                                 message: 'unknown error',
                                 success: false,
-                                error: err1.message
+                                error: err1
                             });
                         }
                     }));

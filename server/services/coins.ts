@@ -52,6 +52,7 @@ export const fake = async () => {
   await cec.save();
   await bpm.save();
   await lvc.save();
+  await s4y.save();
   await boof.save();
   await shr.save();
 }
