@@ -35,6 +35,13 @@ export const fake = async () => {
   boof.price = boof.price + rndInt(-10, 10);
   shr.price = shr.price + rndInt(-10, 10);
 
+  if (cec.logs.length > 25) { cec.logs = []; }
+  if (bpm.logs.length > 25) { bpm.logs = []; }
+  if (lvc.logs.length > 25) { lvc.logs = []; }
+  if (s4y.logs.length > 25) { s4y.logs = []; }
+  if (boof.logs.length > 25) { boof.logs = []; }
+  if (shr.logs.length > 25) { shr.logs = []; }
+  
   cec.logs.push({ price: cec.price, date: new Date().toISOString() });
   bpm.logs.push({ price: bpm.price, date: new Date().toISOString() });
   lvc.logs.push({ price: lvc.price, date: new Date().toISOString() });
@@ -53,25 +60,29 @@ export const fake = async () => {
 export const real = async () => {
   const btc = await Coin.findOne({ abbreviation: 'BTC' });
   const eth = await Coin.findOne({ abbreviation: 'ETH' });
-  const doge = await Coin.findOne({ abbreviation: 'DOGE' });
+  const ltc = await Coin.findOne({ abbreviation: 'LTC' });
 
   const url = 'https://coingecko.p.rapidapi.com/simple/price';
-  const params = { 'ids': 'bitcoin,ethereum,dogecoin', 'vs_currencies': 'usd' }
+  const params = { 'ids': 'bitcoin,ethereum,litecoin', 'vs_currencies': 'usd' }
   const headers = { 'x-rapidapi-host': 'coingecko.p.rapidapi.com', 'x-rapidapi-key': 'b94414038cmshb3205d6a0c31a45p12c9bejsn2a77d0ffa6a1' }
 
   // @ts-ignore
   const { data } = await axios.get(url, { params, headers });
-  const { bitcoin, ethereum, dogecoin } = data;
+  const { bitcoin, ethereum, litecoin } = data;
 
   btc.price = bitcoin.usd;
   eth.price = ethereum.usd;
-  doge.price = dogecoin.usd;
+  litecoin.price = litecoin.usd;
+
+  if (btc.logs.length > 25) { btc.logs = []; }
+  if (eth.logs.length > 25) { eth.logs = []; }
+  if (ltc.logs.length > 25) { ltc.logs = []; }
 
   btc.logs.push({ price: btc.price, date: new Date().toISOString() });
   eth.logs.push({ price: eth.price, date: new Date().toISOString() });
-  doge.logs.push({ price: doge.price, date: new Date().toISOString() });
+  ltc.logs.push({ price: ltc.price, date: new Date().toISOString() });
 
   await btc.save();
   await eth.save();
-  await doge.save();
+  await ltc.save();
 }
