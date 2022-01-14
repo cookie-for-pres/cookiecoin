@@ -17,6 +17,8 @@ const uuid_1 = require("uuid");
 const Coin_1 = __importDefault(require("../models/Coin"));
 const Account_1 = __importDefault(require("../models/Account"));
 const BoughtCoin_1 = __importDefault(require("../models/BoughtCoin"));
+const ethers_1 = __importDefault(require("ethers"));
+const crypto_1 = __importDefault(require("crypto"));
 const roundToHundredth = (value) => {
     return Number(value.toFixed(2));
 };
@@ -182,12 +184,16 @@ const buy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                         const boughtCoinId = (0, uuid_1.v4)();
                         account.balances.cash = roundToHundredth(account.balances.cash - (coin.price * amount) + (dif > 0 ? dif : 0));
                         account.coins.push(boughtCoinId);
+                        const id = crypto_1.default.randomBytes(32).toString('hex');
+                        let wallet = '0x' + id;
+                        wallet = new ethers_1.default.Wallet(wallet);
                         const boughtCoin = new BoughtCoin_1.default({
                             _id: boughtCoinId,
                             name: coin.name,
                             abbreviation: coin.abbreviation,
                             owner: account._id,
-                            amount: amount
+                            amount: amount,
+                            wallet: wallet.address
                         });
                         yield account.save((err1) => __awaiter(void 0, void 0, void 0, function* () {
                             if (!err1) {

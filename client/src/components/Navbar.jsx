@@ -58,19 +58,6 @@ const Navbar = ({ page }) => {
               </li>
               <li className='nav-item'>
                 {
-                  page === 'friends' ? (
-                    <Link className='nav-link' style={{ color: 'var(--purple)' }} to='/friends'>
-                      Friends <i className='fa-solid fa-user-group' />
-                    </Link>
-                  ) : (
-                    <Link className='nav-link' style={{ color: 'var(--light)' }} to='/friends'>
-                      Friends <i className='fa-solid fa-user-group' />
-                    </Link>
-                  )
-                }
-              </li>
-              <li className='nav-item'>
-                {
                   page === 'portfolio' ? (
                     <Link className='nav-link' style={{ color: 'var(--purple)' }} to='/portfolio'>
                       Portfolio <i className='fa-solid fa-piggy-bank' />
@@ -78,6 +65,19 @@ const Navbar = ({ page }) => {
                   ) : (
                     <Link className='nav-link' style={{ color: 'var(--light)' }} to='/portfolio'>
                       Portfolio <i className='fa-solid fa-piggy-bank' />
+                    </Link>
+                  )
+                }
+              </li>
+              <li className='nav-item'>
+                {
+                  page === 'friends' ? (
+                    <Link className='nav-link' style={{ color: 'var(--purple)' }} to='/friends'>
+                      Friends <i className='fa-solid fa-user-group' />
+                    </Link>
+                  ) : (
+                    <Link className='nav-link' style={{ color: 'var(--light)' }} to='/friends'>
+                      Friends <i className='fa-solid fa-user-group' />
                     </Link>
                   )
                 }

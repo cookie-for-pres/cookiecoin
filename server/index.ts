@@ -20,8 +20,7 @@ import game from './routes/game';
 import coin from './routes/coin';
 import account from './routes/account';
 import coinflip from './routes/coinflip';
-
-import Account from './models/Account';
+import portfolio from './routes/portfolio';
 
 import { fake, real, get } from './services/coins';
 
@@ -58,6 +57,7 @@ app.use(api, game);
 app.use(api, coin);
 app.use(api, account);
 app.use(api, coinflip);
+app.use(api, portfolio);
 
 setInterval(async () => {
   await real();

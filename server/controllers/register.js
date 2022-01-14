@@ -21,13 +21,12 @@ exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (username && email && password) {
         if (!check1 && !check2) {
             const accountId = (0, uuid_1.v4)();
-            const boughtCoinId = (0, uuid_1.v4)();
             const account = new Account_1.default({
                 _id: accountId,
                 username,
                 email,
                 password,
-                coins: [boughtCoinId]
+                coins: []
             });
             yield account.save((err1) => __awaiter(void 0, void 0, void 0, function* () {
                 if (!err1) {

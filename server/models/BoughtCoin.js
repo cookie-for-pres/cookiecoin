@@ -9,6 +9,7 @@ const boughtCoinSchema = new mongoose_1.default.Schema({
     name: { type: String, required: true },
     abbreviation: { type: String, required: true },
     owner: { type: String, required: true },
-    amount: { type: Number, required: true }
+    amount: { type: Number, required: true },
+    wallet: { type: String, required: true }
 }, { timestamps: true, versionKey: false });
 exports.default = mongoose_1.default.model('bought-coins', boughtCoinSchema);

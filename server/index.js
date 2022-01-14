@@ -31,6 +31,7 @@ const game_1 = __importDefault(require("./routes/game"));
 const coin_1 = __importDefault(require("./routes/coin"));
 const account_1 = __importDefault(require("./routes/account"));
 const coinflip_1 = __importDefault(require("./routes/coinflip"));
+const portfolio_1 = __importDefault(require("./routes/portfolio"));
 const coins_1 = require("./services/coins");
 const app = (0, express_1.default)();
 const server = http_1.default.createServer(app);
@@ -59,14 +60,17 @@ app.use(api, game_1.default);
 app.use(api, coin_1.default);
 app.use(api, account_1.default);
 app.use(api, coinflip_1.default);
+app.use(api, portfolio_1.default);
 setInterval(() => __awaiter(void 0, void 0, void 0, function* () {
-    yield (0, coins_1.fake)();
     yield (0, coins_1.real)();
 }), 5 * 60 * 1000);
+setInterval(() => __awaiter(void 0, void 0, void 0, function* () {
+    yield (0, coins_1.fake)();
+}), 2.5 * 60 * 1000);
 io.on('connection', (socket) => {
     setInterval(() => __awaiter(void 0, void 0, void 0, function* () {
         socket.emit('coin-update', yield (0, coins_1.get)());
-    }), 5 * 60 * 1000);
+    }), 2.5 * 60 * 1000);
 });
 server.listen(config_1.default.port, () => {
     console.log(`Listening on http://127.0.0.1:${config_1.default.port}/`);

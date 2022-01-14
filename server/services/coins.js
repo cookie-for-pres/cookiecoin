@@ -34,43 +34,74 @@ const fake = () => __awaiter(void 0, void 0, void 0, function* () {
     const cec = yield Coin_1.default.findOne({ abbreviation: 'CEC' });
     const bpm = yield Coin_1.default.findOne({ abbreviation: 'BPM' });
     const lvc = yield Coin_1.default.findOne({ abbreviation: 'ŁVC' });
-    const s4y = yield Coin_1.default.findOne({ abbreviation: 'S4Y' });
+    const s4y = yield Coin_1.default.findOne({ abbreviation: '420' });
     const boof = yield Coin_1.default.findOne({ abbreviation: 'BOOF' });
+    const shr = yield Coin_1.default.findOne({ abbreviation: 'SHR' });
     cec.price = cec.price + rndInt(-10, 10);
     bpm.price = bpm.price + rndInt(-10, 10);
     lvc.price = lvc.price + rndInt(-10, 10);
     s4y.price = s4y.price + rndInt(-10, 10);
     boof.price = boof.price + rndInt(-10, 10);
+    shr.price = shr.price + rndInt(-10, 10);
+    if (cec.logs.length > 150) {
+        cec.logs = [];
+    }
+    if (bpm.logs.length > 150) {
+        bpm.logs = [];
+    }
+    if (lvc.logs.length > 150) {
+        lvc.logs = [];
+    }
+    if (s4y.logs.length > 150) {
+        s4y.logs = [];
+    }
+    if (boof.logs.length > 150) {
+        boof.logs = [];
+    }
+    if (shr.logs.length > 150) {
+        shr.logs = [];
+    }
     cec.logs.push({ price: cec.price, date: new Date().toISOString() });
     bpm.logs.push({ price: bpm.price, date: new Date().toISOString() });
     lvc.logs.push({ price: lvc.price, date: new Date().toISOString() });
     s4y.logs.push({ price: s4y.price, date: new Date().toISOString() });
     boof.logs.push({ price: boof.price, date: new Date().toISOString() });
+    shr.logs.push({ price: shr.price, date: new Date().toISOString() });
     yield cec.save();
     yield bpm.save();
     yield lvc.save();
     yield s4y.save();
     yield boof.save();
+    yield shr.save();
 });
 exports.fake = fake;
 const real = () => __awaiter(void 0, void 0, void 0, function* () {
     const btc = yield Coin_1.default.findOne({ abbreviation: 'BTC' });
     const eth = yield Coin_1.default.findOne({ abbreviation: 'ETH' });
-    const doge = yield Coin_1.default.findOne({ abbreviation: 'DOGE' });
+    const ltc = yield Coin_1.default.findOne({ abbreviation: 'LTC' });
     const url = 'https://coingecko.p.rapidapi.com/simple/price';
-    const params = { 'ids': 'bitcoin,ethereum,dogecoin', 'vs_currencies': 'usd' };
+    const params = { 'ids': 'bitcoin,ethereum,litecoin', 'vs_currencies': 'usd' };
     const headers = { 'x-rapidapi-host': 'coingecko.p.rapidapi.com', 'x-rapidapi-key': 'b94414038cmshb3205d6a0c31a45p12c9bejsn2a77d0ffa6a1' };
     // @ts-ignore
     const { data } = yield axios_1.default.get(url, { params, headers });
-    const { bitcoin, ethereum, dogecoin } = data;
+    const { bitcoin, ethereum, litecoin } = data;
     btc.price = bitcoin.usd;
     eth.price = ethereum.usd;
-    doge.price = dogecoin.usd;
+    ltc.price = litecoin.usd;
+    if (btc.logs.length > 150) {
+        btc.logs = [];
+    }
+    if (eth.logs.length > 150) {
+        eth.logs = [];
+    }
+    if (ltc.logs.length > 150) {
+        ltc.logs = [];
+    }
     btc.logs.push({ price: btc.price, date: new Date().toISOString() });
     eth.logs.push({ price: eth.price, date: new Date().toISOString() });
-    doge.logs.push({ price: doge.price, date: new Date().toISOString() });
+    ltc.logs.push({ price: ltc.price, date: new Date().toISOString() });
     yield btc.save();
     yield eth.save();
-    yield doge.save();
+    yield ltc.save();
 });
 exports.real = real;
