@@ -43,22 +43,22 @@ const fake = () => __awaiter(void 0, void 0, void 0, function* () {
     s4y.price = s4y.price + rndInt(-10, 10);
     boof.price = boof.price + rndInt(-10, 10);
     shr.price = shr.price + rndInt(-10, 10);
-    if (cec.logs.length > 150) {
+    if (cec.logs.length > 50) {
         cec.logs = [];
     }
-    if (bpm.logs.length > 150) {
+    if (bpm.logs.length > 50) {
         bpm.logs = [];
     }
-    if (lvc.logs.length > 150) {
+    if (lvc.logs.length > 50) {
         lvc.logs = [];
     }
-    if (s4y.logs.length > 150) {
+    if (s4y.logs.length > 50) {
         s4y.logs = [];
     }
-    if (boof.logs.length > 150) {
+    if (boof.logs.length > 50) {
         boof.logs = [];
     }
-    if (shr.logs.length > 150) {
+    if (shr.logs.length > 50) {
         shr.logs = [];
     }
     cec.logs.push({ price: cec.price, date: new Date().toISOString() });
@@ -88,13 +88,13 @@ const real = () => __awaiter(void 0, void 0, void 0, function* () {
     btc.price = bitcoin.usd;
     eth.price = ethereum.usd;
     ltc.price = litecoin.usd;
-    if (btc.logs.length > 150) {
+    if (btc.logs.length > 50) {
         btc.logs = [];
     }
-    if (eth.logs.length > 150) {
+    if (eth.logs.length > 50) {
         eth.logs = [];
     }
-    if (ltc.logs.length > 150) {
+    if (ltc.logs.length > 50) {
         ltc.logs = [];
     }
     btc.logs.push({ price: btc.price, date: new Date().toISOString() });

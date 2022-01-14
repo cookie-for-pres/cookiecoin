@@ -94,9 +94,7 @@ export const buy = async (req: Request, res: Response) => {
 
             await account.save(async (err1: any) => {
               if (!err1) {
-                console.log(err1);
                 await owned.save((err2: any) => {
-                  console.log(err2);
                   if (!err2) {
                     res.json({
                       message: 'successfully bought coin',
@@ -186,11 +184,9 @@ export const buy = async (req: Request, res: Response) => {
             
             await account.save(async (err1: any) => {
               if (!err1) {
-                console.log(err1);
                 await boughtCoin.save((err2: any) => {
                   if (!err2) {
-                    console.log(err2);
-                    res.json({
+                      res.json({
                       message: 'successfully bought coin',
                       success: true
                     });
@@ -238,11 +234,9 @@ export const buy = async (req: Request, res: Response) => {
             
             await account.save(async (err1: any) => {
               if (!err1) {
-                console.log(err1);
                 await boughtCoin.save((err2: any) => {
                   if (!err2) {
-                    console.log(err2);
-                    res.json({  
+                      res.json({  
                       message: 'successfully bought coin',
                       success: true
                     });

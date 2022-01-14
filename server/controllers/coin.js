@@ -104,9 +104,7 @@ const buy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                         owned.amount = owned.amount + amount;
                         yield account.save((err1) => __awaiter(void 0, void 0, void 0, function* () {
                             if (!err1) {
-                                console.log(err1);
                                 yield owned.save((err2) => {
-                                    console.log(err2);
                                     if (!err2) {
                                         res.json({
                                             message: 'successfully bought coin',
@@ -199,10 +197,8 @@ const buy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                         });
                         yield account.save((err1) => __awaiter(void 0, void 0, void 0, function* () {
                             if (!err1) {
-                                console.log(err1);
                                 yield boughtCoin.save((err2) => {
                                     if (!err2) {
-                                        console.log(err2);
                                         res.json({
                                             message: 'successfully bought coin',
                                             success: true
@@ -251,10 +247,8 @@ const buy = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                         });
                         yield account.save((err1) => __awaiter(void 0, void 0, void 0, function* () {
                             if (!err1) {
-                                console.log(err1);
                                 yield boughtCoin.save((err2) => {
                                     if (!err2) {
-                                        console.log(err2);
                                         res.json({
                                             message: 'successfully bought coin',
                                             success: true
