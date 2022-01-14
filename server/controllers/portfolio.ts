@@ -1,7 +1,6 @@
 import Account from '../models/Account';
 import BoughtCoin from '../models/BoughtCoin';
 import Coin from '../models/Coin';
-import Wallet from 'ethereumjs-wallet';
 import { Request, Response } from 'express';
 
 export const portfolio = async (req: Request, res: Response) => {

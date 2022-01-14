@@ -3,8 +3,7 @@ import Coin from '../models/Coin';
 import Account from '../models/Account';
 import BoughtCoin from '../models/BoughtCoin';
 import { Request, Response } from 'express';
-import ethers from 'ethers';
-import crypto from 'crypto';
+import Wallet from 'ethereumjs-wallet';
 
 const roundToHundredth = (value: number) => {
   return Number(value.toFixed(2));
@@ -171,9 +170,8 @@ export const buy = async (req: Request, res: Response) => {
             account.balances.cash = roundToHundredth(account.balances.cash - (coin.price * amount) + (dif > 0 ? dif : 0));
             account.coins.push(boughtCoinId);
 
-            const id = crypto.randomBytes(32).toString('hex');
-            let wallet: any = '0x' + id;
-            wallet = new ethers.Wallet(wallet);
+            const wallet = Wallet.generate();
+            const address = wallet.getAddressString();
 
             const boughtCoin = new BoughtCoin({
               _id: boughtCoinId,
@@ -181,7 +179,7 @@ export const buy = async (req: Request, res: Response) => {
               abbreviation: coin.abbreviation,
               owner: account._id,
               amount: amount,
-              wallet: wallet.address
+              wallet: address
             });
             
             await account.save(async (err1: any) => {
@@ -222,13 +220,17 @@ export const buy = async (req: Request, res: Response) => {
 
             account.balances.bank = roundToHundredth(account.balances.bank - (coin.price * amount) + (dif > 0 ? dif : 0));
             account.coins.push(boughtCoinId);
+
+            const wallet = Wallet.generate();
+            const address = wallet.getAddressString();
             
             const boughtCoin = new BoughtCoin({
               _id: boughtCoinId,
               name: coin.name,
               abbreviation: coin.abbreviation,
               owner: account._id,
-              amount: amount
+              amount: amount,
+              wallet: address
             });
             
             await account.save(async (err1: any) => {
