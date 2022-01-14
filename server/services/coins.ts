@@ -25,21 +25,25 @@ export const fake = async () => {
   const bpm = await Coin.findOne({ abbreviation: 'BPM' });
   const lvc = await Coin.findOne({ abbreviation: 'ŁVC' });
   const s4y = await Coin.findOne({ abbreviation: 'S4Y' });
+  const boof = await Coin.findOne({ abbreviation: 'BOOF' });
   
   cec.price = cec.price + rndInt(-10, 10);
   bpm.price = bpm.price + rndInt(-10, 10);
   lvc.price = lvc.price + rndInt(-10, 10);
   s4y.price = s4y.price + rndInt(-10, 10);
+  boof.price = boof.price + rndInt(-10, 10);
 
   cec.logs.push({ price: cec.price, date: new Date().toISOString() });
   bpm.logs.push({ price: bpm.price, date: new Date().toISOString() });
   lvc.logs.push({ price: lvc.price, date: new Date().toISOString() });
   s4y.logs.push({ price: s4y.price, date: new Date().toISOString() });
+  boof.logs.push({ price: boof.price, date: new Date().toISOString() });
 
   await cec.save();
   await bpm.save();
   await lvc.save();
   await s4y.save();
+  await boof.save();
 }
 
 export const real = async () => {
