@@ -12,14 +12,13 @@ export default async (req: Request, res: Response) => {
   if (username && email && password) {
     if (!check1 && !check2) {
       const accountId = v4();
-      const boughtCoinId = v4();
 
       const account = new Account({
         _id: accountId,
         username,
         email,
         password,
-        coins: [boughtCoinId]
+        coins: []
       });
 
       await account.save(async (err1: any) => {
