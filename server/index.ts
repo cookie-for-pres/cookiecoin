@@ -60,9 +60,12 @@ app.use(api, account);
 app.use(api, coinflip);
 
 setInterval(async () => {
-  await fake();
   await real();
 }, 5 * 60 * 1000);
+
+setInterval(async () => {
+  await fake();
+}, 2.5 * 60 * 1000);
 
 io.on('connection', (socket: any) => {
   setInterval(async () => {
