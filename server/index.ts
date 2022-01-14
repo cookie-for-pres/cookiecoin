@@ -70,7 +70,7 @@ setInterval(async () => {
 io.on('connection', (socket: any) => {
   setInterval(async () => {
     socket.emit('coin-update', await get());
-  }, 5 * 60 * 1000);
+  }, 2.5 * 60 * 1000);
 });
 
 server.listen(config.port, () => {
