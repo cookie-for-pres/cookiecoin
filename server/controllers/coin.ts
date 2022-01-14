@@ -105,7 +105,7 @@ export const buy = async (req: Request, res: Response) => {
                     res.status(500).json({
                       message: 'unknown error',
                       success: false,
-                      error: err1.message
+                      error: err1
                     });
                   }
                 });
@@ -113,7 +113,7 @@ export const buy = async (req: Request, res: Response) => {
                 res.status(500).json({
                   message: 'unknown error',
                   success: false,
-                  error: err1.message
+                  error: err1
                 });
               }
             });
@@ -142,7 +142,7 @@ export const buy = async (req: Request, res: Response) => {
                     res.status(500).json({
                       message: 'unknown error',
                       success: false,
-                      error: err1.message
+                      error: err1
                     });
                   }
                 });
@@ -150,7 +150,7 @@ export const buy = async (req: Request, res: Response) => {
                 res.status(500).json({
                   message: 'unknown error',
                   success: false,
-                  error: err1.message
+                  error: err1
                 });
               }
             });
@@ -195,7 +195,7 @@ export const buy = async (req: Request, res: Response) => {
                     res.status(500).json({
                       message: 'unknown error',
                       success: false,
-                      error: err1.message
+                      error: err1
                     });
                   }
                 });
@@ -203,7 +203,7 @@ export const buy = async (req: Request, res: Response) => {
                 res.status(500).json({
                   message: 'unknown error',
                   success: false,
-                  error: err1.message
+                  error: err1
                 });
               }
             });
@@ -246,7 +246,7 @@ export const buy = async (req: Request, res: Response) => {
                     res.status(500).json({
                       message: 'unknown error',
                       success: false,
-                      error: err1.message
+                      error: err1
                     });
                   }
                 });
@@ -254,7 +254,7 @@ export const buy = async (req: Request, res: Response) => {
                 res.status(500).json({
                   message: 'unknown error',
                   success: false,
-                  error: err1.message
+                  error: err1
                 });
               }
             });
@@ -310,7 +310,7 @@ export const sell = async (req: Request, res: Response) => {
                   res.status(500).json({
                     message: 'unknown error',
                     success: false,
-                    error: err1.message
+                    error: err1
                   });
                 }
               });
@@ -318,7 +318,7 @@ export const sell = async (req: Request, res: Response) => {
               res.status(500).json({
                 message: 'unknown error',
                 success: false,
-                error: err1.message
+                error: err1
               });
             }
           });
