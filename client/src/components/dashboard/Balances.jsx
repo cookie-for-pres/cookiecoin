@@ -29,7 +29,7 @@ const Balances = ({ balances, boughtCoins, coins }) => {
                       coin.amount > 0 && (
                         <li className='list-group-item' style={{ textDecoration: 'none', fontSize: '18px' }} key={i}>
                           <span>
-                            <img style={{ width: '4%', paddingRight: '5px' }} src={process.env.PUBLIC_URL + c.imageUrl} alt='icon' />
+                            <img style={{ width: '4%', paddingRight: '5px' }} src={c.imageUrl} alt='icon' />
                           </span>  
                           { c.name }: 
                           <span style={{ float: 'right' }}>
