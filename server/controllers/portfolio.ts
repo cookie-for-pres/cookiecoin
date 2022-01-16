@@ -132,7 +132,7 @@ export const transfer = async (req: Request, res: Response) => {
 
           if (fromCoin) {
             if (toCoin) {
-              if (fromBoughtCoin.amount >= amount) {
+              if (fromBoughtCoin.amount * fromCoin.price >= amount) {
                 const fromDiff = amount / fromCoin.price;
                 const toDiff = amount / toCoin.price;
 
