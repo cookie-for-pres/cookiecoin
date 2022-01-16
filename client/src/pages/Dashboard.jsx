@@ -27,8 +27,6 @@ const Dashboard = () => {
   useEffect(() => {
     const socket = io(BASE_URL);
     socket.connect();
-
-    socket.emit('online-presence-on', cookie);
   }, []);
 
   useEffect(() => {

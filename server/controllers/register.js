@@ -12,8 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const Coin_1 = __importDefault(require("../models/Coin"));
+const BoughtCoin_1 = __importDefault(require("../models/BoughtCoin"));
 const Account_1 = __importDefault(require("../models/Account"));
 const uuid_1 = require("uuid");
+const ethereumjs_wallet_1 = __importDefault(require("ethereumjs-wallet"));
 exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, email, password } = req.body;
     const check1 = yield Account_1.default.findOne({ username });
@@ -27,6 +30,16 @@ exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 email,
                 password,
                 coins: []
+            });
+            (yield Coin_1.default.find({})).forEach((coin) => {
+                const boughtCoin = new BoughtCoin_1.default({
+                    _id: (0, uuid_1.v4)(),
+                    owner: accountId,
+                    name: coin.name,
+                    amount: 0,
+                    wallet: ethereumjs_wallet_1.default.generate().getAddressString(),
+                });
+                account.coins.push(boughtCoin);
             });
             yield account.save((err1) => __awaiter(void 0, void 0, void 0, function* () {
                 if (!err1) {

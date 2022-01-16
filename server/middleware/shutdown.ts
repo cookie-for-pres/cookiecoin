@@ -1,9 +1,8 @@
 import Middleware from '../models/Middleware';
-import config from '../config/config';
 
 export default async (req: any, res: any, next: any) => {
-  const shutdown = await Middleware.findOne({ _id: config.shutdownId });
-
+  const shutdown = await Middleware.findOne({ name: 'shutdown' });
+  
   if (shutdown.active) {
     res.status(401).json({
       message: 'shutdown protocol activated',

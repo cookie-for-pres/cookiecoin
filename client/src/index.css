@@ -119,6 +119,7 @@ select:-webkit-autofill:focus {
   border: 1px solid var(--purple);
   -webkit-text-fill-color: var(--light);
   -webkit-box-shadow: 0 0 0px 1000px var(--purple-04) inset;
+  box-shadow: 0 0 0px 1000px var(--purple-04) inset;
   transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -209,4 +210,15 @@ select:-webkit-autofill:focus {
 @keyframes flipTails {
     from { -webkit-transform: rotateY(0); -moz-transform: rotateY(0); transform: rotateY(0); }
     to { -webkit-transform: rotateY(1980deg); -moz-transform: rotateY(1980deg); transform: rotateY(1980deg); }
+}
+
+/* .scroll {
+    max-height: 67vh;
+    overflow-y: auto;
+} */
+
+@media screen and (max-width: 768px) {
+    .wrapper-3 {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }

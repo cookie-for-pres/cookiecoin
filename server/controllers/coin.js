@@ -25,11 +25,13 @@ const coins = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { accountId } = req.body;
     const account = yield Account_1.default.findOne({ _id: accountId });
     const coins = yield Coin_1.default.find({}).sort({ index: 1 });
+    const boughtCoins = yield BoughtCoin_1.default.find({ owner: accountId });
     if (account) {
         res.json({
             message: 'successfully found coins',
             success: true,
-            coins
+            coins,
+            boughtCoins
         });
     }
     else {

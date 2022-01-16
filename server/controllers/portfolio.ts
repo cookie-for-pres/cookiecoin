@@ -43,70 +43,37 @@ export const transfer = async (req: Request, res: Response) => {
   const { accountId, type, data } = req.body;
   const account = await Account.findOne({ _id: accountId });
 
+  console.log(req.body);
+  
+
   if (account) {
-    if (type === 'coin-to-coin') {
+    if (type === 'balance-to-balance') {
+      const balances = account.balances;
       const { to, from, amount } = data;
-      const to_bought_coin = await BoughtCoin.findOne({ name: to });
-      const from_bought_coin = await BoughtCoin.findOne({ name: from });
-      const to_coin = await Coin.findOne({ name: to });
-      const from_coin = await Coin.findOne({ name: from });
 
-      if (to_coin && from_coin) {
-        if (to_bought_coin && from_bought_coin) {
-          if (to_bought_coin.amount >= amount) {
-            const to_new_amount = to_bought_coin.amount - amount;
-            const from_new_amount = from_bought_coin.amount + amount;
-
-            await BoughtCoin.findOneAndUpdate({ name: to }, { amount: to_new_amount });
-            await BoughtCoin.findOneAndUpdate({ name: from }, { amount: from_new_amount });
-
-            res.json({
-              message: 'successfully transferred',
-              success: true,
-              account: {
-                balances: account.balances,
-              }
-            });
-          } else {
-            res.status(404).json({
-              message: 'not enough coins',
-              success: false
-            });
-          }
-        } else {
-          res.status(404).json({
-            message: 'cant find bought coin',
-            success: false
-          });
-        }
-      } else {
-        res.status(404).json({
-          message: 'cant find coin',
+      if (amount <= 0) {
+        return res.status(400).json({
+          message: 'amount must be greater than 0',
           success: false
         });
       }
 
-    } else if (type === 'balance-to-balance') {
-      const balances = account.balances;
-      const { to, from, amount } = data;
+      if (balances[from] >= amount) {
+        const newFromBalance = balances[from] - amount;
+        const newToBalance = balances[to] + amount;
 
-      if (balances[to] >= amount) {
-        const new_to_balance = balances[to] - amount;
-        const new_from_balance = balances[from] + amount;
-
-        const new_balances = {
-          ...balances,
-          [to]: new_to_balance,
-          [from]: new_from_balance,
+        const newBalances = {
+          [to]: newToBalance,
+          [from]: newFromBalance
         }
-
-        await Account.findOneAndUpdate({ _id: accountId }, { balances: new_balances });
+      
+        await Account.findOneAndUpdate({ _id: account._id }, { balances: newBalances });
 
         res.json({
           message: 'successfully transferred',
           success: true,
           account: {
-            balances: new_balances,
+            balances: newBalances,
           }
         });
       } else {
@@ -116,31 +83,103 @@ export const transfer = async (req: Request, res: Response) => {
         });
       }
     } else if (type === 'user:account-to-user:account') {
-      const { to, amount } = data;
-      const to_account = await Account.findOne({ username: to });
+      const { from, to, amount } = data;
+      const toAccount = await Account.findOne({ username: to });
 
-      if (account.balances.bank >= amount) {
-        const new_balance = account.balances.bank - amount;
-        const new_to_balance = to_account.balances.bank + amount;
+      if (toAccount) {
+        if (account.balances.bank >= amount) {
+          const newBalance = account.balances[from] - amount;
+          const newToBalance = toAccount.balances.bank + amount;
 
-        await Account.findOneAndUpdate({ _id: accountId }, { 'balances.bank': new_balance });
-        await Account.findOneAndUpdate({ _id: to_account._id }, { 'balances.bank': new_to_balance });
-
-        res.json({
-          message: 'successfully transferred',
-          success: true,
-          account: {
-            balances: {
-              bank: new_balance,
-            }
+          const newBalances = {
+            ...account.balances,
+            [from]: newBalance
           }
-        });
+  
+          await Account.findOneAndUpdate({ _id: account._id }, { 'balances': newBalances });
+          await Account.findOneAndUpdate({ _id: toAccount._id }, { 'balances.bank': newToBalance });
+  
+          res.json({
+            message: 'successfully transferred',
+            success: true,
+            account: {
+              balances: {
+                ...account.balances
+              }
+            }
+          });
+        } else {
+          res.status(400).json({
+            message: 'insufficient funds',
+            success: false
+          });
+        }
       } else {
-        res.status(400).json({
-          message: 'insufficient funds',
+        res.json({
+          message: 'cant find to account',
           success: false
         });
       }
+    } else if (type === 'user:coin-to-user:coin') {
+      const { from, to, amount } = data;
+      const fromBoughtCoin = await BoughtCoin.findOne({ owner: accountId, name: from });
+      const toBoughtCoin = await BoughtCoin.findOne({ wallet: to });
+      
+      if (fromBoughtCoin) {
+        if (toBoughtCoin) {
+          const fromCoin = await Coin.findOne({ name: fromBoughtCoin.name });
+          const toCoin = await Coin.findOne({ name: toBoughtCoin.name });
+
+          if (fromCoin) {
+            if (toCoin) {
+              if (fromBoughtCoin.amount >= amount) {
+                const fromDiff = amount / fromCoin.price;
+                const toDiff = amount / toCoin.price;
+
+                const newFromAmount = fromBoughtCoin.amount - fromDiff;
+                const newToAmount = toBoughtCoin.amount + toDiff;    
+                
+                await BoughtCoin.findOneAndUpdate({ _id: fromBoughtCoin._id }, { amount: newFromAmount });
+                await BoughtCoin.findOneAndUpdate({ _id: toBoughtCoin._id }, { amount: newToAmount })
+
+                res.json({
+                  message: 'successfully transferred',
+                  success: true,
+                  account: {
+                    balances: account.balances,
+                  }
+                });
+              } else {
+                res.status(400).json({
+                  message: 'insufficient funds',
+                  success: false
+                });
+              }
+            } else {
+              res.status(404).json({
+                message: 'cant find to coin',
+                success: false
+              });
+            }
+          } else {
+            res.status(404).json({
+              message: 'cant find from coin',
+              success: false
+            });
+          }
+        } else {
+          res.status(404).json({
+            message: 'cant find to bought coin',
+            success: false
+          });
+        }
+      } else {
+        res.status(404).json({
+          message: 'cant find from bought coin',
+          success: false
+        });
+      }
+      
     } else {
       res.status(404).json({
         message: 'cant find type',

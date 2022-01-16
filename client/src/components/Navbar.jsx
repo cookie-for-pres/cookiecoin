@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 const Navbar = ({ page }) => {
   return (
     <>
-      <nav className='navbar navbar-expand-lg navbar-light' style={{ backgroundColor: 'var(--grey)' }}>
+      <nav className='navbar navbar-expand-lg navbar-light ' style={{ backgroundColor: 'var(--grey)' }}>
         <div className='container-fluid'>
           <a className='navbar-brand'>
 						<img src='/logo512.png' alt='' width='30' height='30' className='d-inline-block align-text-top' />

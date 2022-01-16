@@ -3,6 +3,7 @@ import BoughtCoin from '../models/BoughtCoin';
 import Account from '../models/Account';
 import { v4 } from 'uuid';
 import { Request, Response } from 'express';
+import Wallet from 'ethereumjs-wallet';
 
 export default async (req: Request, res: Response) => {
   const { username, email, password } = req.body;  
@@ -19,6 +20,18 @@ export default async (req: Request, res: Response) => {
         email,
         password,
         coins: []
+      });
+
+      (await Coin.find({})).forEach((coin) => {
+        const boughtCoin = new BoughtCoin({
+          _id: v4(),
+          owner: accountId,
+          name: coin.name,
+          amount: 0,
+          wallet: Wallet.generate().getAddressString(),
+        });
+
+        account.coins.push(boughtCoin);
       });
 
       await account.save(async (err1: any) => {

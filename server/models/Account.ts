@@ -16,8 +16,7 @@ const accountSchema = new mongoose.Schema({
   transactions: [],
   balances: {
     cash: { type: Number, default: 100.00 },
-    bank: { type: Number, default: 100.00 },
-    interest: { type: Number, default: 1.00 }
+    bank: { type: Number, default: 200.00 }
   }
 }, { timestamps: true, versionKey: false });
 

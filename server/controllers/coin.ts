@@ -12,13 +12,15 @@ const roundToHundredth = (value: number) => {
 export const coins = async (req: Request, res: Response) => {
   const { accountId } = req.body;
   const account = await Account.findOne({ _id: accountId });
-  const coins = await Coin.find({}).sort({ index: 1});
+  const coins = await Coin.find({}).sort({ index: 1 });
+  const boughtCoins = await BoughtCoin.find({ owner: accountId });
 
   if (account) {
     res.json({
       message: 'successfully found coins',
       success: true,
-      coins
+      coins,
+      boughtCoins
     });
   } else {
     res.status(404).json({

@@ -13,9 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Middleware_1 = __importDefault(require("../models/Middleware"));
-const config_1 = __importDefault(require("../config/config"));
 exports.default = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const shutdown = yield Middleware_1.default.findOne({ _id: config_1.default.shutdownId });
+    const shutdown = yield Middleware_1.default.findOne({ name: 'shutdown' });
     if (shutdown.active) {
         res.status(401).json({
             message: 'shutdown protocol activated',

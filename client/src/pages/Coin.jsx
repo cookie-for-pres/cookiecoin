@@ -102,7 +102,7 @@ const Coin = () => {
             </div>
             <br />
             <p style={{ textAlign: 'center' }} className='text-muted'>
-              * This page refreshes every 5 minutes, any unsaved data will be erased. * 
+              * This page refreshes every 2.5 minutes, any unsaved data will be erased. * 
             </p>
           </div>
         </div>

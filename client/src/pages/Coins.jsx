@@ -53,8 +53,8 @@ const Coins = () => {
       <h1 style={{ textAlign: 'center' }}>Coins</h1>
 		  <br />
       <div className='container'>
-        <div className='card'>
-          <div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)'}}>
+        <div className='card scroll'>
+          <div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)' }}>
             <CoinS coins={coins} />
           </div>
         </div>
