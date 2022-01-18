@@ -130,7 +130,7 @@ const transfer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                     const toCoin = yield Coin_1.default.findOne({ name: toBoughtCoin.name });
                     if (fromCoin) {
                         if (toCoin) {
-                            if (fromBoughtCoin.amount >= amount) {
+                            if (fromBoughtCoin.amount * fromCoin.price >= amount) {
                                 const fromDiff = amount / fromCoin.price;
                                 const toDiff = amount / toCoin.price;
                                 const newFromAmount = fromBoughtCoin.amount - fromDiff;

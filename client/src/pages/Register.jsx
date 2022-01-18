@@ -63,7 +63,7 @@ const Register = () => {
 
       <h1 style={{ textAlign: 'center' }}>Register</h1>
       <br />
-      <div className='container-sm' style={{ width: '500px' }}>	
+      <div className='container-sm' style={{ width: '50%' }}>	
         {
           alertShow && (
             <Alert style={{ marginBottom: '24px' }} message={alertMessage} type={alertType} />
