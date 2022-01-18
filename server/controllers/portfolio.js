@@ -54,7 +54,6 @@ exports.portfolio = portfolio;
 const transfer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { accountId, type, data } = req.body;
     const account = yield Account_1.default.findOne({ _id: accountId });
-    console.log(req.body);
     if (account) {
         if (type === 'balance-to-balance') {
             const balances = account.balances;
@@ -91,6 +90,12 @@ const transfer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         else if (type === 'user:account-to-user:account') {
             const { from, to, amount } = data;
             const toAccount = yield Account_1.default.findOne({ username: to });
+            if (toAccount.username === account.username) {
+                return res.status(400).json({
+                    message: 'cant transfer to yourself',
+                    success: false
+                });
+            }
             if (toAccount) {
                 if (account.balances.bank >= amount) {
                     const newBalance = account.balances[from] - amount;
@@ -124,6 +129,12 @@ const transfer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             const { from, to, amount } = data;
             const fromBoughtCoin = yield BoughtCoin_1.default.findOne({ owner: accountId, name: from });
             const toBoughtCoin = yield BoughtCoin_1.default.findOne({ wallet: to });
+            if (fromBoughtCoin.wallet === toBoughtCoin.wallet) {
+                return res.status(400).json({
+                    message: 'cant transfer to yourself',
+                    success: false
+                });
+            }
             if (fromBoughtCoin) {
                 if (toBoughtCoin) {
                     const fromCoin = yield Coin_1.default.findOne({ name: fromBoughtCoin.name });

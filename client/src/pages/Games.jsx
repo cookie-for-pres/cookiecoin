@@ -48,7 +48,7 @@ const Games = () => {
           <div className='col-sm-6'>
             <h1 style={{ textAlign: 'center' }}>Join a Game</h1>
             <br />
-            <div className='card' style={{ height: '80%' }}>
+            <div className='card' style={{ height: '82%' }}>
               <div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)' }}>
                 <JoinGame />
               </div>
@@ -58,7 +58,7 @@ const Games = () => {
           <div className='col-sm-6'>
             <h1 style={{ textAlign: 'center' }}>Join a Random Game</h1>
             <br />
-            <div className='card' style={{ height: '80%' }}>
+            <div className='card' style={{ height: '82%' }}>
               <div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)' }}>
                 <DisplayGames games={displayGames} />
               </div>

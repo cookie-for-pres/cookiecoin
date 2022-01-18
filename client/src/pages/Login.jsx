@@ -67,7 +67,7 @@ const Login = () => {
       
       <h1 style={{ textAlign: 'center' }}>Login</h1>
       <br />
-      <div className='container-sm' style={{ width: '50%' }}>	
+      <div className='container-sm auth-card'>	
         { 
           alertShow && (
             <Alert style={{ marginBottom: '24px' }} message={alertMessage} type={alertType} />

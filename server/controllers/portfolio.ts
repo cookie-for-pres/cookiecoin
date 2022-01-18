@@ -43,9 +43,6 @@ export const transfer = async (req: Request, res: Response) => {
   const { accountId, type, data } = req.body;
   const account = await Account.findOne({ _id: accountId });
 
-  console.log(req.body);
-  
-
   if (account) {
     if (type === 'balance-to-balance') {
       const balances = account.balances;
@@ -86,6 +83,13 @@ export const transfer = async (req: Request, res: Response) => {
       const { from, to, amount } = data;
       const toAccount = await Account.findOne({ username: to });
 
+      if (toAccount.username === account.username) {
+        return res.status(400).json({
+          message: 'cant transfer to yourself',
+          success: false
+        });
+      }
+
       if (toAccount) {
         if (account.balances.bank >= amount) {
           const newBalance = account.balances[from] - amount;
@@ -124,6 +128,13 @@ export const transfer = async (req: Request, res: Response) => {
       const { from, to, amount } = data;
       const fromBoughtCoin = await BoughtCoin.findOne({ owner: accountId, name: from });
       const toBoughtCoin = await BoughtCoin.findOne({ wallet: to });
+
+      if (fromBoughtCoin.wallet === toBoughtCoin.wallet) {
+        return res.status(400).json({
+          message: 'cant transfer to yourself',
+          success: false  
+        });
+      }
       
       if (fromBoughtCoin) {
         if (toBoughtCoin) {

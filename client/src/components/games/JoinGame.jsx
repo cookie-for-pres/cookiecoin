@@ -121,6 +121,9 @@ const JoinGame = () => {
             Find Game <i className='fa-solid fa-magnifying-glass' />
           </button>
         </div>
+        <br />
+        <br />
+        <br />
         <div className='col-sm-6'>
           <button onClick={joinGame} className={gameFound ? 'btn btn-purple shadow-none' : 'btn btn-purple shadow-none disabled'} style={{ width: '100%', height: '48px' }}>
             Join Game <i className='fa-solid fa-user-plus' />
