@@ -128,13 +128,6 @@ export const transfer = async (req: Request, res: Response) => {
       const { from, to, amount } = data;
       const fromBoughtCoin = await BoughtCoin.findOne({ owner: accountId, name: from });
       const toBoughtCoin = await BoughtCoin.findOne({ wallet: to });
-
-      if (fromBoughtCoin.wallet === toBoughtCoin.wallet) {
-        return res.status(400).json({
-          message: 'cant transfer to yourself',
-          success: false  
-        });
-      }
       
       if (fromBoughtCoin) {
         if (toBoughtCoin) {
