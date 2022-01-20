@@ -32,6 +32,7 @@ const coin_1 = __importDefault(require("./routes/coin"));
 const account_1 = __importDefault(require("./routes/account"));
 const coinflip_1 = __importDefault(require("./routes/coinflip"));
 const portfolio_1 = __importDefault(require("./routes/portfolio"));
+const leaderboard_1 = __importDefault(require("./routes/leaderboard"));
 const coins_1 = require("./services/coins");
 const app = (0, express_1.default)();
 const server = http_1.default.createServer(app);
@@ -61,6 +62,7 @@ app.use(api, coin_1.default);
 app.use(api, account_1.default);
 app.use(api, coinflip_1.default);
 app.use(api, portfolio_1.default);
+app.use(api, leaderboard_1.default);
 setInterval(() => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, coins_1.real)();
 }), 5 * 60 * 1000);

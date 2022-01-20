@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
@@ -7,7 +8,30 @@ import { Link } from 'react-router-dom';
 
 import AuthNavbar from '../components/AuthNavbar';
 
+const format = (amount) => {
+  return (amount).toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }); 
+}
+
 const Home = () => {
+	const [leaderboard, setLeaderboard] = useState([]);
+
+	const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+	useEffect(() => {
+		fetch(`${BASE_URL}/api/leaderboard`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' }
+		}).then(res => res.json())
+		.then(res => {
+			if (res.success) {
+				setLeaderboard(res.leaderboard);
+			}
+		});
+	}, []);
+
 	return (
 		<>
 				<Helmet>
@@ -73,21 +97,16 @@ const Home = () => {
 						<div className='card' style={{ height: '78%' }}>
 							<div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)' }}>
 								<ul className='list-group list-group-flush'>
-									<li className='list-group-item'>
-										----- <span style={{ float: 'right' }}>$0</span>
-									</li>
-									<li className='list-group-item'>
-										----- <span style={{ float: 'right' }}>$0</span>
-									</li>
-									<li className='list-group-item'>
-										----- <span style={{ float: 'right' }}>$0</span>
-									</li>
-									<li className='list-group-item'>
-										----- <span style={{ float: 'right' }}>$0</span>
-									</li>
-									<li className='list-group-item'>
-										----- <span style={{ float: 'right' }}>$0</span>
-									</li>
+									{
+										leaderboard.map((account) => (
+											<li className='list-group-item' key={account.username}>
+												{ account.username }
+												<span style={{ float: 'right' }}>
+												  { format(account.balance) }
+												</span>
+											</li>
+										))
+									}
 								</ul>
 							</div>
 						</div>

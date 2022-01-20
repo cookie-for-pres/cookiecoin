@@ -13,10 +13,10 @@ const Balances = ({ balances }) => {
     <>
       <ul className='list-group list-group-flush'>
         <li className='list-group-item' style={{ textDecoration: 'none', fontSize: '18px' }}>
-          Cash: <span style={{ float: 'right' }}>{ format(balances.cash) }</span>
+          Cash <span style={{ float: 'right' }}>{ format(balances.cash) }</span>
         </li>
         <li className='list-group-item' style={{ textDecoration: 'none', fontSize: '18px' }}>
-          Bank: <span style={{ float: 'right' }}>{ format(balances.bank) }</span>
+          Bank <span style={{ float: 'right' }}>{ format(balances.bank) }</span>
         </li> 
       </ul>
     </>

@@ -129,12 +129,6 @@ const transfer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             const { from, to, amount } = data;
             const fromBoughtCoin = yield BoughtCoin_1.default.findOne({ owner: accountId, name: from });
             const toBoughtCoin = yield BoughtCoin_1.default.findOne({ wallet: to });
-            if (fromBoughtCoin.wallet === toBoughtCoin.wallet) {
-                return res.status(400).json({
-                    message: 'cant transfer to yourself',
-                    success: false
-                });
-            }
             if (fromBoughtCoin) {
                 if (toBoughtCoin) {
                     const fromCoin = yield Coin_1.default.findOne({ name: fromBoughtCoin.name });

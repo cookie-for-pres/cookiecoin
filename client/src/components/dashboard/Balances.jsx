@@ -15,10 +15,10 @@ const Balances = ({ balances, boughtCoins, coins }) => {
         balances.cash !== '' && balances.bank !== '' ? (
           <>
             <li className='list-group-item' style={{ textDecoration: 'none', fontSize: '18px' }}>
-              Cash: <span style={{ float: 'right' }}>{ format(balances.cash) }</span>
+              Cash <span style={{ float: 'right' }}>{ format(balances.cash) }</span>
             </li>
             <li className='list-group-item' style={{ textDecoration: 'none', fontSize: '18px' }}>
-              Bank: <span style={{ float: 'right' }}>{ format(balances.bank) }</span>
+              Bank <span style={{ float: 'right' }}>{ format(balances.bank) }</span>
             </li>
             <br />
             {
@@ -28,10 +28,7 @@ const Balances = ({ balances, boughtCoins, coins }) => {
                     c.name === coin.name && (
                       coin.amount > 0 && (
                         <li className='list-group-item' style={{ textDecoration: 'none', fontSize: '18px' }} key={i}>
-                          <span>
-                            <img style={{ width: '4%', paddingRight: '5px' }} src={c.imageUrl} alt='icon' />
-                          </span>  
-                          { c.name }: 
+                          { c.name }
                           <span style={{ float: 'right' }}>
                             { format(coin.amount * c.price) }
                           </span>

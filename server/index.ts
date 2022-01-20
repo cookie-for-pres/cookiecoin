@@ -21,6 +21,7 @@ import coin from './routes/coin';
 import account from './routes/account';
 import coinflip from './routes/coinflip';
 import portfolio from './routes/portfolio';
+import leaderboard from './routes/leaderboard';
 
 import { fake, real, get } from './services/coins';
 
@@ -58,6 +59,7 @@ app.use(api, coin);
 app.use(api, account);
 app.use(api, coinflip);
 app.use(api, portfolio);
+app.use(api, leaderboard);
 
 setInterval(async () => {
   await real();
