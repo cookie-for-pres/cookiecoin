@@ -230,8 +230,8 @@ const Blackjack = () => {
 
       await callApi('win');
     } else {
-      setAlertType('danger');
-      setAlertMessage('You lose!');
+      setAlertType('success');
+      setAlertMessage('You win!');
       setAlertShow(true);
       setButtonsDisabled(true);
 
@@ -241,7 +241,7 @@ const Blackjack = () => {
         setButtonsDisabled(false);
       } , 3000);
 
-      await callApi('lose');
+      await callApi('win');
     }
   }
 
