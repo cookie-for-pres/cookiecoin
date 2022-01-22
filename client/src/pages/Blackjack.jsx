@@ -203,9 +203,7 @@ const Blackjack = () => {
       } , 3000);
 
       await callApi('lose');
-    }
-
-    if (getHandValue(newDealersHand) === getHandValue(playersHand)) {
+    } else if (getHandValue(newDealersHand) === getHandValue(playersHand)) {
       setAlertType('warning');
       setAlertMessage('Push!');
       setAlertShow(true);
@@ -218,9 +216,7 @@ const Blackjack = () => {
       } , 3000);
 
       await callApi('push');
-    }
-
-    if (getHandValue(newDealersHand) < getHandValue(playersHand) && getHandValue(playersHand) <= 21) {
+    } else if (getHandValue(newDealersHand) < getHandValue(playersHand) && getHandValue(playersHand) <= 21) {
       setAlertType('success');
       setAlertMessage('You win!');
       setAlertShow(true);
@@ -233,6 +229,19 @@ const Blackjack = () => {
       } , 3000);
 
       await callApi('win');
+    } else {
+      setAlertType('danger');
+      setAlertMessage('You lose!');
+      setAlertShow(true);
+      setButtonsDisabled(true);
+
+      setTimeout(() => {
+        setAlertShow(false);
+        setCurrentPlaying(false);
+        setButtonsDisabled(false);
+      } , 3000);
+
+      await callApi('lose');
     }
   }
 
