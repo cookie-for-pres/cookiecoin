@@ -67,19 +67,11 @@ const Blackjack = () => {
     });
   }, []);
 
-  useEffect(() => {
-    if (account === 'cash' && balances.cash <= bet) {
-      setBet(balances.cash);
-    } else if (account === 'bank' && balances.bank <= bet) {
-      setBet(balances.bank);
-    }
-  });
-
   const callApi = async (status) => {
     const req = await fetch(`${BASE_URL}/api/blackjack`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ accountId: cookie, bet, account, status })
+      body: JSON.stringify({ accountId: cookie, bet: parseFloat(bet), account, status })
     });
 
     const res = await req.json();
@@ -251,7 +243,7 @@ const Blackjack = () => {
   }
   
   const deal = () => {
-    if (bet > 0) {
+    if (bet > 0 && bet <= balances[account]) {
       setCurrentPlaying(true);
 
       const newDealersHand = [];
@@ -272,7 +264,7 @@ const Blackjack = () => {
       setPlayersHand(newPlayersHand);
     } else {
       setAlertType('danger');
-      setAlertMessage('Bet must be greater than 0!');
+      setAlertMessage(`Bet must be greater than 0 and less that ${balances[account]}!`);
       setAlertShow(true);
 
       setTimeout(() => {

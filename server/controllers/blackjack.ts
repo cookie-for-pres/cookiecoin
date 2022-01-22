@@ -6,10 +6,7 @@ import { Request, Response } from 'express';
 export default async (req: Request, res: Response) => {
   const { accountId, bet, account: accountBalance, status } = req.body;
   const account = await Account.findOne({ _id: accountId });
-
-  console.log(req.body);
   
-
   if (account) {
     if (account.balances[accountBalance] >= bet) {
       const gameLog = new GameLog({
@@ -26,10 +23,10 @@ export default async (req: Request, res: Response) => {
       await gameLog.save();
 
       if (status === 'win') {
-        account.balances[accountBalance] = account.balances[accountBalance] + bet;
+        account.balances[accountBalance] += bet;
         await account.save(); 
       } else if (status === 'lose') {
-        account.balances[accountBalance] = account.balances[accountBalance] - bet;
+        account.balances[accountBalance] -= bet;
         await account.save();
       }
 
