@@ -30,22 +30,8 @@ const Coinflip = () => {
   const cookies = new Cookies();
   const cookie = cookies.get('account');
 
+  // eslint-disable-next-line no-undef
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
-  const getBalances = () => {
-    fetch(`${BASE_URL}/api/account/balances`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ accountId: cookie })
-    }).then((res) => res.json())
-    .then((res) => {
-      if (res.success) {
-        setBalances(res.balances);
-      } else {
-        navigate(-1);
-      }
-    });
-  }
 
   useEffect(() => {
     fetch(`${BASE_URL}/api/account/balances`, {
@@ -149,113 +135,63 @@ const Coinflip = () => {
                 </>
               )
             }
-            <div className='row'>
-              <div className='col-sm-5'>
-                <div className='card shadow-none' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)', height: '100%' }}>
-                  <div className='card-title' style={{ textAlign: 'center', paddingTop: '10px' }}>
-                    <h4>How To</h4>
-                  </div>
-                  <div className='card-body'>
-                    <ul>
-                      <li>
-                        <h5>
-                          <span>
-                            Select the amount of $$$ you want to bet.
-                          </span>
-                        </h5>
-                      </li>
-                      <li>
-                        <h5>
-                          <span>
-                            Select the account to send/receive the $$$ to.
-                          </span>
-                        </h5>
-                      </li>
-                      <li>
-                        <h5>
-                          <span>
-                            Select the side of the coin you want to bet on.
-                          </span>
-                        </h5>
-                      </li>
-                      <li>
-                        <h5>
-                          <span>
-                            Click the coinflip button to start the coinflip.
-                          </span>
-                        </h5>
-                      </li>
-                      <li>
-                        <h5>
-                          <span>
-                            Don't let the gambling addiction consume you 😶...
-                          </span>
-                        </h5>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className='col-sm-7'>
-                <div className='card shadow-none' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)', height: '100%' }}>
-                  <div className='card-body'>
-                    <div className='container'>
-                      <div id='coin' className={coinClass}>
-                        <div className='side-a'>
-                          <p style={{ fontSize: '20px', textAlign: 'center', marginTop: '20%' }}>
-                            <i className='fa-solid fa-user-astronaut' />
-                            <br />
-                            Heads
-                          </p>
-                        </div>
-                        <div className='side-b'>
-                          <p style={{ fontSize: '20px', textAlign: 'center', marginTop: '20%' }}>
-                            <i className='fa-solid fa-dove' />
-                            <br />
-                            Tails
-                          </p>
-                        </div>
-                      </div>
-                      <br />
-                      <label style={{ fontSize: '16px' }}>Amount: </label>
-                      <div className='form-group'>
-                        <input value={bet} onChange={(e) => setBet(isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value ))} type='number' className='form-style' placeholder='Amount' min={0} />
-                        <i className='input-icon fa-solid fa-tags' />
-                      </div>
-                      <br />
-                      <div className='row'>
-                        <div className='col-sm-6'>
-                          <label style={{ fontSize: '16px' }}>Side: </label>
-                          <select value={side} onChange={(e) => setSide(e.target.value)} className='form-select custom-select select-style'>
-                            <option disabled>Select Coin Side</option>
-                            <option value='heads'>Heads</option>
-                            <option value='tails'>Tails</option>
-                          </select> 
-                        </div>
-                        <div className='col-sm-6'>
-                          <label style={{ fontSize: '16px' }}>Account: </label>
-                          <select value={account} onChange={(e) => setAccount(e.target.value)} className='form-select custom-select select-style'>
-                            <option disabled>Select Account 👨🏽‍💻</option>
-                            <option value='cash'>Cash: { format(balances.cash) }</option>
-                            <option value='bank'>Bank: { format(balances.bank) }</option>
-                          </select> 
-                          <br />
-                        </div>
-                      </div>
-                      <br />
-                      {
-                        buttonLoading ? (
-                          <button disabled onClick={coinflip} style={{ width: '100%', height: '50px', fontSize: '20px' }} className='btn btn-purple shadow-none'>
-                            Flip <i className='fa-solid fa-circle-notch fa-spin' />
-                          </button>
-                        ) : (
-                          <button onClick={coinflip} style={{ width: '100%', height: '50px', fontSize: '20px' }} className='btn btn-purple shadow-none'>
-                            Flip 
-                          </button>
-                        )
-                      }
+            <div className='card shadow-none' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)', height: '100%' }}>
+              <div className='card-body'>
+                <div className='container'>
+                  <div id='coin' className={coinClass}>
+                    <div className='side-a'>
+                      <p style={{ fontSize: '20px', textAlign: 'center', marginTop: '20%' }}>
+                        <i className='fa-solid fa-user-astronaut' />
+                        <br />
+                        Heads
+                      </p>
+                    </div>
+                    <div className='side-b'>
+                      <p style={{ fontSize: '20px', textAlign: 'center', marginTop: '20%' }}>
+                        <i className='fa-solid fa-dove' />
+                        <br />
+                        Tails
+                      </p>
                     </div>
                   </div>
+                  <br />
+                  <label style={{ fontSize: '16px' }}>Amount: </label>
+                  <div className='form-group'>
+                    <input value={bet} onChange={(e) => setBet(isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value ))} type='number' className='form-style' placeholder='Amount' min={0} />
+                    <i className='input-icon fa-solid fa-tags' />
+                  </div>
+                  <br />
+                  <div className='row'>
+                    <div className='col-sm-6'>
+                      <label style={{ fontSize: '16px' }}>Side: </label>
+                      <select value={side} onChange={(e) => setSide(e.target.value)} className='form-select custom-select select-style'>
+                        <option disabled>Select Coin Side</option>
+                        <option value='heads'>Heads</option>
+                        <option value='tails'>Tails</option>
+                      </select> 
+                    </div>
+                    <div className='col-sm-6'>
+                      <label style={{ fontSize: '16px' }}>Account: </label>
+                      <select value={account} onChange={(e) => setAccount(e.target.value)} className='form-select custom-select select-style'>
+                        <option disabled>Select Account 👨🏽‍💻</option>
+                        <option value='cash'>Cash: { format(balances.cash) }</option>
+                        <option value='bank'>Bank: { format(balances.bank) }</option>
+                      </select> 
+                      <br />
+                    </div>
+                  </div>
+                  <br />
+                  {
+                    buttonLoading ? (
+                      <button disabled onClick={coinflip} style={{ width: '100%', height: '50px', fontSize: '20px' }} className='btn btn-purple shadow-none'>
+                        Flip <i className='fa-solid fa-circle-notch fa-spin' />
+                      </button>
+                    ) : (
+                      <button onClick={coinflip} style={{ width: '100%', height: '50px', fontSize: '20px' }} className='btn btn-purple shadow-none'>
+                        Flip 
+                      </button>
+                    )
+                  }
                 </div>
               </div>
             </div>
