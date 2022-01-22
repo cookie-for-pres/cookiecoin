@@ -21,6 +21,8 @@ const Buy = ({ coin, coinId, cookie, balances: b }) => {
   const [buyAlertShow, setBuyAlertShow] = useState(false);
 
   const navigate = useNavigate();
+
+  // eslint-disable-next-line no-undef
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
@@ -127,7 +129,7 @@ const Buy = ({ coin, coinId, cookie, balances: b }) => {
                 <i className='input-icon fa-solid fa-tags' />
               </div>
               <br />
-              <h3 style={{ marginLeft: '2px' }}>Total:
+              <h3 style={{ marginLeft: '2px' }}>Total: 
                 <strong>
                   { format(buyTotal) }
                 </strong>

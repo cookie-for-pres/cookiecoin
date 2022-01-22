@@ -28,22 +28,6 @@ const Blackjack = () => {
   const [alertMessage, setAlertMessage] = useState('');
   const [alertShow, setAlertShow] = useState(false);
 
-  const playingCards = [
-    { name: 'ace', value: 1, image: '/blackjack/ace.png' },
-    { name: 'two', value: 2, image: '/blackjack/two.png' },
-    { name: 'three', value: 3, image: '/blackjack/three.png' },
-    { name: 'four', value: 4, image: '/blackjack/four.png' },
-    { name: 'five', value: 5, image: '/blackjack/five.png' },
-    { name: 'six', value: 6, image: '/blackjack/six.png' },
-    { name: 'seven', value: 7, image: '/blackjack/seven.png' },
-    { name: 'eight', value: 8, image: '/blackjack/eight.png' },
-    { name: 'nine', value: 9, image: '/blackjack/nine.png' },
-    { name: 'ten', value: 10, image: '/blackjack/ten.png' },
-    { name: 'jack', value: 10, image: '/blackjack/jack.png' },
-    { name: 'queen', value: 10, image: '/blackjack/queen.png' },
-    { name: 'king', value: 10, image: '/blackjack/king.png' }
-  ];
-
   const cookies = new Cookies();
   const cookie = cookies.get('account');
 
@@ -86,14 +70,42 @@ const Blackjack = () => {
   const getHandValue = (hand) => {
     let total = 0;
     hand.forEach((card) => {
-      total += card.value;
+      if (card.name === 'ace' && total + 11 > 21) {
+        total += 1;
+      } else if (card.name === 'ace' && total + 11 <= 21) {
+        total += 11;
+      } else {
+        total += card.value;
+      }
     });
     return total;
   }
 
+  const playingCards = [
+    { name: 'ace', value: 1, image: '/blackjack/ace.png', uses: 0 },
+    { name: 'two', value: 2, image: '/blackjack/two.png', uses: 0 },
+    { name: 'three', value: 3, image: '/blackjack/three.png', uses: 0 },
+    { name: 'four', value: 4, image: '/blackjack/four.png', uses: 0 },
+    { name: 'five', value: 5, image: '/blackjack/five.png', uses: 0 },
+    { name: 'six', value: 6, image: '/blackjack/six.png', uses: 0 },
+    { name: 'seven', value: 7, image: '/blackjack/seven.png', uses: 0 },
+    { name: 'eight', value: 8, image: '/blackjack/eight.png', uses: 0 },
+    { name: 'nine', value: 9, image: '/blackjack/nine.png', uses: 0 },
+    { name: 'ten', value: 10, image: '/blackjack/ten.png', uses: 0 },
+    { name: 'jack', value: 10, image: '/blackjack/jack.png', uses: 0 },
+    { name: 'queen', value: 10, image: '/blackjack/queen.png', uses: 0 },
+    { name: 'king', value: 10, image: '/blackjack/king.png', uses: 0 }
+  ];
+
   const hit = async () => {
     const newPlayersHand = [...playersHand];
-    const newCard = playingCards[Math.floor(Math.random() * playingCards.length)];
+    let newCard = playingCards[Math.floor(Math.random() * playingCards.length)];
+
+    while (newCard.uses > 1) {
+      newCard = playingCards[Math.floor(Math.random() * playingCards.length)];
+    }
+
+    playingCards[newCard.name] = { ...newCard, uses: newCard.uses + 1 };
     newPlayersHand.push(newCard);
     setPlayersHand(newPlayersHand);
 
@@ -132,7 +144,12 @@ const Blackjack = () => {
     setButtonsDisabled(true);
 
     const newDealersHand = [...dealersHand];
-    const newCard = playingCards[Math.floor(Math.random() * playingCards.length)];
+    let newCard = playingCards[Math.floor(Math.random() * playingCards.length)];
+
+    while (newCard.uses > 1) {
+      newCard = playingCards[Math.floor(Math.random() * playingCards.length)];
+    }
+
     newDealersHand.push(newCard);
 
     setDealersHand(newDealersHand);
@@ -171,7 +188,12 @@ const Blackjack = () => {
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       if (getHandValue(newDealersHand) < 17) {
-        const newCard = playingCards[Math.floor(Math.random() * playingCards.length)];
+        let newCard = playingCards[Math.floor(Math.random() * playingCards.length)];
+
+        while (newCard.uses > 1) {
+          newCard = playingCards[Math.floor(Math.random() * playingCards.length)];
+        }
+
         newDealersHand.push(newCard);
       }
 
@@ -317,6 +339,12 @@ const Blackjack = () => {
                           <p className='text-muted' style={{ fontSize: '19px', textAlign: 'center' }}>
                             Game not started
                           </p>
+                          <br />
+                          <br />
+                          <br />
+                          <br />
+                          <br />
+                          <br />
                         </>
                       )
                     }
