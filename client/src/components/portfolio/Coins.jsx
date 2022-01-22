@@ -4,6 +4,7 @@ import Coin from './Coin';
 
 const Coins = ({ coins }) => {
   coins.sort((a, b) => b.total - a.total);
+  
   return (
     <div className='table-responsive'>
       <table className='table table-striped table-hover border-0'>
@@ -36,7 +37,9 @@ const Coins = ({ coins }) => {
             ) : (
               <tr>
                 <td colSpan='7' style={{ color: 'var(--light) '}} className='text-center border-0'>
-                  <h3>You don't have any coins in your portfolio yet.</h3>
+                  <p style={{ textAlign: 'center', fontSize: '105.5px' }}>
+                    <i className='fa-solid fa-circle-notch fa-spin' />
+                  </p>
                 </td>
               </tr>
             )

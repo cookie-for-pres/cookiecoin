@@ -33,10 +33,12 @@ const account_1 = __importDefault(require("./routes/account"));
 const coinflip_1 = __importDefault(require("./routes/coinflip"));
 const portfolio_1 = __importDefault(require("./routes/portfolio"));
 const leaderboard_1 = __importDefault(require("./routes/leaderboard"));
+const blackjack_1 = __importDefault(require("./controllers/blackjack"));
 const coins_1 = require("./services/coins");
+const config = config_1.default;
 const app = (0, express_1.default)();
 const server = http_1.default.createServer(app);
-let rawOrigins = fs_1.default.readFileSync('origins.json');
+const rawOrigins = fs_1.default.readFileSync('origins.json');
 let origins = JSON.parse(rawOrigins.toString());
 origins = origins.map((origin) => origin.url);
 // @ts-ignore
@@ -63,6 +65,7 @@ app.use(api, account_1.default);
 app.use(api, coinflip_1.default);
 app.use(api, portfolio_1.default);
 app.use(api, leaderboard_1.default);
+app.use(api, blackjack_1.default);
 setInterval(() => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, coins_1.real)();
 }), 5 * 60 * 1000);
@@ -74,10 +77,9 @@ io.on('connection', (socket) => {
         socket.emit('coin-update', yield (0, coins_1.get)());
     }), 2.5 * 60 * 1000);
 });
-server.listen(config_1.default.port, () => {
-    console.log(`Listening on http://127.0.0.1:${config_1.default.port}/`);
-    // @ts-ignore
-    mongoose_1.default.connect(config_1.default.mongoUri, () => {
+server.listen(config.port, () => {
+    console.log(`Listening on http://127.0.0.1:${config.port}/`);
+    mongoose_1.default.connect(config.mongoUri, () => {
         console.log('MongoDB connected');
     });
 });

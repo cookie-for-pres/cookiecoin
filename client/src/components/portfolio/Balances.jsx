@@ -7,7 +7,6 @@ const format = (amount) => {
   }); 
 }
 
-
 const Balances = ({ balances }) => {
   return (
     <>

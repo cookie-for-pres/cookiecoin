@@ -20,9 +20,9 @@ const rndInt = (min, max) => {
     return parseFloat((Math.random() * (max - min + 1) + min).toFixed(2));
 };
 const get = () => __awaiter(void 0, void 0, void 0, function* () {
-    let coins = yield Coin_1.default.find({});
+    const coins = yield Coin_1.default.find({});
     coins.map((coin) => coin);
-    let boughtCoins = yield BoughtCoin_1.default.find({});
+    const boughtCoins = yield BoughtCoin_1.default.find({});
     boughtCoins.map((boughtCoin) => boughtCoin);
     return {
         coins,
@@ -37,12 +37,12 @@ const fake = () => __awaiter(void 0, void 0, void 0, function* () {
     const s4y = yield Coin_1.default.findOne({ abbreviation: '420' });
     const boof = yield Coin_1.default.findOne({ abbreviation: 'BOOF' });
     const shr = yield Coin_1.default.findOne({ abbreviation: 'SHR' });
-    cec.price = cec.price + rndInt(-10, 10);
-    bpm.price = bpm.price + rndInt(-10, 10);
-    lvc.price = lvc.price + rndInt(-10, 10);
-    s4y.price = s4y.price + rndInt(-10, 10);
-    boof.price = boof.price + rndInt(-10, 10);
-    shr.price = shr.price + rndInt(-10, 10);
+    cec.price = cec.price + rndInt(-15, 10);
+    bpm.price = bpm.price + rndInt(-15, 10);
+    lvc.price = lvc.price + rndInt(-15, 10);
+    s4y.price = s4y.price + rndInt(-15, 10);
+    boof.price = boof.price + rndInt(-15, 10);
+    shr.price = shr.price + rndInt(-15, 10);
     if (cec.logs.length > 50) {
         cec.logs = [];
     }

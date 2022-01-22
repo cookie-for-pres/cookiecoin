@@ -40,16 +40,27 @@ const DisplayGame = ({ _id, name, players, online, creatable }) => {
                   </Link>
                 </>
               ) : (
-                <>
-                  <Link className={online ? 'btn btn-purple shadow-none me-2' : 'btn btn-purple shadow-none disabled me-2'} to={`/games/random/${_id}`}>
-                    Play <i className='fa-solid fa-play' />
-                  </Link>
-                  <Link className={online ? 'btn btn-purple shadow-none disabled' : 'btn btn-purple shadow-none disabled'} to={`/games/create/${_id}`}>
-                    Create <i className='fa-solid fa-plus' />
-                  </Link>
-                </>
+                name === 'Blackjack' ? (
+                  <>
+                    <Link className={online ? 'btn btn-purple shadow-none me-2' : 'btn btn-purple shadow-none disabled me-2'} to={`/games/blackjack`}>
+                      Play <i className='fa-solid fa-play' />
+                    </Link>
+                    <Link className={'btn btn-purple shadow-none disabled'} to=''>
+                      Create <i className='fa-solid fa-plus' />
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link className={online ? 'btn btn-purple shadow-none me-2' : 'btn btn-purple shadow-none disabled me-2'} to={`/games/random/${_id}`}>
+                      Play <i className='fa-solid fa-play' />
+                    </Link>
+                    <Link className={online ? 'btn btn-purple shadow-none disabled' : 'btn btn-purple shadow-none disabled'} to={`/games/create/${_id}`}>
+                      Create <i className='fa-solid fa-plus' />
+                    </Link>
+                  </>
+                )        
               )
-            ) 
+            )
           }
         </span>
       </li>

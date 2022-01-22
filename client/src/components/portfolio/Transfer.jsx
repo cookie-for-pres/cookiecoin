@@ -1,6 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
-
 import React, { useState, useEffect } from 'react';
 import Cookie from 'universal-cookie';
 
@@ -40,6 +37,7 @@ const Transfer = () => {
   const cookies = new Cookie();
   const cookie = cookies.get('account');
 
+  // eslint-disable-next-line no-undef
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {

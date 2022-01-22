@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
 import React, { useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet';
 import Cookie from 'universal-cookie';

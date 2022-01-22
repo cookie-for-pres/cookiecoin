@@ -17,6 +17,7 @@ import Portfolio from './pages/Portfolio';
 import Settings from './pages/Settings';
 import Coin from './pages/Coin';
 import Logout from './pages/Logout';
+import Blackjack from './pages/Blackjack';
 
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/games' element={<Games />} />
             <Route path='/games/coinflip' element={<Coinflip />} />
+            <Route path='/games/blackjack' element={<Blackjack />} />
             <Route path='/coins' element={<Coins />} />
             <Route path='/friends' element={<Friends />} />
             <Route path='/portfolio' element={<Portfolio />} />

@@ -1,7 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
@@ -60,14 +56,20 @@ const Home = () => {
 					<div className='col-sm-6'>
 						<h1 style={{ textAlign: 'center' }}>Games</h1>
 						<br />
-						<div className='card' style={{ height: '78%' }}>
+						<div className='card' style={{ height: '83%' }}>
 							<div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)'}}>
 								<ul className='list-group list-group-flush'>
 									<li className='list-group-item'>
-										Coinflip • <span className='text-muted'>1 Player <i className='fa-solid fa-user' /></span>
-										<Link className='btn btn-purple shadow-none' style={{ float: 'right', width: '15%' }} to='/coinflip'>
-											Play <i className='fa-solid fa-play' />
-										</Link>
+										<div className='row'>
+											<div className='col-sm-6'>
+												Coinflip • <span className='text-muted'>1 Player <i className='fa-solid fa-user' /></span>
+											</div>
+											<div className='col-sm-6'>
+												<Link className='btn btn-purple shadow-none' style={{ float: 'right', width: '32%' }} to='/coinflip'>
+													Play <i className='fa-solid fa-play' />
+												</Link>
+											</div>
+										</div>
 									</li>
 									<li className='list-group-item'>
 										Blackjack • <span className='text-muted'>1-4 Players <i className='fa-solid fa-user' /></span>
@@ -94,7 +96,7 @@ const Home = () => {
 					<div className='col-sm-6'>
 						<h1 style={{ textAlign: 'center' }}>Leaderboard</h1>
 						<br />
-						<div className='card' style={{ height: '78%' }}>
+						<div className='card' style={{ height: '83%' }}>
 							<div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)' }}>
 								<ul className='list-group list-group-flush'>
 									{

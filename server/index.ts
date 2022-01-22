@@ -7,7 +7,7 @@ import http from 'http';
 import cors from 'cors';
 import fs from 'fs';
 
-import config from './config/config';
+import rawConfig from './config/config';
 
 import shutdown from './middleware/shutdown';
 
@@ -22,14 +22,16 @@ import account from './routes/account';
 import coinflip from './routes/coinflip';
 import portfolio from './routes/portfolio';
 import leaderboard from './routes/leaderboard';
+import blackjack from './controllers/blackjack';
 
 import { fake, real, get } from './services/coins';
 
+const config: any = rawConfig;
 const app = express();
 const server = http.createServer(app);
 
-let rawOrigins = fs.readFileSync('origins.json');
-let origins: any = JSON.parse(rawOrigins.toString());
+const rawOrigins = fs.readFileSync('origins.json');
+let origins = JSON.parse(rawOrigins.toString());
 origins = origins.map((origin: any) => origin.url);
 
 // @ts-ignore
@@ -60,6 +62,7 @@ app.use(api, account);
 app.use(api, coinflip);
 app.use(api, portfolio);
 app.use(api, leaderboard);
+app.use(api, blackjack)
 
 setInterval(async () => {
   await real();
@@ -78,7 +81,6 @@ io.on('connection', (socket: any) => {
 server.listen(config.port, () => {
   console.log(`Listening on http://127.0.0.1:${config.port}/`);
 
-  // @ts-ignore
   mongoose.connect(config.mongoUri, () => {
     console.log('MongoDB connected');
   });

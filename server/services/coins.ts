@@ -1,6 +1,5 @@
 import Coin from '../models/Coin';
 import BoughtCoin from '../models/BoughtCoin';
-import config from '../config/config';
 import axios from 'axios';
 
 const rndInt = (min: number, max: number) => {
@@ -8,10 +7,10 @@ const rndInt = (min: number, max: number) => {
 }
 
 export const get = async () => {
-  let coins = await Coin.find({});
+  const coins = await Coin.find({});
   coins.map((coin: any) => coin);
   
-  let boughtCoins = await BoughtCoin.find({});
+  const boughtCoins = await BoughtCoin.find({});
   boughtCoins.map((boughtCoin: any) => boughtCoin);
 
   return {
@@ -28,12 +27,12 @@ export const fake = async () => {
   const boof = await Coin.findOne({ abbreviation: 'BOOF' });
   const shr = await Coin.findOne({ abbreviation: 'SHR' });
   
-  cec.price = cec.price + rndInt(-10, 10);
-  bpm.price = bpm.price + rndInt(-10, 10);
-  lvc.price = lvc.price + rndInt(-10, 10);
-  s4y.price = s4y.price + rndInt(-10, 10);
-  boof.price = boof.price + rndInt(-10, 10);
-  shr.price = shr.price + rndInt(-10, 10);
+  cec.price = cec.price + rndInt(-15, 10);
+  bpm.price = bpm.price + rndInt(-15, 10);
+  lvc.price = lvc.price + rndInt(-15, 10);
+  s4y.price = s4y.price + rndInt(-15, 10);
+  boof.price = boof.price + rndInt(-15, 10);
+  shr.price = shr.price + rndInt(-15, 10);
 
   if (cec.logs.length > 50) { cec.logs = []; }
   if (bpm.logs.length > 50) { bpm.logs = []; }
