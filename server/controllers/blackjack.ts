@@ -23,7 +23,7 @@ export default async (req: Request, res: Response) => {
       await gameLog.save();
 
       if (status === 'won') {
-        account.balances[accountBalance] = account.balances[accountBalance] + bet;
+        account.balances[accountBalance] = account.balances[accountBalance] + bet * 2;
         await account.save(); 
       } else if (status === 'lose') {
         account.balances[accountBalance] = account.balances[accountBalance] - bet;

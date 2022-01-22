@@ -32,7 +32,7 @@ exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
             yield gameLog.save();
             if (status === 'won') {
-                account.balances[accountBalance] = account.balances[accountBalance] + bet;
+                account.balances[accountBalance] = account.balances[accountBalance] + bet * 2;
                 yield account.save();
             }
             else if (status === 'lose') {
