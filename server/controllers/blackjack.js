@@ -18,6 +18,7 @@ const uuid_1 = require("uuid");
 exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { accountId, bet, account: accountBalance, status } = req.body;
     const account = yield Account_1.default.findOne({ _id: accountId });
+    console.log(req.body);
     if (account) {
         if (account.balances[accountBalance] >= bet) {
             const gameLog = new GameLog_1.default({
@@ -31,8 +32,8 @@ exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 }
             });
             yield gameLog.save();
-            if (status === 'won') {
-                account.balances[accountBalance] = account.balances[accountBalance] + bet * 2;
+            if (status === 'win') {
+                account.balances[accountBalance] = account.balances[accountBalance] + bet;
                 yield account.save();
             }
             else if (status === 'lose') {
