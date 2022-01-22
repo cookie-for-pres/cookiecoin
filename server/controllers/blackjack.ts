@@ -23,12 +23,12 @@ export default async (req: Request, res: Response) => {
       await gameLog.save();
 
       if (status === 'won') {
-        account.balances[accountBalance] += bet * 2;
+        account.balances[accountBalance] = account.balances[accountBalance] + bet;
+        await account.save(); 
       } else if (status === 'lose') {
-        account.balances[accountBalance] -= bet;
+        account.balances[accountBalance] = account.balances[accountBalance] - bet;
+        await account.save();
       }
-
-      await account.save();
 
       res.json({
         message: 'successfully played blackjack',

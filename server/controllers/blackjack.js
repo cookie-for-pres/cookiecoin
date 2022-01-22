@@ -32,12 +32,13 @@ exports.default = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
             yield gameLog.save();
             if (status === 'won') {
-                account.balances[accountBalance] += bet * 2;
+                account.balances[accountBalance] = account.balances[accountBalance] + bet;
+                yield account.save();
             }
             else if (status === 'lose') {
-                account.balances[accountBalance] -= bet;
+                account.balances[accountBalance] = account.balances[accountBalance] - bet;
+                yield account.save();
             }
-            yield account.save();
             res.json({
                 message: 'successfully played blackjack',
                 success: true,
