@@ -190,7 +190,7 @@ const Blackjack = () => {
       setDealersHand(newDealersHand);
     }
 
-    if (getHandValue(newDealersHand) > getHandValue(playersHand)) {
+    if (getHandValue(newDealersHand) > getHandValue(playersHand) && getHandValue(newDealersHand) <= 21) {
       setAlertType('danger');
       setAlertMessage('Dealer wins!');
       setAlertShow(true);
@@ -220,7 +220,7 @@ const Blackjack = () => {
       await callApi('push');
     }
 
-    if (getHandValue(newDealersHand) < getHandValue(playersHand)) {
+    if (getHandValue(newDealersHand) < getHandValue(playersHand) && getHandValue(playersHand) <= 21) {
       setAlertType('success');
       setAlertMessage('You win!');
       setAlertShow(true);
