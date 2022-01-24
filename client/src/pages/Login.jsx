@@ -9,6 +9,7 @@ import Alert from '../components/Alert';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [ip, setIp] = useState('');
 
   const [alertType, setAlertType] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
@@ -19,13 +20,23 @@ const Login = () => {
 
   const cookies = new Cookies();
 
+  // eslint-disable-next-line no-undef
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+  useEffect(() => {
+    fetch('https://geolocation-db.com/json/', {
+      method: 'GET'
+    }).then((res) => res.json())
+    .then((res) => {
+      setIp(res.IPv4);
+    });
+  }, [])
 
   const login = async () => {
     const req = await fetch(`${BASE_URL}/api/login`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ username, password })
+      body: JSON.stringify({ username, password, ip })
     });
 
     const res = await req.json();
