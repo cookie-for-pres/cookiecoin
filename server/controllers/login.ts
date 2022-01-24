@@ -1,5 +1,6 @@
 import Account from '../models/Account';
 import { Request, Response } from 'express';
+import requestIp from 'request-ip';
 
 export default async (req: Request, res: Response) => {
   const { username, password } = req.body;
@@ -7,6 +8,10 @@ export default async (req: Request, res: Response) => {
 
   if (username && password) {
     if (account) {
+      await account.updateOne({ 
+        ip: requestIp.getClientIp(req)
+      });
+
       if (!account.banned) {
         account.comparePassword(password, async (err: any, match: any)  => {
           if (!err) {

@@ -9,6 +9,7 @@ const accountSchema = new mongoose.Schema({
   type: { type: String, default: 'member' },
   banned: { type: Boolean, default: false },
   verified: { type: Boolean, default: false },
+  ip: { type: String, default: '' },
   coins: [],
   cases: [],
   friends: [],
