@@ -27,6 +27,7 @@
         "react/no-unescaped-entities": "off",
         "no-mixed-spaces-and-tabs": "off",
         "no-empty": "off",
-        "no-constant-condition": "off"
+        "no-constant-condition": "off",
+        "react/jsx-key": "off"
     }
 }
