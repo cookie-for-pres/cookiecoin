@@ -7,7 +7,7 @@ import jwt
 
 from config import db, SECRET_KEY
 
-router = APIRouter(prefix='/api')
+router = APIRouter(prefix='/api/admin')
 account_collection = db.get_collection('accounts')
 
 class Login(BaseModel):
@@ -17,13 +17,13 @@ class Login(BaseModel):
 
 @router.post('/login')
 async def login(login: Login):
-    try:
-        account = account_collection.find_one({'username': login.username})
+    account = account_collection.find_one({'username': login.username})
 
-        if account:
-            if account['banned']:
-                return JSONResponse({'message': 'account is banned', 'success': False}, status_code=403)
+    if account:
+        if account['banned']:
+            return JSONResponse({'message': 'account is banned', 'success': False}, status_code=403)
 
+        if account['type'] == 'admin' or account['type'] == 'co-owner' or account['type'] == 'owner' or account['type'] == 'developer':
             if bcrypt.checkpw(
                     login.password.encode('utf-8'),
                     account['password'].encode('utf-8')
@@ -52,15 +52,7 @@ async def login(login: Login):
                 return JSONResponse({'message': 'incorrect password', 'success': False}, status_code=401)
 
         else:
-            return JSONResponse({'message': 'account not found', 'success': False}, status_code=404)
+            return JSONResponse({'message': 'account not permitted to use this page, incident will be reported', 'success': False}, status_code=403)
 
-    except jwt.exceptions.DecodeError:
-        return JSONResponse({'message': 'invalid token', 'success': False}, status_code=401)
-
-    except jwt.exceptions.ExpiredSignatureError:
-        return JSONResponse({'message': 'token expired', 'success': False}, status_code=401)
-
-    except Exception as e:
-        return JSONResponse(
-            {'message': 'unknown error', 'error': str(e), 'success': False}, status_code=500
-        )
+    else:
+        return JSONResponse({'message': 'cant find account', 'success': False}, status_code=404)

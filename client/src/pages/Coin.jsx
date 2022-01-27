@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams, useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import { io } from 'socket.io-client';
 
 import Chart from '../components/coins/Chart';
 import Navbar from '../components/Navbar';

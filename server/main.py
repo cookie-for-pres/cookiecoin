@@ -45,3 +45,7 @@ app.include_router(leaderboard_router)
 app.include_router(account_router)
 app.include_router(coinflip_router)
 app.include_router(blackjack_router)
+app.include_router(auth_router)
+
+app.include_router(admin_login_router)
+app.include_router(admin_dashboard_router)

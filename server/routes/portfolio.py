@@ -1,6 +1,8 @@
 from pydantic import BaseModel
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
+import datetime
+import uuid
 import jwt
 
 from config import db, SECRET_KEY
@@ -9,6 +11,20 @@ router = APIRouter(prefix='/api/portfolio')
 account_collection = db.get_collection('accounts')
 coin_collection = db.get_collection('coins')
 bought_coin_collection = db.get_collection('bought-coins')
+transaction_collection = db.get_collection('transactions')
+
+def add_transaction(type: str, data: dict):
+    _id = str(uuid.uuid4())
+    slug = str(uuid.uuid4())[:4].upper()
+
+    transaction_collection.insert_one({
+        '_id': _id,
+        'slug': slug,
+        'type': type,
+        'data': data,
+        'createdAt': datetime.datetime.now(),
+        'updatedAt': datetime.datetime.now()
+    })
 
 class Portfolio(BaseModel):
     token: str
@@ -87,6 +103,9 @@ async def transfer(transfer: Transfer):
                 new_balances = {from_: from_balance, to: to_balance}
 
                 account_collection.find_one_and_update({'_id': account['_id']}, {'$set': {'balances': new_balances}})
+                add_transaction(type='Account Balance to Account Balance', data={
+                    'from': from_, 'to': to, 'amount': amount
+                })
 
                 return JSONResponse(
                     {
@@ -118,6 +137,9 @@ async def transfer(transfer: Transfer):
 
                     account_collection.find_one_and_update({'_id': account['_id']}, {'$set': {'balances': new_balances}})
                     account_collection.find_one_and_update({'_id': to_account['_id']}, {'$set': {'balances.bank': new_to_balance}})
+                    add_transaction(type='User Account to User Account', data={
+                        'from': from_, 'to': to, 'amount': amount
+                    })
 
                     return JSONResponse(
                         {
@@ -165,6 +187,9 @@ async def transfer(transfer: Transfer):
 
                 bought_coin_collection.find_one_and_update({'_id': from_bought_coin['_id']}, {'$set': {'amount': new_from_amount}})
                 bought_coin_collection.find_one_and_update({'_id': to_bought_coin['_id']}, {'$set': {'amount': new_to_amount}})
+                add_transaction(type='User Coin to User Coin', data={
+                    'from': from_, 'to': to, 'amount': amount
+                })
 
                 return JSONResponse(
                     {

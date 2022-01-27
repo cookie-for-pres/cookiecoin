@@ -19,6 +19,15 @@ import Coin from './pages/Coin';
 import Logout from './pages/Logout';
 import Blackjack from './pages/Blackjack';
 
+import AdminLogin from './pages/admin/Login';
+import AdminDashboard from './pages/admin/Dashboard';
+import AdminNews from './pages/admin/News';
+import AdminUsers from './pages/admin/Users';
+import AdminGames from './pages/admin/Games';
+import AdminLogs from './pages/admin/Logs';
+import AdminProtocols from './pages/admin/Protocols';
+import AdminChat from './pages/admin/Chat';
+
 const App = () => {
   return (
     <>
@@ -29,6 +38,8 @@ const App = () => {
             <Route path='/home' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
+
+            <Route path='/admin/login' element={<AdminLogin />} />
           </Route>
 
           <Route element={<ProtectedRoutes />}>
@@ -42,6 +53,14 @@ const App = () => {
             <Route path='/settings' element={<Settings />} />
 
             <Route path='/coin/:coinId' element={<Coin /> } />
+
+            <Route path='/admin/dashboard' element={<AdminDashboard />} />
+            <Route path='/admin/news' element={<AdminNews />} />
+            <Route path='/admin/users' element={<AdminUsers />} />
+            <Route path='/admin/games' element={<AdminGames />} />
+            <Route path='/admin/logs' element={<AdminLogs />} />
+            <Route path='/admin/protocols' element={<AdminProtocols />} />
+            <Route path='/admin/chat' element={<AdminChat />} />
             
             <Route path='/logout' element={<Logout />} />
             

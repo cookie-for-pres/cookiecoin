@@ -66,6 +66,7 @@ async def register(register: Register):
             'balances': {'cash': 200, 'bank': 200},
             'ip': '',
             'token': '',
+            'lastLogin': '',
             'createdAt': datetime.datetime.utcnow(),
             'updatedAt': datetime.datetime.utcnow()
         })

@@ -12,7 +12,21 @@ router = APIRouter(prefix='/api')
 account_collection = db.get_collection('accounts')
 bought_coin_collection = db.get_collection('bought-coins')
 game_log_collection = db.get_collection('game-logs')
+transaction_collection = db.get_collection('transactions')
 
+def add_transaction(type: str, data: dict):
+    _id = str(uuid.uuid4())
+    slug = str(uuid.uuid4())[:4].upper()
+
+    transaction_collection.insert_one({
+        '_id': _id,
+        'slug': slug,
+        'type': type,
+        'data': data,
+        'createdAt': datetime.datetime.now(),
+        'updatedAt': datetime.datetime.now()
+    })
+    
 class Blackjack(BaseModel):
     token: str
     bet: float
@@ -41,6 +55,7 @@ async def blackjack(blackjack: Blackjack):
             }
         })
 
+
         if blackjack.status == 'win':
             account['balances'][blackjack.account] = account['balances'][blackjack.account] + blackjack.bet
         
@@ -48,6 +63,7 @@ async def blackjack(blackjack: Blackjack):
             account['balances'][blackjack.account] = account['balances'][blackjack.account] - blackjack.bet
         
         account_collection.find_one_and_update({'_id': account['_id']}, {'$set': {'balances': account['balances'], 'updatedAt': datetime.datetime.now()}})
+        add_transaction(type='Blackjack', data={'status': blackjack.status, 'bet': blackjack.bet, 'account': blackjack.account})
 
         return JSONResponse(
             {

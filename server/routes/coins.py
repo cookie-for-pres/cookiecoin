@@ -14,6 +14,20 @@ router = APIRouter(prefix='/api')
 account_collection = db.get_collection('accounts')
 coin_collection = db.get_collection('coins')
 bought_coins_collection = db.get_collection('bought-coins')
+transaction_collection = db.get_collection('transactions')
+
+def add_transaction(type: str, data: dict):
+    _id = str(uuid.uuid4())
+    slug = str(uuid.uuid4())[:4].upper()
+
+    transaction_collection.insert_one({
+        '_id': _id,
+        'slug': slug,
+        'type': type,
+        'data': data,
+        'createdAt': datetime.datetime.now(),
+        'updatedAt': datetime.datetime.now()
+    })
 
 class Coin(BaseModel):
     token: str
@@ -98,8 +112,6 @@ async def find_coin(coin: FindCoin):
                 'imageUrl': coin_['imageUrl']
             }
 
-            print(coin_)
-
             bought_coin = bought_coins_collection.find_one({'owner': account['_id'], 'name': coin_['name']})
 
             bought_coin = {
@@ -149,6 +161,15 @@ async def buy_coin(coin: BuyCoin):
             bought_coins_collection.update_one({'_id': owned['_id']}, {'$set': {'amount': owned['amount'], 'updatedAt': datetime.datetime.now()}})
             account_collection.update_one({'_id': account['_id']}, {'$set': {'balances': account['balances'], 'updatedAt': datetime.datetime.now()}})
 
+            add_transaction(type='Coin Purchase', data={
+                'coin': {
+                    'name': coin_['name'], 
+                    'abbreviation': coin_['abbreviation']
+                },
+                'amount': coin.amount,
+                'price': coin_['price']
+            })
+
             return JSONResponse({'message': 'successfully bought coin', 'success': True}, status_code=200)
 
         else:
@@ -159,6 +180,15 @@ async def buy_coin(coin: BuyCoin):
                 '_id': str(uuid.uuid4()), 'owner': account['_id'], 'name': coin_['name'],
                 'abbreviation': coin_['abbreviation'], 'amount': coin.amount,
                 'wallet': wallet, 'createdAt': datetime.datetime.utcnow(), 'updatedAt': datetime.datetime.utcnow()
+            })
+
+            add_transaction(type='Coin Purchase', data={
+                'coin': {
+                    'name': coin_['name'], 
+                    'abbreviation': coin_['abbreviation']
+                },
+                'amount': coin.amount,
+                'price': coin_['price']
             })
 
             return JSONResponse({'message': 'successfully bought coin', 'success': True}, status_code=200)
@@ -183,6 +213,14 @@ async def sell_coin(coin: SellCoin):
             account['balances'][coin.balance] = account['balances'][coin.balance] + (coin.amount * coin_['price'])
             bought_coins_collection.update_one({'_id': owned['_id']}, {'$set': {'amount': owned['amount'], 'updatedAt': datetime.datetime.now()}})
             account_collection.update_one({'_id': account['_id']}, {'$set': {'balances': account['balances'], 'updatedAt': datetime.datetime.now()}})
+            add_transaction(type='Coin Sale', data={
+                'coin': {
+                    'name': coin_['name'], 
+                    'abbreviation': coin_['abbreviation']
+                },
+                'amount': coin.amount,
+                'price': coin_['price']
+            })
 
             return JSONResponse({'message': 'successfully sold coin', 'success': True}, status_code=200)
 

@@ -12,6 +12,20 @@ router = APIRouter(prefix='/api')
 account_collection = db.get_collection('accounts')
 bought_coin_collection = db.get_collection('bought-coins')
 game_log_collection = db.get_collection('game-logs')
+transaction_collection = db.get_collection('transactions')
+
+def add_transaction(type: str, data: dict):
+    _id = str(uuid.uuid4())
+    slug = str(uuid.uuid4())[:4].upper()
+
+    transaction_collection.insert_one({
+        '_id': _id,
+        'slug': slug,
+        'type': type,
+        'data': data,
+        'createdAt': datetime.datetime.now(),
+        'updatedAt': datetime.datetime.now()
+    })
 
 class CoinFlip(BaseModel):
     account: str
@@ -50,6 +64,7 @@ async def coinflip(coinflip: CoinFlip):
                 }
 
                 game_log_collection.insert_one(doc)
+                add_transaction(type='Coinflip', data={'status': 'win', 'bet': coinflip.bet, 'side': coinflip.side, 'botChoice': bot_choice})
 
                 account_collection.update_one(
                     {'_id': account['_id']},
@@ -79,6 +94,7 @@ async def coinflip(coinflip: CoinFlip):
                 }
                 
                 game_log_collection.insert_one(doc)
+                add_transaction(type='Coinflip', data={'status': 'lose', 'bet': coinflip.bet, 'side': coinflip.side, 'botChoice': bot_choice})
 
                 account_collection.update_one(
                     {'_id': account['_id']},
