@@ -44,7 +44,7 @@ const Games = () => {
       <Navbar page='games' />
       
       <div className='container'>
-        <div className='row'>
+        {/* <div className='row'>
           <div className='col-sm-6'>
             <h1 style={{ textAlign: 'center' }}>Join a Game</h1>
             <br />
@@ -64,7 +64,14 @@ const Games = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+        <h1 style={{ textAlign: 'center' }}>Join a Random Game</h1>
+            <br />
+            <div className='card' style={{ height: '82%' }}>
+              <div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)' }}>
+                <DisplayGames games={displayGames} />
+              </div>
+            </div>
         <br />
         <br />
         <h1 style={{ textAlign: 'center' }}>Joinable Games</h1>

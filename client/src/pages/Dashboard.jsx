@@ -53,7 +53,7 @@ const Dashboard = () => {
           <div className='col-sm-6'>
             <h1 style={{ textAlign: 'center' }}>Summary</h1>
 						<br />
-						<div className='card' style={{ height: '85%' }}>
+						<div className='card' >
 							<div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)'}}>
                 <Balances balances={balances} boughtCoins={boughtCoins} coins={coins} />
               </div>
@@ -63,7 +63,7 @@ const Dashboard = () => {
           <div className='col-sm-6'>
             <h1 style={{ textAlign: 'center' }}>Friends</h1>
 						<br />
-						<div className='card' style={{ height: '85%' }}>
+						<div className='card'>
 							<div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)'}}>
                 <Friends friends={friends} />
               </div>

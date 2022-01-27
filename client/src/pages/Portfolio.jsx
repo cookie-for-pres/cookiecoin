@@ -56,7 +56,7 @@ const Portfolio = () => {
           <div className='col-sm-6'>
             <h1 style={{ textAlign: 'center' }}>Balances</h1>
 		        <br />
-            <div className='card' style={{ height: '90%' }}>
+            <div className='card'>
               <div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)'}}>
                 <Balances balances={balances} />
               </div>
@@ -65,7 +65,7 @@ const Portfolio = () => {
           <div className='col-sm-6'>
             <h1 style={{ textAlign: 'center' }}>Transfer</h1>
 		        <br />
-            <div className='card' style={{ height: '90%' }}>
+            <div className='card'>
               <div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)'}}>
                 <Transfer />
               </div>
