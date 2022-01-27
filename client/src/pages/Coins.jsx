@@ -12,13 +12,8 @@ const Coins = () => {
   const cookies = new Cookies();
   const cookie = cookies.get('account');
 
+  // eslint-disable-next-line no-undef
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
-  const socket = io(BASE_URL);
-
-  socket.on('coin-update', (data) => {
-    setCoins(data);
-  });
 
   useEffect(() => {
     getCoins();
@@ -28,12 +23,12 @@ const Coins = () => {
     fetch(`${BASE_URL}/api/coins`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ accountId: cookie })
+      body: JSON.stringify({ token: cookie })
     }).then((res) => res.json())
     .then((res) => {
       if (res.success) {
         setCoins(res.coins);
-      } else if (res.message === 'cant find account') {
+      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
         cookies.remove('account');
         window.location.reload();
       }

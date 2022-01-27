@@ -14,19 +14,20 @@ const Portfolio = () => {
   const cookies = new Cookie();
   const cookie = cookies.get('account');
 
+  // eslint-disable-next-line no-undef
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
     fetch(`${BASE_URL}/api/portfolio`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ accountId: cookie })
+      body: JSON.stringify({ token: cookie })
     }).then(res => res.json())
     .then(res => {
       if (res.success) {
         setCoins(res.portfolio);
         setBalances(res.account.balances);
-      } else {
+      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
         cookies.remove('account');
         window.location.reload();   
       }

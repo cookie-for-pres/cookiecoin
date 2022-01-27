@@ -18,18 +18,14 @@ const Dashboard = () => {
   const cookies = new Cookies();
   const cookie = cookies.get('account');
 
+  // eslint-disable-next-line no-undef
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
-  useEffect(() => {
-    const socket = io(BASE_URL);
-    socket.connect();
-  }, []);
 
   useEffect(() => {
     fetch(`${BASE_URL}/api/dashboard`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ accountId: cookie })
+      body: JSON.stringify({ token: cookie })
     }).then((res) => res.json())
     .then((res) => {
       if (res.success) {
@@ -37,7 +33,7 @@ const Dashboard = () => {
         setBoughtCoins(res.account.boughtCoins);
         setBalances(res.account.balances);
         setCoins(res.coins);
-      } else if (res.message === 'cant find account') {
+      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
         cookies.remove('account');
         window.location.reload();
       }

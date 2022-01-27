@@ -14,21 +14,23 @@ const Games = () => {
   const cookies = new Cookies();
   const cookie = cookies.get('account');
 
+  // eslint-disable-next-line no-undef
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
     fetch(`${BASE_URL}/api/games`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ accountId: cookie })
+      body: JSON.stringify({ token: cookie })
     }).then((res) => res.json())
     .then((res) => {
       if (res.success) {
         setJoinableGames(res.joinableGames);
         setDisplayGames(res.displayGames);
       } else if (res.message === 'cant find account') {
-        cookies.remove('account');
-        window.location.reload();
+        console.log('cant find account');
+        // cookies.remove('account');
+        // window.location.reload();
       }
     });
   }, []);
