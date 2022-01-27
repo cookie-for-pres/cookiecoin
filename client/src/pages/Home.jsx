@@ -14,6 +14,7 @@ const format = (amount) => {
 const Home = () => {
 	const [leaderboard, setLeaderboard] = useState([]);
 
+	// eslint-disable-next-line no-undef
 	const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 	useEffect(() => {
@@ -100,14 +101,19 @@ const Home = () => {
 							<div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)' }}>
 								<ul className='list-group list-group-flush'>
 									{
-										leaderboard.map((account) => (
-											<li className='list-group-item' key={account.username}>
-												{ account.username }
-												<span style={{ float: 'right' }}>
-												  { format(account.balance) }
-												</span>
-											</li>
-										))
+										leaderboard.length > 0 ? (
+											leaderboard.map((account) => (
+												<li className='list-group-item' key={account.username}>
+													{ account.username }
+													<span style={{ float: 'right' }}>
+														{ format(account.balance) }
+													</span>
+												</li>
+											))
+										) : (
+          						<p style={{ textAlign: 'center', fontSize: '105.5px' }}><i className='fa-solid fa-circle-notch fa-spin' /></p>	
+										)
+
 									}
 								</ul>
 							</div>

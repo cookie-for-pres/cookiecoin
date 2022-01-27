@@ -47,7 +47,7 @@ const Login = () => {
       setAlertShow(true);
       setRedirectUrl('/dashboard');
 
-      cookies.set('account', res.id);
+      cookies.set('account', res.token, { path: '/', expires: new Date(Date.now() + (1000 * 60 * 60 * 24)) });
 
       setTimeout(() => {
         setAlertShow(false);

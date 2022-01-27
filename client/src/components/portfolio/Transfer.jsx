@@ -44,7 +44,7 @@ const Transfer = () => {
     fetch(`${BASE_URL}/api/account/balances`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ accountId: cookie })
+      body: JSON.stringify({ token: cookie })
     }).then(res => res.json())
     .then(res => {
       setBalances(res.balances);
@@ -53,7 +53,7 @@ const Transfer = () => {
     fetch(`${BASE_URL}/api/coins`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ accountId: cookie })
+      body: JSON.stringify({ token: cookie })
     }).then(res => res.json())
     .then(res => {
       setCoins(res.coins);
@@ -79,7 +79,7 @@ const Transfer = () => {
 
     if (transferType === 'balance-to-balance') {
       body = {
-        accountId: cookie,
+        token: cookie,
         type: 'balance-to-balance',
         data: {
           from: balanceFromAccount,
@@ -89,7 +89,7 @@ const Transfer = () => {
       }
     } else if (transferType === 'user:account-to-user:account') {
       body = {
-        accountId: cookie,
+        token: cookie,
         type: 'user:account-to-user:account',
         data: {
           from: uatFromAccount,
@@ -99,7 +99,7 @@ const Transfer = () => {
       }
     } else if (transferType === 'user:coin-to-user:coin') {
       body = {
-        accountId: cookie,
+        token: cookie,
         type: 'user:coin-to-user:coin',
         data: {
           from: ucToCoinFromAccount,
@@ -135,7 +135,7 @@ const Transfer = () => {
       fetch(`${BASE_URL}/api/account/balances`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ accountId: cookie })
+        body: JSON.stringify({ token: cookie })
       }).then(res => res.json())
       .then(res => {
         setBalances(res.balances);
@@ -144,7 +144,7 @@ const Transfer = () => {
       fetch(`${BASE_URL}/api/coins`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ accountId: cookie })
+        body: JSON.stringify({ token: cookie })
       }).then(res => res.json())
       .then(res => {
         setCoins(res.coins);

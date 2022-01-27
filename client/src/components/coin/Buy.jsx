@@ -43,7 +43,7 @@ const Buy = ({ coin, coinId, cookie, balances: b }) => {
     fetch(`${BASE_URL}/api/account/balances`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ accountId: cookie })
+      body: JSON.stringify({ token: cookie })
     }).then((res) => res.json())
     .then((res) => {
       if (res.success) {
@@ -58,7 +58,7 @@ const Buy = ({ coin, coinId, cookie, balances: b }) => {
     const req = await fetch(`${BASE_URL}/api/coins/buy`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ accountId: cookie, coinId, amount: buyAmount, balance: buyAccount })
+      body: JSON.stringify({ token: cookie, coinId, amount: buyAmount, balance: buyAccount })
     });
 
     const res = await req.json();
@@ -88,7 +88,7 @@ const Buy = ({ coin, coinId, cookie, balances: b }) => {
     fetch(`${BASE_URL}/api/account/balances`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ accountId: cookie })
+      body: JSON.stringify({ token: cookie })
     }).then((res) => res.json())
     .then((res) => {
       if (res.success) {

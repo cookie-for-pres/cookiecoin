@@ -1,0 +1,78 @@
+import datetime
+import requests
+import random
+import time
+
+from config import db, CRYPTO_API_KEY
+
+coin_collection = db.get_collection('coins')
+
+def fake_coin():
+    while True:
+        cec = coin_collection.find_one({'abbreviation': 'CEC'})
+        lvc = coin_collection.find_one({'abbreviation': 'ŁVC'})
+        bpm = coin_collection.find_one({'abbreviation': 'BPM'})
+        s4y = coin_collection.find_one({'abbreviation': '420'})
+        boof = coin_collection.find_one({'abbreviation': 'BOOF'})
+        shr = coin_collection.find_one({'abbreviation': 'SHR'})
+
+        cec['price'] = cec['price'] + random.randint(-12, 12)
+        lvc['price'] = lvc['price'] + random.randint(-12, 12)
+        bpm['price'] = bpm['price'] + random.randint(-12, 12)
+        s4y['price'] = s4y['price'] + random.randint(-12, 12)
+        boof['price'] = boof['price'] + random.randint(-12, 12)
+        shr['price'] = shr['price'] + random.randint(-12, 12)
+
+        if len(cec['logs']) > 100: cec['logs'] = []
+        if len(lvc['logs']) > 100: lvc['logs'] = []
+        if len(bpm['logs']) > 100: bpm['logs'] = []
+        if len(s4y['logs']) > 100: s4y['logs'] = []
+        if len(boof['logs']) > 100: boof['logs'] = []
+        if len(shr['logs']) > 100: shr['logs'] = []
+
+        cec['logs'].append({'price': cec['price'], 'date': datetime.datetime.now()})
+        lvc['logs'].append({'price': lvc['price'], 'date': datetime.datetime.now()})
+        bpm['logs'].append({'price': bpm['price'], 'date': datetime.datetime.now()})
+        s4y['logs'].append({'price': s4y['price'], 'date': datetime.datetime.now()})
+        boof['logs'].append({'price': boof['price'], 'date': datetime.datetime.now()})
+        shr['logs'].append({'price': shr['price'], 'date': datetime.datetime.now()})
+
+        coin_collection.update_one({'abbreviation': 'CEC'}, {'$set': {'price': cec['price']}})
+        coin_collection.update_one({'abbreviation': 'ŁVC'}, {'$set': {'price': lvc['price']}})
+        coin_collection.update_one({'abbreviation': 'BPM'}, {'$set': {'price': bpm['price']}})
+        coin_collection.update_one({'abbreviation': '420'}, {'$set': {'price': s4y['price']}})
+        coin_collection.update_one({'abbreviation': 'BOOF'}, {'$set': {'price': boof['price']}})
+        coin_collection.update_one({'abbreviation': 'SHR'}, {'$set': {'price': shr['price']}})
+
+        time.sleep(300)
+
+def real_coin():
+    while True:
+        btc = coin_collection.find_one({'abbreviation': 'BTC'})
+        eth = coin_collection.find_one({'abbreviation': 'ETH'})
+        ltc = coin_collection.find_one({'abbreviation': 'LTC'})
+
+        url = 'https://coingecko.p.rapidapi.com/simple/price'
+        params = {'ids': 'bitcoin,ethereum,litecoin', 'vs_currencies': 'usd'}
+        headers = {'x-rapidapi-host': 'coingecko.p.rapidapi.com', 'x-rapidapi-key': str(CRYPTO_API_KEY)}
+
+        response = requests.get(url, headers=headers, params=params)
+        data = response.json()
+
+        btc['price'] = data['bitcoin']['usd']
+        eth['price'] = data['ethereum']['usd']
+        ltc['price'] = data['litecoin']['usd']
+
+        if len(btc['logs']) > 100: btc['logs'] = []
+        if len(eth['logs']) > 100: eth['logs'] = []
+        if len(ltc['logs']) > 100: ltc['logs'] = []
+
+        btc['logs'].append({'price': btc['price'], 'date': datetime.datetime.now()})
+        eth['logs'].append({'price': eth['price'], 'date': datetime.datetime.now()})
+        ltc['logs'].append({'price': ltc['price'], 'date': datetime.datetime.now()})
+
+        coin_collection.update_one({'abbreviation': 'BTC'}, {'$set': {'price': btc['price']}})
+        coin_collection.update_one({'abbreviation': 'ETH'}, {'$set': {'price': eth['price']}})
+        coin_collection.update_one({'abbreviation': 'LTC'}, {'$set': {'price': ltc['price']}})
+
+        time.sleep(300)
