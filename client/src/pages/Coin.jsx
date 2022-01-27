@@ -26,19 +26,14 @@ const Coin = () => {
   const cookie = cookies.get('account');
   const navigate = useNavigate();
 
+  // eslint-disable-next-line no-undef
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
-  
-  const socket = io(BASE_URL);
-
-  socket.on('coin-update', (data) => {
-    window.location.reload();
-  });
 
   useEffect(() => {
     fetch(`${BASE_URL}/api/coins/find`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ accountId: cookie, coinId })
+      body: JSON.stringify({ token: cookie, coinId })
     }).then((res) => res.json())
     .then((res) => {
       if (res.success) {

@@ -245,7 +245,13 @@ select:-webkit-autofill:focus {
        opacity: 1;
        transform: translateY(0);
     }
- }   
+}   
+
+@media screen and (max-width: 992px) {
+    .wrapper-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
 @media screen and (max-width: 768px) {
     .wrapper-3 {

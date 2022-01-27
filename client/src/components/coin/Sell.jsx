@@ -24,6 +24,7 @@ const Sell = ({ coin: c, boughtCoin: bc, coinId, cookie, balances: b }) => {
   const [sellAlertShow, setSellAlertShow] = useState(false);
 
   const navigate = useNavigate();
+  // eslint-disable-next-line no-undef
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
@@ -42,7 +43,7 @@ const Sell = ({ coin: c, boughtCoin: bc, coinId, cookie, balances: b }) => {
     fetch(`${BASE_URL}/api/account/balances`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ accountId: cookie })
+      body: JSON.stringify({ token: cookie })
     }).then((res) => res.json())
     .then((res) => {
       if (res.success) {
@@ -55,7 +56,7 @@ const Sell = ({ coin: c, boughtCoin: bc, coinId, cookie, balances: b }) => {
     fetch(`${BASE_URL}/api/coins/find`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ accountId: cookie, coinId })
+      body: JSON.stringify({ token: cookie, coinId })
     }).then((res) => res.json())
     .then((res) => {
       if (res.success) {
@@ -71,7 +72,7 @@ const Sell = ({ coin: c, boughtCoin: bc, coinId, cookie, balances: b }) => {
     const req = await fetch(`${BASE_URL}/api/coins/sell`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ accountId: cookie, coinId, amount: sellAmount, balance: sellAccount })
+      body: JSON.stringify({ token: cookie, coinId, amount: sellAmount, balance: sellAccount })
     });
 
     const res = await req.json();
@@ -100,7 +101,7 @@ const Sell = ({ coin: c, boughtCoin: bc, coinId, cookie, balances: b }) => {
     fetch(`${BASE_URL}/api/account/balances`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ accountId: cookie })
+      body: JSON.stringify({ token: cookie })
     }).then((res) => res.json())
     .then((res) => {
       if (res.success) {
@@ -113,7 +114,7 @@ const Sell = ({ coin: c, boughtCoin: bc, coinId, cookie, balances: b }) => {
     fetch(`${BASE_URL}/api/coins/find`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ accountId: cookie, coinId })
+      body: JSON.stringify({ token: cookie, coinId })
     }).then((res) => res.json())
     .then((res) => {
       if (res.success) {

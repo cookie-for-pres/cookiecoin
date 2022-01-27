@@ -55,7 +55,7 @@ const Blackjack = () => {
     const req = await fetch(`${BASE_URL}/api/blackjack`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ accountId: cookie, bet: parseFloat(bet), account, status })
+      body: JSON.stringify({ token: cookie, bet: parseFloat(bet), account, status })
     });
 
     const res = await req.json();

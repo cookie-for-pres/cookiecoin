@@ -39,13 +39,14 @@ const JoinGame = () => {
   const cookies = new Cookies();
   const cookie = cookies.get('account');
 
+  // eslint-disable-next-line no-undef
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   const findGame = async () => {
     const req = await fetch(`${BASE_URL}/api/games/find`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ accountId: cookie, code: gameCode, password: gamePassword })
+      body: JSON.stringify({ token: cookie, code: gameCode, password: gamePassword })
     });
 
     const res = await req.json();
@@ -77,7 +78,7 @@ const JoinGame = () => {
     const req = await fetch(`${BASE_URL}/api/games/join`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ accountId: cookie, code: gameCode, password: gamePassword })
+      body: JSON.stringify({ token: cookie, code: gameCode, password: gamePassword })
     });
 
     const res = await req.json();
