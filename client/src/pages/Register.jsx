@@ -17,6 +17,7 @@ const Register = () => {
   const [redirect, setRedirect] = useState(false);
   const [redirectUrl, setRedirectUrl] = useState('');
 
+  // eslint-disable-next-line no-undef
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
    
   const register = async () => {    

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 import Alert from '../Alert';
 
 const format = (amount) => {
@@ -21,6 +22,8 @@ const Buy = ({ coin, coinId, cookie, balances: b }) => {
   const [buyAlertShow, setBuyAlertShow] = useState(false);
 
   const navigate = useNavigate();
+
+  const cookies = new Cookies();
 
   // eslint-disable-next-line no-undef
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -48,6 +51,9 @@ const Buy = ({ coin, coinId, cookie, balances: b }) => {
     .then((res) => {
       if (res.success) {
         setBalances(res.balances);
+      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+        cookies.remove('account');
+        window.location.reload();
       } else {
         navigate(-1);
       }
@@ -93,6 +99,9 @@ const Buy = ({ coin, coinId, cookie, balances: b }) => {
     .then((res) => {
       if (res.success) {
         setBalances(res.balances);
+      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+        cookies.remove('account');
+        window.location.reload();
       } else {
         navigate(-1);
       }

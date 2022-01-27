@@ -132,7 +132,7 @@ async def find_coin(coin: FindCoin):
         )
 
 @router.post('/coins/buy')
-async def buy_coind(coin: BuyCoin):
+async def buy_coin(coin: BuyCoin):
     payload = jwt.decode(coin.token, SECRET_KEY, algorithms=['HS256'])
     account = account_collection.find_one({'_id': payload['_id']})
     coin_ = coin_collection.find_one({'_id': coin.coinId})
@@ -146,8 +146,8 @@ async def buy_coind(coin: BuyCoin):
         if owned:
             owned['amount'] = owned['amount'] + coin.amount
             account['balances'][coin.balance] = account['balances'][coin.balance] - (coin.amount * coin_['price'])
-            bought_coins_collection.update_one({'_id': owned['_id']}, {'$set': {'amount': owned['amount']}})
-            account_collection.update_one({'_id': account['_id']}, {'$set': {'balances': account['balances']}})
+            bought_coins_collection.update_one({'_id': owned['_id']}, {'$set': {'amount': owned['amount'], 'updatedAt': datetime.datetime.now()}})
+            account_collection.update_one({'_id': account['_id']}, {'$set': {'balances': account['balances'], 'updatedAt': datetime.datetime.now()}})
 
             return JSONResponse({'message': 'successfully bought coin', 'success': True}, status_code=200)
 
@@ -181,8 +181,8 @@ async def sell_coin(coin: SellCoin):
 
             owned['amount'] = owned['amount'] - coin.amount
             account['balances'][coin.balance] = account['balances'][coin.balance] + (coin.amount * coin_['price'])
-            bought_coins_collection.update_one({'_id': owned['_id']}, {'$set': {'amount': owned['amount']}})
-            account_collection.update_one({'_id': account['_id']}, {'$set': {'balances': account['balances']}})
+            bought_coins_collection.update_one({'_id': owned['_id']}, {'$set': {'amount': owned['amount'], 'updatedAt': datetime.datetime.now()}})
+            account_collection.update_one({'_id': account['_id']}, {'$set': {'balances': account['balances'], 'updatedAt': datetime.datetime.now()}})
 
             return JSONResponse({'message': 'successfully sold coin', 'success': True}, status_code=200)
 

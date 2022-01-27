@@ -27,10 +27,9 @@ const Games = () => {
       if (res.success) {
         setJoinableGames(res.joinableGames);
         setDisplayGames(res.displayGames);
-      } else if (res.message === 'cant find account') {
-        console.log('cant find account');
-        // cookies.remove('account');
-        // window.location.reload();
+      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+        cookies.remove('account');
+        window.location.reload();
       }
     });
   }, []);
@@ -66,12 +65,12 @@ const Games = () => {
           </div>
         </div> */}
         <h1 style={{ textAlign: 'center' }}>Join a Random Game</h1>
-            <br />
-            <div className='card' style={{ height: '82%' }}>
-              <div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)' }}>
-                <DisplayGames games={displayGames} />
-              </div>
-            </div>
+        <br />
+        <div className='card' style={{ height: '82%' }}>
+          <div className='card-body' style={{ color: 'var(--light)', backgroundColor: 'var(--grey)' }}>
+            <DisplayGames games={displayGames} />
+          </div>
+        </div>
         <br />
         <br />
         <h1 style={{ textAlign: 'center' }}>Joinable Games</h1>

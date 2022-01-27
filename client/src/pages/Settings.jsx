@@ -10,7 +10,8 @@ const Settings = () => {
       </Helmet>
 
       <Navbar page='settings' />
-      
+      <br />
+      <p className='text-muted' style={{ textAlign: 'center', fontSize: '25px' }}>Coming soon...</p>
     </>
   );
 }

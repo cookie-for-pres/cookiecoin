@@ -6,3 +6,5 @@ from .coins import router as coins_router
 from .portfolio import router as portfolio_router
 from .leaderboard import router as leaderboard_router
 from .account import router as account_router
+from .coinflip import router as coinflip_router
+from .blackjack import router as blackjack_router

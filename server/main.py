@@ -27,11 +27,6 @@ async def add_process_time_header(request: Request, call_next):
 
     return response
 
-origins_file = open('origins.json', 'r')
-origins = json.load(origins_file)
-origins = [origin['url'] for origin in origins]
-origins_file.close()
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=['*'],
@@ -48,3 +43,5 @@ app.include_router(coins_router)
 app.include_router(portfolio_router)
 app.include_router(leaderboard_router)
 app.include_router(account_router)
+app.include_router(coinflip_router)
+app.include_router(blackjack_router)

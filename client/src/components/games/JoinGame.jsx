@@ -63,6 +63,9 @@ const JoinGame = () => {
       setTimeout(() => {
         setAlertShow(false);
       }, 2500);
+    } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+      cookies.remove('account');
+      window.location.reload();
     } else {
       setAlertType('danger');
       setAlertMessage(res.message.charAt(0).toUpperCase() + res.message.slice(1) + '.');
@@ -93,6 +96,9 @@ const JoinGame = () => {
         setJoinGameRedirect(true);
         setAlertShow(false);
       }, 3000);
+    } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+      cookies.remove('account');
+      window.location.reload();
     }
   }
 

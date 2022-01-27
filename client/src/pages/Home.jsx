@@ -66,17 +66,23 @@ const Home = () => {
 												Coinflip • <span className='text-muted'>1 Player <i className='fa-solid fa-user' /></span>
 											</div>
 											<div className='col-sm-6'>
-												<Link className='btn btn-purple shadow-none' style={{ float: 'right', width: '32%' }} to='/coinflip'>
+												<Link className='btn btn-purple shadow-none' style={{ float: 'right', width: '32%' }} to='/games/coinflip'>
 													Play <i className='fa-solid fa-play' />
 												</Link>
 											</div>
 										</div>
 									</li>
 									<li className='list-group-item'>
-										Blackjack • <span className='text-muted'>1-4 Players <i className='fa-solid fa-user' /></span>
-										<Link className='btn btn-purple shadow-none disabled' style={{ float: 'right', width: '15%' }} to='/blackjack'>
-											Play <i className='fa-solid fa-play' />
-										</Link>
+										<div className='row'>
+											<div className='col-sm-6'>
+												Blackjack • <span className='text-muted'>1 Player <i className='fa-solid fa-user' /></span>
+											</div>
+											<div className='col-sm-6'>
+												<Link className='btn btn-purple shadow-none' style={{ float: 'right', width: '32%' }} to='/games/blackjack'>
+													Play <i className='fa-solid fa-play' />
+												</Link>
+											</div>
+										</div>
 									</li>
 									<li className='list-group-item'>
 										Rock Paper Scissors • <span className='text-muted'>1-2 Players <i className='fa-solid fa-user' /></span>

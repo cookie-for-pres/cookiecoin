@@ -39,6 +39,9 @@ const Coin = () => {
       if (res.success) {
         setCoin(res.coin);
         setBoughtCoin(res.boughtCoin);
+      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+        cookies.remove('account');
+        window.location.reload();
       } else {
         navigate(-1);
       }

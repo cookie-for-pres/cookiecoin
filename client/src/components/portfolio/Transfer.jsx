@@ -56,8 +56,13 @@ const Transfer = () => {
       body: JSON.stringify({ token: cookie })
     }).then(res => res.json())
     .then(res => {
-      setCoins(res.coins);
-      setBoughtCoins(res.boughtCoins);
+      if (res.success) {
+        setCoins(res.coins);
+        setBoughtCoins(res.boughtCoins);
+      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+        cookies.remove('account');
+        window.location.reload();
+      }
     });
   }, []);
 

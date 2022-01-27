@@ -10,7 +10,8 @@ const Friends = () => {
       </Helmet>
 
       <Navbar page='friends' />
-      
+      <br />
+      <p className='text-muted' style={{ textAlign: 'center', fontSize: '25px' }}>Coming soon...</p>
     </>
   );
 }

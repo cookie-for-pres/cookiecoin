@@ -37,11 +37,14 @@ const Coinflip = () => {
     fetch(`${BASE_URL}/api/account/balances`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ accountId: cookie })
+      body: JSON.stringify({ token: cookie })
     }).then((res) => res.json())
     .then((res) => {
       if (res.success) {
         setBalances(res.balances);
+      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+        cookies.remove('account');
+        window.location.reload();
       } else {
         navigate(-1);
       }
@@ -61,7 +64,7 @@ const Coinflip = () => {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        accountId: cookie,
+        token: cookie,
         bet,
         account,
         side,
@@ -96,8 +99,9 @@ const Coinflip = () => {
         }, 3000);
       }, 3000);
 
-    } else if (res.message === 'cant find account') {
+    } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
       cookies.remove('account');
+      window.location.reload();
     } else {
       setAlertType('danger');
       setAlertMessage(res.message.charAt(0).toUpperCase() + res.message.slice(1) + '.');

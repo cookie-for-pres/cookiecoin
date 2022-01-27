@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 import Alert from '../Alert';
 
@@ -24,6 +25,8 @@ const Sell = ({ coin: c, boughtCoin: bc, coinId, cookie, balances: b }) => {
   const [sellAlertShow, setSellAlertShow] = useState(false);
 
   const navigate = useNavigate();
+
+  const cookies = new Cookies();
   // eslint-disable-next-line no-undef
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -48,6 +51,9 @@ const Sell = ({ coin: c, boughtCoin: bc, coinId, cookie, balances: b }) => {
     .then((res) => {
       if (res.success) {
         setBalances(res.balances);
+      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+        cookies.remove('account');
+        window.location.reload();
       } else {
         navigate(-1);
       }
@@ -62,6 +68,9 @@ const Sell = ({ coin: c, boughtCoin: bc, coinId, cookie, balances: b }) => {
       if (res.success) {
         setCoin(res.coin);
         setBoughtCoin(res.boughtCoin);
+      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+        cookies.remove('account');
+        window.location.reload();
       } else {
         navigate(-1);
       }
@@ -85,6 +94,9 @@ const Sell = ({ coin: c, boughtCoin: bc, coinId, cookie, balances: b }) => {
       setTimeout(() => {
         setSellAlertShow(false);
       }, 3000);
+    } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+      cookies.remove('account');
+      window.location.reload();
     } else {
       setSellAlertType('danger');
       setSellAlertMessage(res.message.charAt(0).toUpperCase() + res.message.slice(1) + '.');
@@ -106,6 +118,9 @@ const Sell = ({ coin: c, boughtCoin: bc, coinId, cookie, balances: b }) => {
     .then((res) => {
       if (res.success) {
         setBalances(res.balances);
+      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+        cookies.remove('account');
+        window.location.reload();
       } else {
         navigate(-1);
       }
@@ -120,6 +135,9 @@ const Sell = ({ coin: c, boughtCoin: bc, coinId, cookie, balances: b }) => {
       if (res.success) {
         setCoin(res.coin);
         setBoughtCoin(res.boughtCoin);
+      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+        cookies.remove('account');
+        window.location.reload();
       } else {
         navigate(-1);
       }

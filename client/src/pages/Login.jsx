@@ -53,6 +53,9 @@ const Login = () => {
         setAlertShow(false);
         setRedirect(true);
       }, 3000);
+    } else if (res.message === 'invalid token' || res.message === 'token expired') {
+      cookies.remove('account');
+      window.location.reload();
     } else {
       setAlertType('danger');
       setAlertMessage(res.message.charAt(0).toUpperCase() + res.message.slice(1) + '.');
