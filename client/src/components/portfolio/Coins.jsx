@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Cookies from 'universal-cookie';
+import axios from 'axios';
 
 import Coin from './Coin';
 

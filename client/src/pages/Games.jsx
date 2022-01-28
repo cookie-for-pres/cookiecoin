@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import Cookies from 'universal-cookie';
+import axios from 'axios';
 
 import Navbar from '../components/Navbar';
-import JoinGame from '../components/games/JoinGame';
 import DisplayGames from '../components/games/DisplayGames';
 import JoinableGames from '../components/games/JoinableGames';
 
@@ -18,16 +18,14 @@ const Games = () => {
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
-    fetch(`${BASE_URL}/api/games`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ token: cookie })
-    }).then((res) => res.json())
+    axios.post(`${BASE_URL}/api/games`, {
+      token: cookie
+    }, { headers: { 'Content-Type': 'application/json' } })
     .then((res) => {
-      if (res.success) {
-        setJoinableGames(res.joinableGames);
-        setDisplayGames(res.displayGames);
-      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+      if (res.data.success) {
+        setJoinableGames(res.data.joinableGames);
+        setDisplayGames(res.data.displayGames);
+      } else if (res.data.message === 'cant find account' || res.data.message === 'invalid token' || res.data.message === 'token expired') {
         cookies.remove('account');
         window.location.reload();
       }

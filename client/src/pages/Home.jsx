@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 import AuthNavbar from '../components/AuthNavbar';
 
@@ -18,13 +19,10 @@ const Home = () => {
 	const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 	useEffect(() => {
-		fetch(`${BASE_URL}/api/leaderboard`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' }
-		}).then(res => res.json())
+		axios.post(`${BASE_URL}/api/leaderboard`, {}, { headers: { 'Content-Type': 'application/json' } })
 		.then(res => {
-			if (res.success) {
-				setLeaderboard(res.leaderboard);
+			if (res.data.success) {
+				setLeaderboard(res.data.leaderboard);
 			}
 		});
 	}, []);

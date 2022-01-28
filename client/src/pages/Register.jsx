@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, Navigate } from 'react-router-dom';
 import Alert from '../components/Alert';
+import axios from 'axios';
 
 import AuthNavbar from '../components/AuthNavbar';
 
@@ -21,13 +22,11 @@ const Register = () => {
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
    
   const register = async () => {    
-    const req = await fetch(`${BASE_URL}/api/register`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ username, email, password })
-    });
+    const req = await axios.post(`${BASE_URL}/api/register`, {
+      username, email, password
+    }, { headers: { 'Content-Type': 'application/json' } });
 
-    const res = await req.json();
+    const res = await req.data;
 
     if (res.success) {
       setAlertType('success');

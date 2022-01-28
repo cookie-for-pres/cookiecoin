@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
+import pymongo
 import jwt
 
 from config import db, SECRET_KEY
@@ -25,7 +26,7 @@ async def games(game: Games):
 
         if account:
             display_games = []
-            for display_game in game_collection.find({'display': True}):
+            for display_game in game_collection.find({'display': True}).sort(key_or_list='index', direction=pymongo.ASCENDING):
                 display_game['createdAt'] = str(display_game['createdAt'])
                 display_game['updatedAt'] = str(display_game['updatedAt'])
                 display_games.append(display_game)

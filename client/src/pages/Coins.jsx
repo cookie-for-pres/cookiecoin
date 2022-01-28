@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Cookies from 'universal-cookie';
-import { io } from 'socket.io-client';
+import axios from 'axios';
 
 import Navbar from '../components/Navbar';
 import CoinS from '../components/coins/Coins';
@@ -16,24 +16,18 @@ const Coins = () => {
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
-    getCoins();
-  }, []);
-  
-  const getCoins = () => {
-    fetch(`${BASE_URL}/api/coins`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ token: cookie })
-    }).then((res) => res.json())
+    axios.post(`${BASE_URL}/api/coins`, {
+      token: cookie
+    }, { headers: { 'Content-Type': 'application/json' } })
     .then((res) => {
-      if (res.success) {
-        setCoins(res.coins);
-      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+      if (res.data.success) {
+        setCoins(res.data.coins);
+      } else if (res.data.message === 'cant find account' || res.data.message === 'invalid token' || res.data.message === 'token expired') {
         cookies.remove('account');
         window.location.reload();
       }
     });
-  }
+  }, []);
 
   return (
     <>

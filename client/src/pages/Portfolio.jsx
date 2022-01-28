@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet';
 import Cookie from 'universal-cookie';
+import axios from 'axios';
 
 import Navbar from '../components/Navbar';
 import Coins from '../components/portfolio/Coins';
@@ -18,18 +19,16 @@ const Portfolio = () => {
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
-    fetch(`${BASE_URL}/api/portfolio`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: cookie })
-    }).then(res => res.json())
-    .then(res => {
-      if (res.success) {
-        setCoins(res.portfolio);
-        setBalances(res.account.balances);
-      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+    axios.post(`${BASE_URL}/api/portfolio`, {
+      token: cookie
+    }, { headers: { 'Content-Type': 'application/json' } })
+    .then((res) => {
+      if (res.data.success) {
+        setCoins(res.data.portfolio);
+        setBalances(res.data.account.balances);
+      } else if (res.data.message === 'cant find account' || res.data.message === 'invalid token' || res.data.message === 'token expired') {
         cookies.remove('account');
-        window.location.reload();   
+        window.location.reload();
       }
     });
   }, []);

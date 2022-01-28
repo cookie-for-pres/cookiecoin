@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Cookies from 'universal-cookie';
+import axios from 'axios';
 
 const Navbar = ({ page }) => {
   const cookies = new Cookies();
@@ -11,13 +12,11 @@ const Navbar = ({ page }) => {
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
-    fetch(`${BASE_URL}/api/auth/token`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ token: cookie })
-    }).then((res) => res.json())
+    axios.post(`${BASE_URL}/api/auth/token`, {
+      token: cookie
+    }, { headers: { 'Content-Type': 'application/json' } })
     .then((res) => {
-      if (!res.success) {
+      if (!res.data.success) {
         cookies.remove('account');
         window.location.reload();
       }

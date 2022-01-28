@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import axios from 'axios';
 
 import Alert from '../Alert';
 
@@ -43,38 +44,37 @@ const Sell = ({ coin: c, boughtCoin: bc, coinId, cookie, balances: b }) => {
   });
 
   useEffect(() => {
-    fetch(`${BASE_URL}/api/account/balances`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ token: cookie })
-    }).then((res) => res.json())
+    axios.post(`${BASE_URL}/api/coins/find`, {
+      token: cookie,
+      coinId
+    }, { headers: { 'Content-Type': 'application/json' } })
     .then((res) => {
-      if (res.success) {
-        setBalances(res.balances);
-      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+      if (res.data.success) {
+        setCoin(res.data.coin);
+        setBoughtCoin(res.data.boughtCoin);
+      } else if (res.data.message === 'cant find account' || res.data.message === 'invalid token' || res.data.message === 'token expired') {
         cookies.remove('account');
         window.location.reload();
       } else {
         navigate(-1);
       }
     });
+  }, [balances]);
 
-    fetch(`${BASE_URL}/api/coins/find`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ token: cookie, coinId })
-    }).then((res) => res.json())
+  useEffect(() => {
+    axios.post(`${BASE_URL}/api/account/balances`, {
+      token: cookie
+    }, { headers: { 'Content-Type': 'application/json' } })
     .then((res) => {
-      if (res.success) {
-        setCoin(res.coin);
-        setBoughtCoin(res.boughtCoin);
-      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+      if (res.data.success) {
+        setBalances(res.data.balances);
+      } else if (res.data.message === 'cant find account' || res.data.message === 'invalid token' || res.data.message === 'token expired') {
         cookies.remove('account');
         window.location.reload();
       } else {
         navigate(-1);
       }
-    });    
+    });
   }, []);
 
   const sell = async () => {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams, useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import axios from 'axios';
 
 import Chart from '../components/coins/Chart';
 import Navbar from '../components/Navbar';
@@ -29,16 +30,29 @@ const Coin = () => {
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
-    fetch(`${BASE_URL}/api/coins/find`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ token: cookie, coinId })
-    }).then((res) => res.json())
+    axios.post(`${BASE_URL}/api/coins/find`, {
+      token: cookie,
+      coinId
+    }, { headers: { 'Content-Type': 'application/json' } })
     .then((res) => {
-      if (res.success) {
-        setCoin(res.coin);
-        setBoughtCoin(res.boughtCoin);
-      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+      if (res.data.success) {
+        setCoin(res.data.coin);
+        setBoughtCoin(res.data.boughtCoin);
+      } else if (res.data.message === 'cant find account' || res.data.message === 'invalid token' || res.data.message === 'token expired') {
+        cookies.remove('account');
+        window.location.reload();
+      } else {
+        navigate(-1);
+      }
+    });
+
+    axios.post(`${BASE_URL}/api/account/balances`, {
+      token: cookie
+    }, { headers: { 'Content-Type': 'application/json' } })
+    .then((res) => {
+      if (res.data.success) {
+        setBalances(res.data.balances);
+      } else if (res.data.message === 'cant find account' || res.data.message === 'invalid token' || res.data.message === 'token expired') {
         cookies.remove('account');
         window.location.reload();
       } else {

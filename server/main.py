@@ -1,7 +1,7 @@
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, Request
 import threading
-import json
+import uvicorn
 import time
 
 from services import fake_coin, real_coin
@@ -49,3 +49,6 @@ app.include_router(auth_router)
 
 app.include_router(admin_login_router)
 app.include_router(admin_dashboard_router)
+
+if __name__ == '__main__':
+    uvicorn.run('main:app', host='0.0.0.0', port=5500, reload=True)

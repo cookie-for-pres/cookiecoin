@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, Navigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import axios from 'axios';
 
 import AuthNavbar from '../components/AuthNavbar';
 import Alert from '../components/Alert';
@@ -24,22 +25,18 @@ const Login = () => {
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
-    fetch('https://geolocation-db.com/json/', {
-      method: 'GET'
-    }).then((res) => res.json())
+    axios.get('https://geolocation-db.com/json/')
     .then((res) => {
-      setIp(res.IPv4);
+      setIp(res.data.IPv4);
     });
   }, [])
 
   const login = async () => {
-    const req = await fetch(`${BASE_URL}/api/login`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ username, password, ip })
-    });
+    const req = await axios.post(`${BASE_URL}/api/login`, {
+      username, password, ip
+    }, { headers: { 'Content-Type': 'application/json' } });
 
-    const res = await req.json();
+    const res = await req.data;
 
     if (res.success) {
       setAlertType('success');

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import Cookies from 'universal-cookie';
-import { io } from 'socket.io-client';
+import axios from 'axios';
 
 import Navbar from '../components/Navbar';
 import Friends from '../components/dashboard/Friends';
@@ -22,18 +22,16 @@ const Dashboard = () => {
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
-    fetch(`${BASE_URL}/api/dashboard`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ token: cookie })
-    }).then((res) => res.json())
+    axios.post(`${BASE_URL}/api/dashboard`, {
+      token: cookie
+    }, { headers: { 'Content-Type': 'application/json' } })
     .then((res) => {
-      if (res.success) {
-        setFriends(res.account.friends);
-        setBoughtCoins(res.account.boughtCoins);
-        setBalances(res.account.balances);
-        setCoins(res.coins);
-      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+      if (res.data.success) {
+        setFriends(res.data.account.friends);
+        setBoughtCoins(res.data.account.boughtCoins);
+        setBalances(res.data.account.balances);
+        setCoins(res.data.coins);
+      } else if (res.data.message === 'cant find account' || res.data.message === 'invalid token' || res.data.message === 'token expired') {
         cookies.remove('account');
         window.location.reload();
       }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Cookie from 'universal-cookie';
+import axios from 'axios';
 
 import Alert from '../Alert';
 
@@ -41,25 +42,26 @@ const Transfer = () => {
   const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   useEffect(() => {
-    fetch(`${BASE_URL}/api/account/balances`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: cookie })
-    }).then(res => res.json())
+    axios.post(`${BASE_URL}/api/account/balances`, {
+      token: cookie
+    }, { headers: { 'Content-Type': 'application/json' } })
     .then(res => {
-      setBalances(res.balances);
+      if (res.data.success) {
+        setBalances(res.data.balances);
+      } else if (res.data.message === 'cant find account' || res.data.message === 'invalid token' || res.data.message === 'token expired') {
+        cookies.remove('account');
+        window.location.reload();
+      }
     });
 
-    fetch(`${BASE_URL}/api/coins`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: cookie })
-    }).then(res => res.json())
+    axios.post(`${BASE_URL}/api/coins`, {
+      token: cookie
+    }, { headers: { 'Content-Type': 'application/json' } })
     .then(res => {
-      if (res.success) {
-        setCoins(res.coins);
-        setBoughtCoins(res.boughtCoins);
-      } else if (res.message === 'cant find account' || res.message === 'invalid token' || res.message === 'token expired') {
+      if (res.data.success) {
+        setCoins(res.data.coins);
+        setBoughtCoins(res.data.boughtCoins);
+      } else if (res.data.message === 'cant find account' || res.data.message === 'invalid token' || res.data.message === 'token expired') {
         cookies.remove('account');
         window.location.reload();
       }
@@ -72,7 +74,7 @@ const Transfer = () => {
     } else if (balanceFromAccount === 'bank' && balances.bank <= balanceAmount) {
       setBalanceAmount(balances.bank);
     }
-  });
+  }, [balanceAmount]);
     
   const transfer = async () => {
     let body = {}
@@ -114,13 +116,12 @@ const Transfer = () => {
       }
     }
 
-    const req = await fetch(`${BASE_URL}/api/portfolio/transfer`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
+    const req = await axios.post(`${BASE_URL}/api/portfolio/transfer`, 
+      body, 
+      { headers: { 'Content-Type': 'application/json' } }
+    );
 
-    const res = await req.json();
+    const res = await req.data;
 
     if (res.success) {
       setAlertMessage('Successfully transferred funds.');
@@ -137,24 +138,25 @@ const Transfer = () => {
         setAlertShow(false);
       }, 3000);
 
-      fetch(`${BASE_URL}/api/account/balances`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: cookie })
-      }).then(res => res.json())
+      axios.post(`${BASE_URL}/api/account/balances`, {
+        token: cookie
+      }, { headers: { 'Content-Type': 'application/json' } })
       .then(res => {
-        setBalances(res.balances);
+        if (res.data.success) {
+          setBalances(res.data.balances);
+        }
       });
-  
-      fetch(`${BASE_URL}/api/coins`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token: cookie })
-      }).then(res => res.json())
+      
+      axios.post(`${BASE_URL}/api/coins`, {
+        token: cookie
+      }, { headers: { 'Content-Type': 'application/json' } })
       .then(res => {
-        setCoins(res.coins);
-        setBoughtCoins(res.boughtCoins);
+        if (res.data.success) {
+          setCoins(res.data.coins);
+          setBoughtCoins(res.data.boughtCoins);
+        }
       });
+
     } else {
       setAlertMessage(res.message.charAt(0).toUpperCase() + res.message.slice(1));
       setAlertShow(true);
