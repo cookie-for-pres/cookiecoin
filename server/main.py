@@ -1,5 +1,5 @@
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI, Request, BackgroundTasks
+from fastapi import FastAPI, Request
 import threading
 import uvicorn
 import time
@@ -9,10 +9,8 @@ from routes import *
 
 app = FastAPI()
 
-background_apps = BackgroundTasks()
-
-background_apps.add_task(func=fake_coin, every=300)
-background_apps.add_task(func=real_coin, every=300)
+threading.Thread(target=fake_coin).start()
+threading.Thread(target=real_coin).start()
 
 @app.middleware('http')
 async def add_process_time_header(request: Request, call_next):

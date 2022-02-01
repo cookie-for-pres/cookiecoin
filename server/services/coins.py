@@ -16,33 +16,49 @@ def fake_coin():
         boof = coin_collection.find_one({'abbreviation': 'BOOF'})
         shr = coin_collection.find_one({'abbreviation': 'SHR'})
 
-        cec['price'] = cec['price'] + random.randint(-12, 12)
-        lvc['price'] = lvc['price'] + random.randint(-12, 12)
-        bpm['price'] = bpm['price'] + random.randint(-12, 12)
-        s4y['price'] = s4y['price'] + random.randint(-12, 12)
-        boof['price'] = boof['price'] + random.randint(-12, 12)
-        shr['price'] = shr['price'] + random.randint(-12, 12)
+        cec['price'] = cec['price'] + random.randint(-12, -12)
+        lvc['price'] = lvc['price'] + random.randint(-12, -12)
+        bpm['price'] = bpm['price'] + random.randint(-12, -12)
+        s4y['price'] = s4y['price'] + random.randint(-12, -12)
+        boof['price'] = boof['price'] + random.randint(-12, -12)
+        shr['price'] = shr['price'] + random.randint(-12, -12)
 
-        if len(cec['logs']) > 100: cec['logs'] = []
-        if len(lvc['logs']) > 100: lvc['logs'] = []
-        if len(bpm['logs']) > 100: bpm['logs'] = []
-        if len(s4y['logs']) > 100: s4y['logs'] = []
-        if len(boof['logs']) > 100: boof['logs'] = []
-        if len(shr['logs']) > 100: shr['logs'] = []
+        if len(cec['logs']) > 1000: cec['logs'] = []
+        if len(lvc['logs']) > 1000: lvc['logs'] = []
+        if len(bpm['logs']) > 1000: bpm['logs'] = []
+        if len(s4y['logs']) > 1000: s4y['logs'] = []
+        if len(boof['logs']) > 1000: boof['logs'] = []
+        if len(shr['logs']) > 1000: shr['logs'] = []
 
-        cec['logs'].append({'price': cec['price'], 'date': datetime.datetime.now()})
-        lvc['logs'].append({'price': lvc['price'], 'date': datetime.datetime.now()})
-        bpm['logs'].append({'price': bpm['price'], 'date': datetime.datetime.now()})
-        s4y['logs'].append({'price': s4y['price'], 'date': datetime.datetime.now()})
-        boof['logs'].append({'price': boof['price'], 'date': datetime.datetime.now()})
-        shr['logs'].append({'price': shr['price'], 'date': datetime.datetime.now()})
+        coin_collection.update_one(
+            {'abbreviation': 'CEC'}, 
+            {'$set': {'price': cec['price'], 'logs': cec['logs']}}
+        )
 
-        coin_collection.update_one({'abbreviation': 'CEC'}, {'$set': {'price': cec['price']}})
-        coin_collection.update_one({'abbreviation': 'ŁVC'}, {'$set': {'price': lvc['price']}})
-        coin_collection.update_one({'abbreviation': 'BPM'}, {'$set': {'price': bpm['price']}})
-        coin_collection.update_one({'abbreviation': '420'}, {'$set': {'price': s4y['price']}})
-        coin_collection.update_one({'abbreviation': 'BOOF'}, {'$set': {'price': boof['price']}})
-        coin_collection.update_one({'abbreviation': 'SHR'}, {'$set': {'price': shr['price']}})
+        coin_collection.update_one(
+            {'abbreviation': 'ŁVC'},
+            {'$set': {'price': lvc['price'], 'logs': lvc['logs']}}
+        )
+
+        coin_collection.update_one(
+            {'abbreviation': 'BPM'},
+            {'$set': {'price': bpm['price'], 'logs': bpm['logs']}}
+        )
+
+        coin_collection.update_one(
+            {'abbreviation': '420'},
+            {'$set': {'price': s4y['price'], 'logs': s4y['logs']}}
+        )
+
+        coin_collection.update_one(
+            {'abbreviation': 'BOOF'},
+            {'$set': {'price': boof['price'], 'logs': boof['logs']}}
+        )
+
+        coin_collection.update_one(
+            {'abbreviation': 'SHR'},
+            {'$set': {'price': shr['price'], 'logs': shr['logs']}}
+        )
 
         time.sleep(300)
 
@@ -63,16 +79,23 @@ def real_coin():
         eth['price'] = data['ethereum']['usd']
         ltc['price'] = data['litecoin']['usd']
 
-        if len(btc['logs']) > 100: btc['logs'] = []
-        if len(eth['logs']) > 100: eth['logs'] = []
-        if len(ltc['logs']) > 100: ltc['logs'] = []
+        if len(btc['logs']) > 1000: btc['logs'] = []
+        if len(eth['logs']) > 1000: eth['logs'] = []
+        if len(ltc['logs']) > 1000: ltc['logs'] = []
 
-        btc['logs'].append({'price': btc['price'], 'date': datetime.datetime.now()})
-        eth['logs'].append({'price': eth['price'], 'date': datetime.datetime.now()})
-        ltc['logs'].append({'price': ltc['price'], 'date': datetime.datetime.now()})
+        coin_collection.update_one(
+            {'abbreviation': 'BTC'},
+            {'$set': {'price': btc['price'], 'logs': btc['logs']}}
+        )
 
-        coin_collection.update_one({'abbreviation': 'BTC'}, {'$set': {'price': btc['price']}})
-        coin_collection.update_one({'abbreviation': 'ETH'}, {'$set': {'price': eth['price']}})
-        coin_collection.update_one({'abbreviation': 'LTC'}, {'$set': {'price': ltc['price']}})
+        coin_collection.update_one(
+            {'abbreviation': 'ETH'},
+            {'$set': {'price': eth['price'], 'logs': eth['logs']}}
+        )
+
+        coin_collection.update_one(
+            {'abbreviation': 'LTC'},
+            {'$set': {'price': ltc['price'], 'logs': ltc['logs']}}
+        )
 
         time.sleep(300)
