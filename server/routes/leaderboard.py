@@ -26,7 +26,8 @@ async def leaderboard():
 
         for bought_coin in bought_coins:
             for coin in coins:
-                balance += bought_coin['amount'] * coin['price']
+                if bought_coin['name'] == coin['name']:
+                    balance += bought_coin['amount'] * coin['price']
 
         balance = round(balance, 2)
 
