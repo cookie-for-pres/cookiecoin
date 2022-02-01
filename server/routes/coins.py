@@ -69,8 +69,11 @@ async def coins(coin: Coin):
                 coin_collection.find_one_and_update({'name': coin['name']}, {'$set': {'index': str(coin['index'])}})
                 coin['createdAt'] = coin['createdAt'].isoformat()
                 coin['updatedAt'] = coin['updatedAt'].isoformat()
+                del coin['logs']
                 
                 coins.append(coin)
+
+            print(coins)
 
             return JSONResponse({
                 'message': 'successfully found coins', 'success': True,
@@ -86,10 +89,10 @@ async def coins(coin: Coin):
     except jwt.exceptions.ExpiredSignatureError:
         return JSONResponse({'message': 'token expired', 'success': False}, status_code=401)
 
-    except Exception as e:
-        return JSONResponse(
-            {'message': 'unknown error', 'error': str(e), 'success': False}, status_code=500
-        )
+    # except Exception as e:
+    #     return JSONResponse(
+    #         {'message': 'unknown error', 'error': str(e), 'success': False}, status_code=500
+    #     )
 
 @router.post('/coins/find')
 async def find_coin(coin: FindCoin):
