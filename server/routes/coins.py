@@ -106,8 +106,7 @@ async def find_coin(coin: FindCoin):
 
             for coin_log in coin_['logs']:
                 coin_log['price'] = float(round(coin_log['price'], 2))
-                coin_log['createdAt'] = coin_log['createdAt'].isoformat()
-                coin_log['updatedAt'] = coin_log['updatedAt'].isoformat()
+                coin_log['time'] = coin_log['time'].isoformat()
 
                 coin_logs.append(coin_log)
 
