@@ -30,6 +30,13 @@ def fake_coin():
         if len(boof['logs']) > 1000: boof['logs'] = []
         if len(shr['logs']) > 1000: shr['logs'] = []
 
+        cec['logs'].append({'price': cec['price'], 'time': datetime.datetime.now()})
+        lvc['logs'].append({'price': lvc['price'], 'time': datetime.datetime.now()})
+        bpm['logs'].append({'price': bpm['price'], 'time': datetime.datetime.now()})
+        s4y['logs'].append({'price': s4y['price'], 'time': datetime.datetime.now()})
+        boof['logs'].append({'price': boof['price'], 'time': datetime.datetime.now()})
+        shr['logs'].append({'price': shr['price'], 'time': datetime.datetime.now()})
+
         coin_collection.update_one(
             {'abbreviation': 'CEC'}, 
             {'$set': {'price': cec['price'], 'logs': cec['logs']}}
@@ -82,6 +89,10 @@ def real_coin():
         if len(btc['logs']) > 1000: btc['logs'] = []
         if len(eth['logs']) > 1000: eth['logs'] = []
         if len(ltc['logs']) > 1000: ltc['logs'] = []
+
+        btc['logs'].append({'price': btc['price'], 'time': datetime.datetime.now()})
+        eth['logs'].append({'price': eth['price'], 'time': datetime.datetime.now()})
+        ltc['logs'].append({'price': ltc['price'], 'time': datetime.datetime.now()})
 
         coin_collection.update_one(
             {'abbreviation': 'BTC'},
