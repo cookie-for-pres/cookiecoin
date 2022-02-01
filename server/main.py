@@ -1,5 +1,5 @@
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, BackgroundTasks
 import threading
 import uvicorn
 import time
@@ -9,13 +9,10 @@ from routes import *
 
 app = FastAPI()
 
-fake_coin_thread = threading.Thread(target=fake_coin)
-fake_coin_thread.daemon = True
-fake_coin_thread.start()
+background_apps = BackgroundTasks()
 
-real_coin_thread = threading.Thread(target=real_coin)
-real_coin_thread.daemon = True
-real_coin_thread.start()
+background_apps.add_task(func=fake_coin, every=300)
+background_apps.add_task(func=real_coin, every=300)
 
 @app.middleware('http')
 async def add_process_time_header(request: Request, call_next):
@@ -51,4 +48,10 @@ app.include_router(admin_login_router)
 app.include_router(admin_dashboard_router)
 
 if __name__ == '__main__':
-    uvicorn.run('main:app', host='0.0.0.0', port=5500, reload=True)
+    uvicorn.run(
+        'main:app', 
+        host='0.0.0.0', 
+        port=5500, 
+        reload=True,    
+        workers=3
+    )
