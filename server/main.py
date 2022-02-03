@@ -45,7 +45,7 @@ async def token_check(request: Request):
             if account_collection.find_one({'token': token}) is None:
                 return JSONResponse({'message': 'cant find account', 'success': False}, status_code=401)
 
-            if account_collection.find_one({'token': token})['status'] == 'banned':
+            if account_collection.find_one({'token': token})['banned']:
                 return JSONResponse({'message': 'banned', 'success': False}, status_code=401)
 
             try:
