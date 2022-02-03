@@ -14,8 +14,8 @@ app = FastAPI()
 middleware_collection = db.get_collection('middlewares')
 account_collection = db.get_collection('accounts')
 
-# threading.Thread(target=fake_coin).start()
-# threading.Thread(target=real_coin).start()
+threading.Thread(target=fake_coin).start()
+threading.Thread(target=real_coin).start()
 
 @app.middleware('http')
 async def set_process_time(request: Request, call_next):
