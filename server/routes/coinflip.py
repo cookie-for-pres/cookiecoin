@@ -23,8 +23,8 @@ def add_transaction(type: str, data: dict):
         'slug': slug,
         'type': type,
         'data': data,
-        'createdAt': datetime.datetime.now(),
-        'updatedAt': datetime.datetime.now()
+        'createdAt': datetime.datetime.utcnow(),
+        'updatedAt': datetime.datetime.utcnow()
     })
 
 class CoinFlip(BaseModel):
@@ -68,7 +68,7 @@ async def coinflip(coinflip: CoinFlip):
 
                 account_collection.update_one(
                     {'_id': account['_id']},
-                    {'$set': {'balances': account['balances'], 'updatedAt': datetime.datetime.now()}}
+                    {'$set': {'balances': account['balances'], 'updatedAt': datetime.datetime.utcnow()}}
                 )
 
                 return JSONResponse(
@@ -98,7 +98,7 @@ async def coinflip(coinflip: CoinFlip):
 
                 account_collection.update_one(
                     {'_id': account['_id']},
-                    {'$set': {'balances': account['balances'], 'updatedAt': datetime.datetime.now()}}
+                    {'$set': {'balances': account['balances'], 'updatedAt': datetime.datetime.utcnow()}}
                 )
 
                 return JSONResponse(

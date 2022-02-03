@@ -1,28 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Cookies from 'universal-cookie';
-import axios from 'axios';
 
 const Navbar = ({ page }) => {
-  const cookies = new Cookies();
-  const cookie = cookies.get('account');
-
-  // eslint-disable-next-line no-undef
-  const BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
-  useEffect(() => {
-    axios.post(`${BASE_URL}/api/auth/token`, {
-      token: cookie
-    }, { headers: { 'Content-Type': 'application/json' } })
-    .then((res) => {
-      if (!res.data.success) {
-        cookies.remove('account');
-        window.location.reload();
-      }
-    });
-  }, [page]);
-
   return (
     <>
       <nav className='navbar navbar-expand-lg navbar-light ' style={{ backgroundColor: 'var(--grey)' }}>

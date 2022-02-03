@@ -25,8 +25,8 @@ def add_transaction(type: str, data: dict):
         'slug': slug,
         'type': type,
         'data': data,
-        'createdAt': datetime.datetime.now(),
-        'updatedAt': datetime.datetime.now()
+        'createdAt': datetime.datetime.utcnow(),
+        'updatedAt': datetime.datetime.utcnow()
     })
 
 class Coin(BaseModel):
@@ -73,8 +73,6 @@ async def coins(coin: Coin):
                 
                 coins.append(coin)
 
-            print(coins)
-
             return JSONResponse({
                 'message': 'successfully found coins', 'success': True,
                 'coins': coins, 'boughtCoins': bought_coins
@@ -112,7 +110,7 @@ async def find_coin(coin: FindCoin):
 
             coin_ = {
                 '_id': coin_['_id'], 'name': coin_['name'], 'abbreviation': coin_['abbreviation'],
-                'price': coin_['price'], 'index': int(str(coin_['index'])), 'logs': coin_logs,
+                'price': coin_['price'], 'index': int(str(coin_['index'])), 'logs': coin_logs[:50],
                 'imageUrl': coin_['imageUrl']
             }
 
@@ -162,8 +160,8 @@ async def buy_coin(coin: BuyCoin):
         if owned:
             owned['amount'] = owned['amount'] + coin.amount
             account['balances'][coin.balance] = account['balances'][coin.balance] - (coin.amount * coin_['price'])
-            bought_coins_collection.update_one({'_id': owned['_id']}, {'$set': {'amount': owned['amount'], 'updatedAt': datetime.datetime.now()}})
-            account_collection.update_one({'_id': account['_id']}, {'$set': {'balances': account['balances'], 'updatedAt': datetime.datetime.now()}})
+            bought_coins_collection.update_one({'_id': owned['_id']}, {'$set': {'amount': owned['amount'], 'updatedAt': datetime.datetime.utcnow()}})
+            account_collection.update_one({'_id': account['_id']}, {'$set': {'balances': account['balances'], 'updatedAt': datetime.datetime.utcnow()}})
 
             add_transaction(type='Coin Purchase', data={
                 'coin': {
@@ -215,8 +213,8 @@ async def sell_coin(coin: SellCoin):
 
             owned['amount'] = owned['amount'] - coin.amount
             account['balances'][coin.balance] = account['balances'][coin.balance] + (coin.amount * coin_['price'])
-            bought_coins_collection.update_one({'_id': owned['_id']}, {'$set': {'amount': owned['amount'], 'updatedAt': datetime.datetime.now()}})
-            account_collection.update_one({'_id': account['_id']}, {'$set': {'balances': account['balances'], 'updatedAt': datetime.datetime.now()}})
+            bought_coins_collection.update_one({'_id': owned['_id']}, {'$set': {'amount': owned['amount'], 'updatedAt': datetime.datetime.utcnow()}})
+            account_collection.update_one({'_id': account['_id']}, {'$set': {'balances': account['balances'], 'updatedAt': datetime.datetime.utcnow()}})
             add_transaction(type='Coin Sale', data={
                 'coin': {
                     'name': coin_['name'], 

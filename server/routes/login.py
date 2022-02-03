@@ -29,7 +29,7 @@ async def login(login: Login):
                     account['password'].encode('utf-8')
             ):
                 token = jwt.encode({
-                    '_id': account['_id'], 'exp': datetime.datetime.now() + datetime.timedelta(hours=24)
+                    '_id': account['_id'], 'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=24)
                 }, SECRET_KEY, algorithm='HS256')
 
                 account_collection.update_one(
@@ -37,8 +37,8 @@ async def login(login: Login):
                     {
                         '$set': {
                             'token': token, 'ip': login.ip, 
-                            'updatedAt': datetime.datetime.now(),
-                            'lastLogin': datetime.datetime.now()
+                            'updatedAt': datetime.datetime.utcnow(),
+                            'lastLogin': datetime.datetime.utcnow()
                         }
                     }
                 )

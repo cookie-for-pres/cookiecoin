@@ -22,8 +22,8 @@ def add_transaction(type: str, data: dict):
         'slug': slug,
         'type': type,
         'data': data,
-        'createdAt': datetime.datetime.now(),
-        'updatedAt': datetime.datetime.now()
+        'createdAt': datetime.datetime.utcnow(),
+        'updatedAt': datetime.datetime.utcnow()
     })
 
 class Portfolio(BaseModel):

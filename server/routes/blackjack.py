@@ -23,8 +23,8 @@ def add_transaction(type: str, data: dict):
         'slug': slug,
         'type': type,
         'data': data,
-        'createdAt': datetime.datetime.now(),
-        'updatedAt': datetime.datetime.now()
+        'createdAt': datetime.datetime.utcnow(),
+        'updatedAt': datetime.datetime.utcnow()
     })
     
 class Blackjack(BaseModel):
@@ -55,14 +55,13 @@ async def blackjack(blackjack: Blackjack):
             }
         })
 
-
         if blackjack.status == 'win':
             account['balances'][blackjack.account] = account['balances'][blackjack.account] + blackjack.bet
         
         elif blackjack.status == 'lose':
             account['balances'][blackjack.account] = account['balances'][blackjack.account] - blackjack.bet
         
-        account_collection.find_one_and_update({'_id': account['_id']}, {'$set': {'balances': account['balances'], 'updatedAt': datetime.datetime.now()}})
+        account_collection.find_one_and_update({'_id': account['_id']}, {'$set': {'balances': account['balances'], 'updatedAt': datetime.datetime.utcnow()}})
         add_transaction(type='Blackjack', data={'status': blackjack.status, 'bet': blackjack.bet, 'account': blackjack.account})
 
         return JSONResponse(
